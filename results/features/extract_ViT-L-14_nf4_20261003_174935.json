@@ -1,0 +1,49 @@
+{
+  "encoder": "ViT-L/14",
+  "precision": "nf4",
+  "quantized_layers": 145,
+  "hf_id": "openai/clip-vit-large-patch14",
+  "device": "mps",
+  "batch": 64,
+  "workers": 8,
+  "timestamp": "2026-10-03T17:50:42",
+  "versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pillow": "12.3.0"
+  },
+  "idle_window": {
+    "seconds": 60.00737079200189,
+    "cpu_j": 2.495,
+    "gpu_j": 0.263,
+    "gpu_sram_j": 0.0,
+    "ane_j": 0.0,
+    "dram_j": 1.596,
+    "total_j": 4.354,
+    "counters_live": true,
+    "watts": 0.07255775319821753
+  },
+  "sets": {
+    "coco_test": {
+      "images": 5000,
+      "seconds": 224.6,
+      "images_per_s": 22.3,
+      "dim": 768,
+      "norm_mean": 18.416,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ViT-L-14_nf4/coco_test.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 224.58935670800201,
+        "cpu_j": 174.853,
+        "gpu_j": 3416.116,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 392.897,
+        "total_j": 3983.866,
+        "counters_live": true
+      },
+      "j_per_image": 0.7968,
+      "j_per_image_above_idle": 0.7935
+    }
+  }
+}

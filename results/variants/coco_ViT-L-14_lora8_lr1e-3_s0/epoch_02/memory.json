@@ -1,0 +1,182 @@
+{
+ "fp32": {
+  "config": "fp32",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1764.122314453125,
+   "metal_mb": 2056.453125
+  },
+  "peak_tensor_mb": 1764.125244140625,
+  "peak_metal_mb": 2085.84375,
+  "rss_mb": 923.84375,
+  "lifetime_peak_rss_mb": 925.5625,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 1761.4101638793945
+  }
+ },
+ "enc_fp16": {
+  "config": "enc_fp16",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1184.505126953125,
+   "metal_mb": 1192.453125
+  },
+  "peak_tensor_mb": 1184.508056640625,
+  "peak_metal_mb": 1251.84375,
+  "rss_mb": 1489.9375,
+  "lifetime_peak_rss_mb": 2438.671875,
+  "size_mb": {
+   "encoder": 579.7714920043945,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 1181.6406326293945
+  }
+ },
+ "enc_int8": {
+  "config": "enc_int8",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 896.008056640625,
+   "metal_mb": 1128.453125
+  },
+  "peak_tensor_mb": 896.08544921875,
+  "peak_metal_mb": 1155.84375,
+  "rss_mb": 1774.734375,
+  "lifetime_peak_rss_mb": 2430.453125,
+  "size_mb": {
+   "encoder": 291.02149200439453,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 892.8906326293945
+  }
+ },
+ "enc_nf4": {
+  "config": "enc_nf4",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 755.58203125,
+   "metal_mb": 1088.453125
+  },
+  "peak_tensor_mb": 755.5849609375,
+  "peak_metal_mb": 1107.84375,
+  "rss_mb": 1570.75,
+  "lifetime_peak_rss_mb": 2435.015625,
+  "size_mb": {
+   "encoder": 151.37915802001953,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 753.2482986450195
+  }
+ },
+ "dec_fp16": {
+  "config": "dec_fp16",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1462.181396484375,
+   "metal_mb": 2088.453125
+  },
+  "peak_tensor_mb": 1462.184326171875,
+  "peak_metal_mb": 2109.84375,
+  "rss_mb": 1129.734375,
+  "lifetime_peak_rss_mb": 1333.578125,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 61.89697265625,
+   "decoder": 239.03759765625,
+   "total": 1460.4755935668945
+  }
+ },
+ "dec_int8": {
+  "config": "dec_int8",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1358.604248046875,
+   "metal_mb": 2064.453125
+  },
+  "peak_tensor_mb": 1358.607666015625,
+  "peak_metal_mb": 2077.84375,
+  "rss_mb": 1392.28125,
+  "lifetime_peak_rss_mb": 1394.0,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 30.95947265625,
+   "decoder": 158.03759765625,
+   "total": 1348.5380935668945
+  }
+ },
+ "dec_nf4": {
+  "config": "dec_nf4",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1296.945068359375,
+   "metal_mb": 2072.453125
+  },
+  "peak_tensor_mb": 1296.947998046875,
+  "peak_metal_mb": 2085.84375,
+  "rss_mb": 1360.890625,
+  "lifetime_peak_rss_mb": 1362.734375,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 15.983749389648438,
+   "decoder": 118.872802734375,
+   "total": 1294.397575378418
+  }
+ },
+ "both_fp16": {
+  "config": "both_fp16",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 881.845458984375,
+   "metal_mb": 1032.453125
+  },
+  "peak_tensor_mb": 881.848388671875,
+  "peak_metal_mb": 1051.84375,
+  "rss_mb": 1563.15625,
+  "lifetime_peak_rss_mb": 2528.984375,
+  "size_mb": {
+   "encoder": 579.7714920043945,
+   "mapper": 61.89697265625,
+   "decoder": 239.03759765625,
+   "total": 880.7060623168945
+  }
+ },
+ "both_int8": {
+  "config": "both_int8",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 489.989990234375,
+   "metal_mb": 1136.453125
+  },
+  "peak_tensor_mb": 490.067626953125,
+  "peak_metal_mb": 1155.84375,
+  "rss_mb": 2117.0,
+  "lifetime_peak_rss_mb": 2813.203125,
+  "size_mb": {
+   "encoder": 291.02149200439453,
+   "mapper": 30.95947265625,
+   "decoder": 158.03759765625,
+   "total": 480.01856231689453
+  }
+ },
+ "both_nf4": {
+  "config": "both_nf4",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 288.24755859375,
+   "metal_mb": 1096.453125
+  },
+  "peak_tensor_mb": 288.25048828125,
+  "peak_metal_mb": 1115.84375,
+  "rss_mb": 1683.15625,
+  "lifetime_peak_rss_mb": 2736.828125,
+  "size_mb": {
+   "encoder": 151.37915802001953,
+   "mapper": 15.983749389648438,
+   "decoder": 118.872802734375,
+   "total": 286.23571014404297
+  }
+ }
+}

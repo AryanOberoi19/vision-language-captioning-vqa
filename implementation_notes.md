@@ -165,7 +165,7 @@ Not specified in the paper, fixed in code (additions, no contradiction):
   - Batch 1 vs batch 64: the batch-1 encoder (0.957 J, ~19 images/s) costs about the same per image as feature caching at batch 64 (0.912 J, 23.8 images/s, incl. JPEG decoding). ViT-L/14 already fills the M4 Pro's GPU at batch 1, which bears on whether a batch-32 measurement adds anything (Differences item 1).
   - The energy boundary is SoC + DRAM. Display, SSD, fans and adapter losses are excluded, so wall-plug energy is higher.
 
-## Step 8: inference configurations (3 Oct; code ready and smoke-tested, runs pending)
+## Step 8: inference configurations (3 Oct)
 
 - Design (agreed with Aryan, 3 Oct):
   - 11 configurations of the trained model, one factor at a time, nothing crossed: FP16, INT8 or NF4 on the encoder, the decoder or both (9, captions at beam 3), and FP32 captions with greedy and beam 5 (2). FP32 with beam 3 is the reference.
@@ -205,7 +205,39 @@ Not specified in the paper, fixed in code (additions, no contradiction):
   - 05 --precision dec_int8 on 20 images. For both_nf4 it stops with the right missing-features message.
   - 10 with 8 items, 1 repetition, GPU-only energy: all 26 windows, the summary and the agreement column work; a second run added only repetition 2.
   - 08 --summary-only gives an identical summary after the refactor.
-- Estimated time: accuracy ~1.5-2 h (INT8 extraction and INT8 decoding are the slowest parts); energy ~2 h for 3 repetitions.
+- Runs (Aryan, 3 Oct): accuracy 17:35-18:33 (variants_accuracy.command), energy 18:41-20:31 (variants_energy.command, 3 repetitions). Code committed as c97a964.
+- Results (results/variants/coco_ViT-L-14_lora8_lr1e-3_s0/epoch_02/: accuracy.md, energy.md, summary.md). Accuracy on Karpathy test (95 % intervals in accuracy.md); cost at batch 1, J per item incl. idle, mean of 3 repetitions; "x FP32" = ratio to the FP32 of the same repetition:
+
+| Configuration | CIDEr | CHAIR_i | VQA | J/caption | x FP32 | J/answer | x FP32 | ms/caption | Size MiB |
+|---|---|---|---|---|---|---|---|---|---|
+| fp32 | 111.8 | 6.5 | 57.9 | 1.813 | 1.00 | 1.191 | 1.00 | 168 | 1,761 |
+| enc_fp16 | 111.7 | 6.5 | 57.9 | 1.535 | 0.85 | 0.938 | 0.79 | 162 | 1,182 |
+| enc_int8 | 111.7 | 6.3 | 57.8 | 3.271 | 1.80 | 2.679 | 2.25 | 340 | 894 |
+| enc_nf4 | 111.4 | 6.4 | 57.7 | 1.771 | 0.98 | 1.157 | 0.97 | 172 | 753 |
+| dec_fp16 | 111.8 | 6.4 | 57.9 | 1.622 | 0.89 | 1.147 | 0.96 | 152 | 1,460 |
+| dec_int8 | 111.6 | 6.4 | 57.8 | 3.297 | 1.82 | 1.577 | 1.32 | 368 | 1,349 |
+| dec_nf4 | 110.2 | 6.8 | 57.5 | 2.535 | 1.40 | 1.274 | 1.07 | 162 | 1,294 |
+| both_fp16 | 111.7 | 6.5 | 57.9 | 1.374 | 0.76 | 0.896 | 0.75 | 148 | 881 |
+| both_int8 | 112.1 | 6.5 | 57.8 | 4.782 | 2.64 | 3.068 | 2.58 | 540 | 481 |
+| both_nf4 | 110.3 | 6.6 | 57.2 | 2.485 | 1.37 | 1.241 | 1.04 | 166 | 286 |
+| fp32, greedy | 106.1 | 7.5 | - | 1.585 | 0.87 | - | - | 130 | 1,761 |
+| fp32, beam 5 | 110.8 | 6.0 | - | 1.937 | 1.07 | - | - | 180 | 1,761 |
+
+- Accuracy:
+  - FP16 and INT8, on either part or both, leave every metric within 0.4 points of FP32. NF4 on the decoder is the only precision change with a visible drop: CIDEr -1.6 (dec_nf4) and -1.5 (both_nf4), VQA -0.4 and -0.7, CHAIR_i +0.3 and +0.1. These are still inside FP32's own intervals; paired tests come in the analysis step.
+  - Decoding matters more than precision. Greedy: CIDEr -5.7, CHAIR_i 7.5 vs 6.5, CHAIR_s 11.6 vs 9.8, at the same caption length (9.5 words), so greedy hallucinates more without writing shorter captions. Beam 5: CIDEr -1.0, CHAIR_i 6.0.
+  - Retention: delta R between -0.004 and +0.008 for all 9 precision configurations. VQA and captioning keep their accuracy in the same proportion, mainly because precision barely changes either. RQ3's test will therefore mostly report no differential effect.
+- Cost:
+  - FP16 is the only precision that saves energy on the M4 Pro. On both parts it uses 0.76x the energy per caption and 0.75x per answer, is 12 % faster per caption, and is half the size, with no accuracy change. On CIDEr vs energy it dominates every other configuration; FP32's 0.1 CIDEr edge is within noise.
+  - INT8 costs 1.3-2.6x FP32's energy (1.8-2.6x per caption) and is 2-3x slower per caption: encoder 2.47x, decoding 2.84x per caption. It has no Metal kernel and runs as PyTorch operations.
+  - NF4 costs the same as FP32 in the encoder (0.97x) but 1.9x in decoding (1.524 vs 0.801 J per caption) at the same speed. The GPU draws more power per token, dequantizing the weights at every step.
+  - Low-bit precision saves size and memory, not energy: both_nf4 286 MiB (16 % of FP32), both_int8 481 MiB. On a size (memory) axis INT8 and NF4 are on the frontier; on the energy axis they are dominated by FP16. This matches Table 2's "energy, conditionally".
+  - Batch size: at batch 64 (test feature extraction, step 8a, incl. JPEG decoding) the NF4 encoder used 0.79 J per image against FP32's 1.04 (-23 %) and FP16's 0.87; at batch 1 NF4 saved 3 % and FP16 25 %. The energy effect of low-bit quantization depends on batch size (methodology §8 cites this). The figures come from different sessions, so they are indicative only.
+  - The CPU + DRAM share of energy rises with INT8 and NF4 decoding (INT8 captions: CPU 25 %).
+- Agreement of batch-1 outputs with the batch-64 evaluation: FP32, enc_fp16 and enc_nf4 100 %; FP16 decoder 94-95 % (captions) / 99 % (answers); NF4 decoder 92-95 % / 99 %; INT8 72-85 % / 96-98 %. Numerics differ slightly with batch size (and LLM.int8 outliers per batch), so the batch-64 accuracy describes the batch-1 deployment only approximately for decoder variants. The analysis step can score the 500 batch-1 captions against the batch-64 ones on the same images to bound this.
+- Measurement quality: 78 windows, no suspect counter readings, idle 0.039 / 0.065 / 0.076 W, AC power, High Power mode. Spotlight indexing ran after 3 windows; those differed from the same window in the other repetitions by -0.2 % to +2.3 %. The largest repetition-to-repetition deviation of any window is 8 % (short decoding windows); configuration totals vary by ≤2 % (sd).
+- Between sessions: FP32 used 1.813 J per caption and 1.191 per answer here, against 1.702 and 1.149 in step 7 (+6.5 %, +3.7%; encoder +4.7 %, caption decoding +13 %) at the same speed, so the chip drew more power on this run. This is the reason the configurations are compared with the FP32 of their own repetition; absolute joules carry a session uncertainty of several percent.
+- Open (Aryan's call): the platform contingency in Decisions (re-measure the precision configurations on a Colab T4 if INT8 / NF4 come out dominated on the Mac) is now triggered on the energy axis.
 
 ## Step 1 results
 
@@ -239,7 +271,7 @@ Hardware: Apple M4 Pro, 8P + 4E CPU cores, 16-core GPU, 24 GB unified memory, ma
 | 5 Decoding + evaluation (BLEU-4, CIDEr, SPICE, CLIPScore, CHAIR, VQA acc, VQA-CE) | done 30 Sep; each metric checked against its reference implementation; pilot scored on val and test (results/eval/) |
 | 6 Reference configuration | encoder check 2 Oct: ViT-L/14; seed 0 done 2 Oct (3 epochs, selected epoch 3: test CIDEr 111.8, VQA 57.9, CHAIR_i 6.5); seeds 1-2 deferred (3 Oct) |
 | 7 Energy measurement harness | done 3 Oct: reference model FP32, 1.70 J per caption, 1.15 J per answer incl. idle; encoder 57 % / 84 % of it (results/inference/) |
-| 8 Inference-side sweep (precision x target, decoding) on the trained model | training-side factors dropped 2 Oct; code ready and smoke-tested 3 Oct (09_evaluate_variants.py, 10_measure_variants.py); runs pending |
+| 8 Inference-side sweep (precision x target, decoding) on the trained model | done 3 Oct: 11 configurations, accuracy on Karpathy test, cost in 3 repetitions; FP16 on both parts saves 24-25 % energy at unchanged accuracy, INT8 and NF4 cost more energy than FP32 on the M4 Pro (results/variants/) |
 | 9 CNN-LSTM baseline | |
 | 10 Analysis (frontiers, grounding score, retention ratios, Grad-CAM) | |
 | 11 Gradio demo | |
