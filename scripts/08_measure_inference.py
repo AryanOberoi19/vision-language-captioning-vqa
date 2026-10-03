@@ -17,7 +17,8 @@ Protocol: the N test images (captions) and N test questions on N different image
 sample (seed 0), saved in results/inference/subset_<split>_<n>.json. Their files are read once at the start so every
 pass reads them from the OS file cache. Each pass is split in two phases measured separately: phase 1 reads and
 encodes all N images, phase 2 generates the N captions or answers from those embeddings; per-item energy is the sum.
-Each unit loads its model, runs --warmup items unmeasured, measures idle power, then runs its pass. Units are
+Each unit loads its model, runs --warmup items unmeasured, measures idle power (re-measured, up to 3 times, when
+macOS background jobs disturb the window; see measure_idle_checked), then runs its pass. Units are
 repeated --repeats times, in a random order within each repetition. Captions and answers of the first repetition
 are compared with scripts/05_evaluate.py's batched outputs for the same checkpoint (agreement rate).
 
@@ -50,6 +51,7 @@ from greenvl.lock import RunLock  # noqa: E402
 
 REFERENCE_RUN = "coco_ViT-L-14_lora8_lr1e-3_s0"
 REFERENCE_CHECKPOINT = "epoch_02.pt"  # highest validation CIDEr of the 3-epoch reference run (results/reference/)
+CO2_G_PER_KWH = 727  # CEA, Indian grid, FY 2023-24 (methodology §8), as in scripts/00_check_env.py
 
 
 # ---------------------------------------------------------------- subset
@@ -171,6 +173,56 @@ def agreement(items, outputs, ref, task) -> float | None:
 
 # ---------------------------------------------------------------- environment record
 
+IDLE_ATTEMPTS = 3
+IDLE_ABS_W = 1.0       # with no clean window yet, idle power above this counts as disturbed
+IDLE_REL = 3.0         # later: disturbed if above IDLE_REL x the session's median clean idle ...
+IDLE_MARGIN_W = 0.5    # ... and more than IDLE_MARGIN_W above it
+
+
+def measure_idle_checked(meter, seconds: float, history: list[float]) -> dict | None:
+    """Idle power before a pass. macOS background jobs (Spotlight, Photos analysis) can run during an idle window
+    and inflate it (2.2 W instead of ~0.2 W on 3 Oct), which would make the above-idle energy of the pass too
+    low. A window is disturbed if it exceeds IDLE_ABS_W (no clean window yet) or both IDLE_REL x and IDLE_MARGIN_W
+    above the median of this session's clean windows; it is then measured again, up to IDLE_ATTEMPTS times, and
+    the lowest is used if all are disturbed. Every attempt is recorded."""
+    if not meter.available or seconds <= 0:
+        return None
+    attempts = []
+    for _ in range(IDLE_ATTEMPTS):
+        r = meter.measure_idle(seconds)
+        r["background"] = top_processes()
+        attempts.append(r)
+        base = statistics.median(history) if history else None
+        limit = IDLE_ABS_W if base is None else max(IDLE_REL * base, base + IDLE_MARGIN_W)
+        r["disturbed"] = r["watts"] > limit
+        if not r["disturbed"]:
+            break
+        last = len(attempts) == IDLE_ATTEMPTS
+        print(f"    idle window disturbed ({r['watts']:.2f} W > {limit:.2f} W); "
+              + ("using the lowest of the attempts" if last else "measuring again"), flush=True)
+    best = min(attempts, key=lambda a: a["watts"])
+    if not best["disturbed"]:
+        history.append(best["watts"])
+    return {**best, "attempts": len(attempts), "all_attempts_w": [round(a["watts"], 4) for a in attempts]}
+
+
+def top_processes(k: int = 3) -> list[str]:
+    """The k processes using most CPU right now (other than this one), for the record."""
+    try:
+        out = subprocess.run(["ps", "-Ao", "pcpu=,comm="], capture_output=True, text=True, timeout=10).stdout
+    except (OSError, subprocess.TimeoutExpired):
+        return []
+    rows = []
+    for line in out.splitlines():
+        parts = line.strip().split(None, 1)
+        if len(parts) == 2 and "python" not in parts[1].lower():
+            try:
+                rows.append((float(parts[0]), Path(parts[1]).name))
+            except ValueError:
+                pass
+    return [f"{name} {cpu:.0f}%" for cpu, name in sorted(rows, reverse=True)[:k]]
+
+
 def system_state() -> dict:
     state = {"python": platform.python_version(), "torch": torch.__version__, "machine": platform.platform()}
     if sys.platform == "darwin":
@@ -206,10 +258,13 @@ def main():
     ap.add_argument("--device", default=None)
     ap.add_argument("--allow-gpu-only-energy", action="store_true",
                     help="continue even if CPU and DRAM energy cannot be measured (no sudo)")
+    ap.add_argument("--summary-only", action="store_true", help="rewrite summary.md from measurements.jsonl and stop")
     args = ap.parse_args()
 
-    dev = get_device(args.device)
     out_dir = paths.RESULTS / "inference" / args.run / (args.label or Path(args.checkpoint).stem)
+    if args.summary_only:
+        return write_summary(out_dir, args.n, args.split)
+    dev = get_device(args.device)
     out_dir.mkdir(parents=True, exist_ok=True)
     RunLock(out_dir / ".lock")
     log_path = out_dir / "measurements.jsonl"
@@ -236,6 +291,7 @@ def main():
     if sys.platform == "darwin" and not system.get("on_ac_power"):
         print("WARNING: not on AC power; measurements should run on AC power.", flush=True)
 
+    idle_history = []  # clean idle windows of this session (W)
     try:
         for rep in range(args.repeats):
             order = units[:]
@@ -250,7 +306,7 @@ def main():
                 for it in items[: args.warmup]:  # unmeasured: compiles kernels, fills caches
                     emb = pipe.encode(paths.COCO_IMAGES / it["file"])
                     pipe.caption(emb, decoding) if task == "caption" else pipe.answer(emb, it["question"])
-                idle = meter.measure_idle(args.idle_seconds) if meter.available and args.idle_seconds > 0 else None
+                idle = measure_idle_checked(meter, args.idle_seconds, idle_history)
                 idle_w = idle["watts"] if idle else None
                 r = run_pass(pipe, items, task, decoding, meter, idle_w)
                 ref = reference_outputs(args.run, args.checkpoint, args.split, task, decoding)
@@ -258,6 +314,7 @@ def main():
                           "checkpoint": args.checkpoint, "split": args.split, "precision": precision, "task": task,
                           "decoding": decoding, "repeat": rep, "position": pos, "n": args.n, "batch": 1,
                           "idle": idle, "idle_w": idle_w, "counters_live": meter.counters_live,
+                          "background_after_pass": top_processes(),
                           "agreement_with_eval": agreement(items, r["outputs"], ref, task),
                           "peak_rss_mb": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2**20
                           if sys.platform == "darwin" else resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2**10,
@@ -304,8 +361,8 @@ def write_summary(out_dir: Path, n: int, split: str):
 
     lines = [f"# Inference cost, batch 1, {n} {split} items per pass (mean ± sd over repeats)\n",
              "| Precision | Task | Decoding | Repeats | J/item above idle | J/item incl. idle | encoder J | decoding J "
-             "| Latency median ms | p95 ms | Peak Metal MB | Size MB | Agreement |",
-             "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+             "| Latency median ms | p95 ms | Idle W | Peak Metal MB | Size MB | Agreement |",
+             "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for (p, task, d), rs in sorted(rows.items()):
         lat = [r["latency_ms"]["median"] for r in rs]
         p95 = [r["latency_ms"]["p95"] for r in rs]
@@ -314,14 +371,32 @@ def write_summary(out_dir: Path, n: int, split: str):
             f"| {p} | {task} | {d} | {len(rs)} | {ms([r['j_per_item_above_idle'] for r in rs])} | "
             f"{ms([r['j_per_item'] for r in rs])} | {ms([r['j_per_item_split']['encode_above_idle'] for r in rs])} | "
             f"{ms([r['j_per_item_split']['decode_above_idle'] for r in rs])} | {statistics.mean(lat):.0f} | "
-            f"{statistics.mean(p95):.0f} | {max(r['peak_metal_mb'] or 0 for r in rs):.0f} | "
+            f"{statistics.mean(p95):.0f} | {ms([r['idle_w'] for r in rs])} | {max(r['peak_metal_mb'] or 0 for r in rs):.0f} | "
             f"{rs[0]['model_size_mb']['total']:.0f} | {'-' if agree is None else f'{agree:.1%}'} |")
+    lines += ["\n## Energy by component (J per item incl. idle, mean over repeats; share of the total)\n",
+              "| Precision | Task | Decoding | CPU | GPU | DRAM | g CO2e per 1,000 items |",
+              "|---|---|---|---|---|---|---|"]
+    for (p, task, d), rs in sorted(rows.items()):
+        comp = {c: [] for c in ("cpu_j", "gpu_j", "dram_j")}
+        for r in rs:
+            if not all(r["energy"].get(ph) for ph in ("encode", "decode")):
+                continue
+            for c in comp:
+                comp[c].append(sum(r["energy"][ph].get(c) or 0.0 for ph in ("encode", "decode")) / r["n"])
+        if not comp["cpu_j"]:
+            continue
+        mean = {c: statistics.mean(v) for c, v in comp.items()}
+        tot = sum(mean.values())
+        co2 = statistics.mean(r["j_per_item"] for r in rs if r["j_per_item"]) * 1000 / 3.6e6 * CO2_G_PER_KWH
+        lines.append(f"| {p} | {task} | {d} | " + " | ".join(f"{mean[c]:.3f} ({mean[c] / tot:.0%})" for c in comp)
+                     + f" | {co2:.2f} |")
     if flops:
         lines.append(f"\nGFLOPs (fp32, CPU count over {flops['images']} images): encoder {flops['encoder_gflops']:.1f} "
                      f"per image; caption decoding ({flops['decoding']}) {flops['caption_decode_gflops']:.2f}; "
                      f"answer decoding {flops['answer_decode_gflops']:.2f}.")
     lines.append("\nEncoder and decoding columns are per item, above idle. Agreement: share of first-repeat outputs "
-                 "identical to the batched evaluation's (scripts/05_evaluate.py).")
+                 "identical to the batched evaluation's (scripts/05_evaluate.py). Energy covers the SoC (CPU, GPU) and "
+                 f"DRAM only; CO2e uses J per item incl. idle at {CO2_G_PER_KWH} g/kWh (CEA, Indian grid), PUE 1.")
     (out_dir / "summary.md").write_text("\n".join(lines) + "\n")
     print("\n" + "\n".join(lines))
 

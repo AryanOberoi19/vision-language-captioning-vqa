@@ -8,8 +8,9 @@ Code: `Implementation/` in the DL_NLP Project folder on Aryan's MacBook (package
 - Training data (29 Sep): the full dataset as written in the paper: COCO Karpathy train 113,287 images (566,747 caption pairs) and all VQA v2 train2014 questions (443,757). A 20,000-image subset was built on 29 Sep and dropped the same day at Aryan's request; its two files are in Datasets/processed/_to_delete/.
 - Learning-rate schedule (29 Sep): constant after a linear warm-up of 0.2 epoch, for every configuration. Runs can then be extended epoch by epoch, and the reference run that sets the epoch budget is itself a valid grid run.
 - Learning rates (30 Sep; Aryan left the call to Claude): each adaptation method gets the rate that was best for it under the same fixed selection protocol, instead of one shared rate. LoRA (and the mapping network, trained in every configuration): 1e-3, confirmed by the Stage C COCO pilot; frozen decoder (mapping network only): the LoRA rate; full fine-tuning: 3e-4 (best Flickr8k validation loss 2.304 vs 2.444 at 1e-3, far beyond the 0.02 margin; at 1e-3 it overfit from epoch 3). Reason: a rate tuned for LoRA handicaps full fine-tuning and would bias the adaptation comparison (RQ1) toward LoRA; tuning each method by one protocol is the fair comparison. Stage C tests LoRA only; full fine-tuning's rate comes from Flickr8k.
-- Scope (2 Oct, Aryan): only one configuration is trained; the training-side factors (encoder, adaptation, distillation) are dropped as factors. The study's compression levels come from the inference-side factors applied to that one model: precision (FP32, FP16, INT8, NF4 on encoder, decoder, both) and caption decoding (greedy, beam 3, beam 5). RQ1-RQ3 remain answerable from those; lost are the encoder-swap, LoRA-rank / frozen / full fine-tuning and distillation comparisons (3 of the 5 techniques in the literature review), and the training-side cost comparison shrinks to one training-energy figure. The configuration is the one predicted to give the best results at an affordable training cost: GPT-2 small (medium trains 2.6x slower), LoRA rank 8 at 1e-3 (full fine-tuning tied it on Flickr8k, 2.304 vs 2.306, at 1.65x the time, and would merge the two heads), FP32, 3 seeds; encoder decided by the encoder check below.
+- Scope (2 Oct, Aryan): only one configuration is trained; the training-side factors (encoder, adaptation, distillation) are dropped as factors. The study's compression levels come from the inference-side factors applied to that one model: precision (FP32, FP16, INT8, NF4 on encoder, decoder, both) and caption decoding (greedy, beam 3, beam 5). RQ1-RQ3 remain answerable from those; lost are the encoder-swap, LoRA-rank / frozen / full fine-tuning and distillation comparisons (3 of the 5 techniques in the literature review), and the training-side cost comparison shrinks to one training-energy figure. The configuration is the one predicted to give the best results at an affordable training cost: GPT-2 small (medium trains 2.6x slower), LoRA rank 8 at 1e-3 (full fine-tuning tied it on Flickr8k, 2.304 vs 2.306, at 1.65x the time, and would merge the two heads), FP32; encoder decided by the encoder check below.
 - Encoder (2 Oct): ViT-L/14, by the encoder check (rule fixed before results; Step 6a below). Training cost is unchanged (features cached; 145 samples/s for both encoders); the cost is at inference (encoder 27 vs 414 images/s; ~11x energy per image when caching features).
+- Seeds (3 Oct, Aryan): seed 0 only for now; seeds 1 and 2 may be run later. Until then the paper reports one seed as a limitation: training-seed variation is not measured. Consequence for the analysis: inference variants of the one model are compared on the same items (paired bootstrap / Wilcoxon), which needs no seeds; only claims about training (e.g. "3 epochs suffice") rest on one run.
 - Training proceeds step by step with Aryan; no training run starts without his go-ahead. Flickr8k runs start 29 Sep.
 
 ## Differences from the Methodology in Research_Paper.tex (as of 29 Sep)
@@ -19,10 +20,10 @@ Changed, text needs updating:
 2. Energy source (§8). Paper: power telemetry sampled every 100 ms, CodeCarbon where it reads telemetry directly. Now: Apple's IOReport energy counters (zeus-apple-silicon), read at the start and end of each pass; no CodeCarbon. Apple derives the counters from a power model (the same source as powermetrics). Boundary: SoC + DRAM (display, SSD, fans, adapter losses excluded). Idle 60 s, 5 repetitions, randomised order, batch 1, PUE 1, CI 727 g/kWh are unchanged. See "Energy counters" below: CPU and DRAM counters may need powermetrics running, which would bring powermetrics back into §8.
 3. Learning rate (§5). Paper: one learning rate for all configurations, chosen on Flickr8k. Now: chosen per adaptation method by the same fixed protocol (scripts/04_select_lr.py): LoRA and frozen 1e-3 (confirmed on COCO + VQA v2), full fine-tuning 3e-4. Changes one sentence of §5.
 
-13. Experimental design (§6, Table 2, Fig. workflow; 2 Oct). Paper: one-factor-at-a-time sweep over encoder, adaptation, distillation, precision and decoding from a ViT-B/32 reference, then a focused grid. Now: one trained configuration (ViT-L/14, LoRA rank 8, GPT-2 small, 3 seeds); the sweep is precision x target and decoding applied to it. The encoder, adaptation and distillation rows of Table 2, the distillation paragraph and the focused grid go; the reference encoder becomes ViT-L/14, with the encoder check reported as the reason.
+13. Experimental design (§6, Table 2, Fig. workflow; 2 Oct). Paper: one-factor-at-a-time sweep over encoder, adaptation, distillation, precision and decoding from a ViT-B/32 reference, then a focused grid. Now: one trained configuration (ViT-L/14, LoRA rank 8, GPT-2 small; seed 0, seeds 1-2 deferred); the sweep is precision x target and decoding applied to it. The encoder, adaptation and distillation rows of Table 2, the distillation paragraph and the focused grid go; the reference encoder becomes ViT-L/14, with the encoder check reported as the reason.
 
 Unchanged but open:
-4. Seeds (§5): three, now for the one trained configuration.
+4. Seeds (§5): paper says three; now seed 0 only (3 Oct), seeds 1-2 possibly later. Stated as a limitation.
 5. Epoch budget (§5): proposed that Flickr8k fixes the learning rate and checks the pipeline, while the epoch budget comes from the reference run on COCO + VQA v2 (validation CIDEr per epoch) and is then held for all configurations. Flickr8k has no VQA questions, and an epoch count found on 30,000 caption pairs does not carry over to 566,747. Changes one sentence of §5.
 
 Not specified in the paper, fixed in code (additions, no contradiction):
@@ -124,7 +125,45 @@ Not specified in the paper, fixed in code (additions, no contradiction):
   - Captions: BLEU-4 33.5 [32.8, 34.2], CIDEr 111.8 [109.8, 113.7], SPICE 20.0 [19.8, 20.3], CLIPScore 72.4 [72.1, 72.7], CHAIR_i 6.5 [5.9, 7.0], CHAIR_s 9.8 [8.9, 10.6], 9.5 words.
   - VQA (26,280 questions): 57.9 [57.2, 58.6]; yes/no 76.5, number 40.6, other 48.0. VQA-CE (7,801): 28.2 [27.2, 29.2].
   - ClipCap on the same test split (Mokady et al.): MLP + fine-tuned GPT-2 BLEU-4 32.2, CIDEr 108.4, SPICE 20.1; frozen GPT-2 + transformer mapper BLEU-4 33.5, CIDEr 113.1, SPICE 21.1. Not like for like: ClipCap uses ViT-B/32 and trains captioning only.
-- Next: seeds 1 and 2 (Aryan's decision), then the inference-side variants and the energy harness.
+- Seeds 1 and 2: not run for now (Aryan, 3 Oct); see Decisions.
+
+## Step 7: inference cost of the reference model (3 Oct)
+
+- Code:
+  - greenvl/inference.py: the deployed pipeline at batch 1. Image file -> CLIPImageProcessor -> CLIPVisionModelWithProjection (ViT-L/14) -> mapping network -> GPT-2 generate, with decoding exactly as in 05_evaluate. It also gives model size per component (parameters + buffers as stored; tied weights once) and FLOPs (torch FlopCounterMode on the CPU, fp32, 3 images).
+  - scripts/08_measure_inference.py + inference.command (password once; Ctrl+C pauses; reopening skips finished passes). `--summary-only` rebuilds summary.md from measurements.jsonl.
+- Protocol (methodology §8):
+  - Items: 500 Karpathy test images for captions; 500 test questions on 500 distinct images for answers. Both are drawn with seed 0 (results/inference/subset_test_500.json). The file cache is warmed first, so disk reads stay out of the measurement.
+  - Each pass: load the model, run 10 unmeasured items, measure 60 s idle, then two measured phases. The first encodes all 500 images; the second generates all 500 captions or answers. The encoder/decoding split is therefore measured, not estimated.
+  - Repetitions: 5, with the task order shuffled per repetition.
+  - Energy: CPU + GPU + DRAM from IOReport, with sudo powermetrics running. Above idle = total - idle W x phase time.
+  - Agreement: the first repetition's outputs are compared with 05_evaluate's batched outputs.
+- Disturbed idle window: in VQA repetition 2 (index 1), the idle window read 2.2 W (CPU 122 J in 60 s; macOS background jobs). That is ~10x the other windows, and it pulled the pass's above-idle figure down to 0.99 J.
+  - The record was moved to excluded.jsonl with its reason, and the pass was re-run (3 Oct 15:28: idle 0.10 W, 1.124 J).
+  - Since then, an idle window is re-measured (up to 3 attempts, lowest kept) if it reads above 1 W before any clean window exists, or later above max(3 x the session's median clean idle, median + 0.5 W).
+  - The top CPU processes are recorded during idle and after each pass.
+- Results: Karpathy test, FP32, batch 1, captions beam 3, answers greedy; mean ± sd over 5 repetitions (results/inference/coco_ViT-L-14_lora8_lr1e-3_s0/epoch_02/summary.md):
+
+| | Caption | Answer |
+|---|---|---|
+| J per item above idle | 1.667 ± 0.018 | 1.134 ± 0.006 |
+| J per item incl. idle | 1.702 ± 0.011 | 1.149 ± 0.014 |
+| Encoder / decoding, J above idle | 0.957 (57 %) / 0.710 | 0.955 (84 %) / 0.179 |
+| CPU / GPU / DRAM, J incl. idle | 0.269 / 1.134 / 0.299 (16 / 67 / 18 %) | 0.104 / 0.913 / 0.132 (9 / 79 / 11 %) |
+| Latency median / p95, ms | 162 / 181 | 74 / 84 |
+| Encode / decode median, ms | 53 / 110 | 53 / 22 |
+| GFLOPs encoder / decoding | 155.5 / 13.6 | 155.5 / 4.14 |
+| g CO2e per 1,000 items (727 g/kWh, incl. idle) | 0.34 | 0.23 |
+| Agreement with 05_evaluate | 100 % | 100 % |
+
+- Fixed across tasks: size 1,761 MiB (encoder 1,160, mapping network 124, decoder 478 incl. both adapter sets). Peak Metal memory 2.09 GB; peak process RSS 1.18 GB. Idle 0.06-0.47 W.
+- Conditions: AC power, High Power mode (pmset powermode 2), macOS 27.0.1, torch 2.14.0.
+- Repeatability: the sd is 1.1 % of the mean for captions and 0.5 % for answers.
+- Findings:
+  - The encoder dominates: 57 % of the energy per caption and 84 % per answer. Step 8's encoder precision variants are the larger lever. Step 1 found INT8 and NF4 layers slower than fp16 on MPS, so the low-bit variants may save memory and size without saving energy.
+  - FLOPs mispredict energy. The encoder is 92 % of a caption's FLOPs but 57 % of its energy. Decoding costs 52 mJ per GFLOP (captions) and 43 mJ per GFLOP (answers), against 6.2 for the encoder: batch-1 autoregressive decoding is bound by kernel launches and memory, not arithmetic. CPU + DRAM are 61 % of decoding energy but 13 % of encoding energy. This supports measuring energy rather than reporting FLOPs (methodology §8).
+  - Batch 1 vs batch 64: the batch-1 encoder (0.957 J, ~19 images/s) costs about the same per image as feature caching at batch 64 (0.912 J, 23.8 images/s, incl. JPEG decoding). ViT-L/14 already fills the M4 Pro's GPU at batch 1, which bears on whether a batch-32 measurement adds anything (Differences item 1).
+  - The energy boundary is SoC + DRAM. Display, SSD, fans and adapter losses are excluded, so wall-plug energy is higher.
 
 ## Step 1 results
 
@@ -156,8 +195,8 @@ Hardware: Apple M4 Pro, 8P + 4E CPU cores, 16-core GPU, 24 GB unified memory, ma
 | 4 Data pipeline + training script | f8k_lr1e-4 finished 3 epochs 29 Sep (val loss 2.393); memory stable after fixed-shape batches |
 | 4b Learning-rate selection (04_select_lr.py) | done 30 Sep: LoRA and frozen 1e-3, full fine-tuning 3e-4 (results/lr_selection/summary.md) |
 | 5 Decoding + evaluation (BLEU-4, CIDEr, SPICE, CLIPScore, CHAIR, VQA acc, VQA-CE) | done 30 Sep; each metric checked against its reference implementation; pilot scored on val and test (results/eval/) |
-| 6 Reference configuration | encoder check 2 Oct: ViT-L/14; seed 0 done 2 Oct (3 epochs, selected epoch 3: test CIDEr 111.8, VQA 57.9, CHAIR_i 6.5); seeds 1-2 pending |
-| 7 Energy measurement harness | |
+| 6 Reference configuration | encoder check 2 Oct: ViT-L/14; seed 0 done 2 Oct (3 epochs, selected epoch 3: test CIDEr 111.8, VQA 57.9, CHAIR_i 6.5); seeds 1-2 deferred (3 Oct) |
+| 7 Energy measurement harness | done 3 Oct: reference model FP32, 1.70 J per caption, 1.15 J per answer incl. idle; encoder 57 % / 84 % of it (results/inference/) |
 | 8 Inference-side sweep (precision x target, decoding) on the trained model | training-side factors dropped 2 Oct |
 | 9 CNN-LSTM baseline | |
 | 10 Analysis (frontiers, grounding score, retention ratios, Grad-CAM) | |

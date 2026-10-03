@@ -27,8 +27,8 @@ Training and measurement run on one MacBook Pro (M4 Pro), on its GPU through PyT
 | 4 | `greenvl/data.py`, `scripts/03_train.py`: tokenisation, one-task-per-batch mixing, training with resumable checkpoints, validation loss and energy per epoch | f8k_lr1e-4 done 29 Sep (3 epochs) |
 | 4b | `scripts/04_select_lr.py`: learning-rate selection (Flickr8k LoRA sweep, full fine-tuning check, COCO + VQA pilot), rules fixed in advance | done 30 Sep: LoRA and frozen 1e-3, full fine-tuning 3e-4 (`results/lr_selection/summary.md`) |
 | 5 | `greenvl/decode.py`, `greenvl/metrics.py`, `greenvl/chair.py`, `greenvl/vqa_metrics.py`, `scripts/05_evaluate.py`: decoding (greedy, beam 3, beam 5) and evaluation: BLEU-4, CIDEr, SPICE, CLIPScore, CHAIR, VQA accuracy, VQA-CE, each with a 95 % bootstrap interval | done 30 Sep; checked on the 1e-3 pilot (`results/eval/`) |
-| 6 | `scripts/06_encoder_check.py`: encoder check (ViT-L/14 vs ViT-B/32, quarter-epoch pilots, rule fixed in advance), then the reference run on COCO + VQA v2 | encoder check done 2 Oct: ViT-L/14 (`results/encoder_check/summary.md`); seed 0 done 2 Oct, 3 epochs (`results/reference/`); seeds 1-2 pending |
-| 7 | Energy measurement harness (idle subtraction, 5 repetitions, randomised order) | |
+| 6 | `scripts/06_encoder_check.py`, `scripts/07_reference_run.py`: encoder check (ViT-L/14 vs ViT-B/32, quarter-epoch pilots, rule fixed in advance), then the reference run on COCO + VQA v2 | encoder check done 2 Oct: ViT-L/14 (`results/encoder_check/summary.md`); seed 0 done 2 Oct, 3 epochs (`results/reference/`); seeds 1-2 deferred |
+| 7 | `greenvl/inference.py`, `scripts/08_measure_inference.py`: energy, latency, memory, size and FLOPs per caption and per answer at batch 1 (idle subtraction, 5 repetitions, randomised order) | done 3 Oct for the reference model, FP32 (`results/inference/`) |
 | 8 | Inference-side sweep on the trained model: precision (FP16, INT8, NF4 on encoder, decoder, both) and decoding (greedy, beam 3, beam 5). Training-side factors dropped on 2 Oct (one trained configuration) | |
 | 9 | CNN-LSTM baseline | |
 | 10 | Analysis: frontiers (RQ1), grounding score (RQ2), retention ratios (RQ3), Grad-CAM figures | |
@@ -111,6 +111,17 @@ open scripts/reference_run.command     # one more epoch (~2.3 h incl. scoring); 
 ```
 
 Each start trains `coco_ViT-L-14_lora8_lr1e-3_s0` to one more full epoch, scores the new checkpoint on Karpathy val and updates `results/reference/<run>.md`. Stopping between epochs gives the same model as one long run. Budget: 3 epochs; the selected checkpoint is the epoch with the highest validation CIDEr. Other seeds: `python scripts/07_reference_run.py --seed 1` (after `sudo -v`).
+
+## Step 7: inference cost (Mac Terminal)
+
+```bash
+open scripts/inference.command     # reference model, FP32: password once, ~25 min; Ctrl+C pauses, reopen to resume
+python scripts/08_measure_inference.py --summary-only    # rebuild summary.md from the measurements
+```
+
+Runs the deployed pipeline one image or question at a time (image file -> CLIP preprocessing -> ViT-L/14 -> mapping network -> GPT-2 generate) on 500 Karpathy test images and 500 test questions. Each pass loads the model, runs 10 unmeasured items, measures 60 s of idle power, then measures encoding and decoding as two separate windows. Five repetitions in a shuffled order. An idle window that reads well above the session's others (macOS background jobs) is measured again, up to three times. Results go to `results/inference/<run>/<checkpoint>/`: `measurements.jsonl` (one record per pass), `flops.json`, `summary.md`. Options: `--precision`, `--decoding greedy beam3 beam5`, `--tasks`, `--n`, `--repeats`, `--label` (a separate results folder, e.g. for a smoke test: `--n 8 --repeats 1 --idle-seconds 5 --label _smoke`).
+
+Close other apps, keep the Mac on AC power, and leave it alone while it runs: other work shows up in the measurement.
 
 ## Fixed implementation choices
 

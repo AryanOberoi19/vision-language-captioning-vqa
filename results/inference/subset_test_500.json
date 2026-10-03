@@ -1,0 +1,5009 @@
+{
+ "split": "test",
+ "n": 500,
+ "seed": 0,
+ "caption": [
+  {
+   "image_id": 42,
+   "file": "val2014/COCO_val2014_000000000042.jpg"
+  },
+  {
+   "image_id": 359,
+   "file": "val2014/COCO_val2014_000000000359.jpg"
+  },
+  {
+   "image_id": 1353,
+   "file": "val2014/COCO_val2014_000000001353.jpg"
+  },
+  {
+   "image_id": 1448,
+   "file": "val2014/COCO_val2014_000000001448.jpg"
+  },
+  {
+   "image_id": 1757,
+   "file": "val2014/COCO_val2014_000000001757.jpg"
+  },
+  {
+   "image_id": 2759,
+   "file": "val2014/COCO_val2014_000000002759.jpg"
+  },
+  {
+   "image_id": 7593,
+   "file": "val2014/COCO_val2014_000000007593.jpg"
+  },
+  {
+   "image_id": 8493,
+   "file": "val2014/COCO_val2014_000000008493.jpg"
+  },
+  {
+   "image_id": 9156,
+   "file": "val2014/COCO_val2014_000000009156.jpg"
+  },
+  {
+   "image_id": 10764,
+   "file": "val2014/COCO_val2014_000000010764.jpg"
+  },
+  {
+   "image_id": 11156,
+   "file": "val2014/COCO_val2014_000000011156.jpg"
+  },
+  {
+   "image_id": 12085,
+   "file": "val2014/COCO_val2014_000000012085.jpg"
+  },
+  {
+   "image_id": 12204,
+   "file": "val2014/COCO_val2014_000000012204.jpg"
+  },
+  {
+   "image_id": 12817,
+   "file": "val2014/COCO_val2014_000000012817.jpg"
+  },
+  {
+   "image_id": 13490,
+   "file": "val2014/COCO_val2014_000000013490.jpg"
+  },
+  {
+   "image_id": 14338,
+   "file": "val2014/COCO_val2014_000000014338.jpg"
+  },
+  {
+   "image_id": 16848,
+   "file": "val2014/COCO_val2014_000000016848.jpg"
+  },
+  {
+   "image_id": 18480,
+   "file": "val2014/COCO_val2014_000000018480.jpg"
+  },
+  {
+   "image_id": 18687,
+   "file": "val2014/COCO_val2014_000000018687.jpg"
+  },
+  {
+   "image_id": 19904,
+   "file": "val2014/COCO_val2014_000000019904.jpg"
+  },
+  {
+   "image_id": 20111,
+   "file": "val2014/COCO_val2014_000000020111.jpg"
+  },
+  {
+   "image_id": 20598,
+   "file": "val2014/COCO_val2014_000000020598.jpg"
+  },
+  {
+   "image_id": 24343,
+   "file": "val2014/COCO_val2014_000000024343.jpg"
+  },
+  {
+   "image_id": 25316,
+   "file": "val2014/COCO_val2014_000000025316.jpg"
+  },
+  {
+   "image_id": 28293,
+   "file": "val2014/COCO_val2014_000000028293.jpg"
+  },
+  {
+   "image_id": 28655,
+   "file": "val2014/COCO_val2014_000000028655.jpg"
+  },
+  {
+   "image_id": 29045,
+   "file": "val2014/COCO_val2014_000000029045.jpg"
+  },
+  {
+   "image_id": 29472,
+   "file": "val2014/COCO_val2014_000000029472.jpg"
+  },
+  {
+   "image_id": 30925,
+   "file": "val2014/COCO_val2014_000000030925.jpg"
+  },
+  {
+   "image_id": 31000,
+   "file": "val2014/COCO_val2014_000000031000.jpg"
+  },
+  {
+   "image_id": 31024,
+   "file": "val2014/COCO_val2014_000000031024.jpg"
+  },
+  {
+   "image_id": 31281,
+   "file": "val2014/COCO_val2014_000000031281.jpg"
+  },
+  {
+   "image_id": 31636,
+   "file": "val2014/COCO_val2014_000000031636.jpg"
+  },
+  {
+   "image_id": 32811,
+   "file": "val2014/COCO_val2014_000000032811.jpg"
+  },
+  {
+   "image_id": 33638,
+   "file": "val2014/COCO_val2014_000000033638.jpg"
+  },
+  {
+   "image_id": 33647,
+   "file": "val2014/COCO_val2014_000000033647.jpg"
+  },
+  {
+   "image_id": 33830,
+   "file": "val2014/COCO_val2014_000000033830.jpg"
+  },
+  {
+   "image_id": 34428,
+   "file": "val2014/COCO_val2014_000000034428.jpg"
+  },
+  {
+   "image_id": 34482,
+   "file": "val2014/COCO_val2014_000000034482.jpg"
+  },
+  {
+   "image_id": 34617,
+   "file": "val2014/COCO_val2014_000000034617.jpg"
+  },
+  {
+   "image_id": 34904,
+   "file": "val2014/COCO_val2014_000000034904.jpg"
+  },
+  {
+   "image_id": 35807,
+   "file": "val2014/COCO_val2014_000000035807.jpg"
+  },
+  {
+   "image_id": 35853,
+   "file": "val2014/COCO_val2014_000000035853.jpg"
+  },
+  {
+   "image_id": 39202,
+   "file": "val2014/COCO_val2014_000000039202.jpg"
+  },
+  {
+   "image_id": 39589,
+   "file": "val2014/COCO_val2014_000000039589.jpg"
+  },
+  {
+   "image_id": 40635,
+   "file": "val2014/COCO_val2014_000000040635.jpg"
+  },
+  {
+   "image_id": 40946,
+   "file": "val2014/COCO_val2014_000000040946.jpg"
+  },
+  {
+   "image_id": 42201,
+   "file": "val2014/COCO_val2014_000000042201.jpg"
+  },
+  {
+   "image_id": 44244,
+   "file": "val2014/COCO_val2014_000000044244.jpg"
+  },
+  {
+   "image_id": 48530,
+   "file": "val2014/COCO_val2014_000000048530.jpg"
+  },
+  {
+   "image_id": 50411,
+   "file": "val2014/COCO_val2014_000000050411.jpg"
+  },
+  {
+   "image_id": 52591,
+   "file": "val2014/COCO_val2014_000000052591.jpg"
+  },
+  {
+   "image_id": 54340,
+   "file": "val2014/COCO_val2014_000000054340.jpg"
+  },
+  {
+   "image_id": 54959,
+   "file": "val2014/COCO_val2014_000000054959.jpg"
+  },
+  {
+   "image_id": 55002,
+   "file": "val2014/COCO_val2014_000000055002.jpg"
+  },
+  {
+   "image_id": 55466,
+   "file": "val2014/COCO_val2014_000000055466.jpg"
+  },
+  {
+   "image_id": 56405,
+   "file": "val2014/COCO_val2014_000000056405.jpg"
+  },
+  {
+   "image_id": 58425,
+   "file": "val2014/COCO_val2014_000000058425.jpg"
+  },
+  {
+   "image_id": 58492,
+   "file": "val2014/COCO_val2014_000000058492.jpg"
+  },
+  {
+   "image_id": 59015,
+   "file": "val2014/COCO_val2014_000000059015.jpg"
+  },
+  {
+   "image_id": 63602,
+   "file": "val2014/COCO_val2014_000000063602.jpg"
+  },
+  {
+   "image_id": 64710,
+   "file": "val2014/COCO_val2014_000000064710.jpg"
+  },
+  {
+   "image_id": 66271,
+   "file": "val2014/COCO_val2014_000000066271.jpg"
+  },
+  {
+   "image_id": 67255,
+   "file": "val2014/COCO_val2014_000000067255.jpg"
+  },
+  {
+   "image_id": 68490,
+   "file": "val2014/COCO_val2014_000000068490.jpg"
+  },
+  {
+   "image_id": 68833,
+   "file": "val2014/COCO_val2014_000000068833.jpg"
+  },
+  {
+   "image_id": 71090,
+   "file": "val2014/COCO_val2014_000000071090.jpg"
+  },
+  {
+   "image_id": 74369,
+   "file": "val2014/COCO_val2014_000000074369.jpg"
+  },
+  {
+   "image_id": 75173,
+   "file": "val2014/COCO_val2014_000000075173.jpg"
+  },
+  {
+   "image_id": 75591,
+   "file": "val2014/COCO_val2014_000000075591.jpg"
+  },
+  {
+   "image_id": 75600,
+   "file": "val2014/COCO_val2014_000000075600.jpg"
+  },
+  {
+   "image_id": 76292,
+   "file": "val2014/COCO_val2014_000000076292.jpg"
+  },
+  {
+   "image_id": 76529,
+   "file": "val2014/COCO_val2014_000000076529.jpg"
+  },
+  {
+   "image_id": 77360,
+   "file": "val2014/COCO_val2014_000000077360.jpg"
+  },
+  {
+   "image_id": 78420,
+   "file": "val2014/COCO_val2014_000000078420.jpg"
+  },
+  {
+   "image_id": 78707,
+   "file": "val2014/COCO_val2014_000000078707.jpg"
+  },
+  {
+   "image_id": 79686,
+   "file": "val2014/COCO_val2014_000000079686.jpg"
+  },
+  {
+   "image_id": 81988,
+   "file": "val2014/COCO_val2014_000000081988.jpg"
+  },
+  {
+   "image_id": 84362,
+   "file": "val2014/COCO_val2014_000000084362.jpg"
+  },
+  {
+   "image_id": 84936,
+   "file": "val2014/COCO_val2014_000000084936.jpg"
+  },
+  {
+   "image_id": 85390,
+   "file": "val2014/COCO_val2014_000000085390.jpg"
+  },
+  {
+   "image_id": 85529,
+   "file": "val2014/COCO_val2014_000000085529.jpg"
+  },
+  {
+   "image_id": 85562,
+   "file": "val2014/COCO_val2014_000000085562.jpg"
+  },
+  {
+   "image_id": 87429,
+   "file": "val2014/COCO_val2014_000000087429.jpg"
+  },
+  {
+   "image_id": 87493,
+   "file": "val2014/COCO_val2014_000000087493.jpg"
+  },
+  {
+   "image_id": 88445,
+   "file": "val2014/COCO_val2014_000000088445.jpg"
+  },
+  {
+   "image_id": 91300,
+   "file": "val2014/COCO_val2014_000000091300.jpg"
+  },
+  {
+   "image_id": 91318,
+   "file": "val2014/COCO_val2014_000000091318.jpg"
+  },
+  {
+   "image_id": 92257,
+   "file": "val2014/COCO_val2014_000000092257.jpg"
+  },
+  {
+   "image_id": 93154,
+   "file": "val2014/COCO_val2014_000000093154.jpg"
+  },
+  {
+   "image_id": 93771,
+   "file": "val2014/COCO_val2014_000000093771.jpg"
+  },
+  {
+   "image_id": 93964,
+   "file": "val2014/COCO_val2014_000000093964.jpg"
+  },
+  {
+   "image_id": 94055,
+   "file": "val2014/COCO_val2014_000000094055.jpg"
+  },
+  {
+   "image_id": 94651,
+   "file": "val2014/COCO_val2014_000000094651.jpg"
+  },
+  {
+   "image_id": 97754,
+   "file": "val2014/COCO_val2014_000000097754.jpg"
+  },
+  {
+   "image_id": 97924,
+   "file": "val2014/COCO_val2014_000000097924.jpg"
+  },
+  {
+   "image_id": 98284,
+   "file": "val2014/COCO_val2014_000000098284.jpg"
+  },
+  {
+   "image_id": 102589,
+   "file": "val2014/COCO_val2014_000000102589.jpg"
+  },
+  {
+   "image_id": 103114,
+   "file": "val2014/COCO_val2014_000000103114.jpg"
+  },
+  {
+   "image_id": 105622,
+   "file": "val2014/COCO_val2014_000000105622.jpg"
+  },
+  {
+   "image_id": 110026,
+   "file": "val2014/COCO_val2014_000000110026.jpg"
+  },
+  {
+   "image_id": 110156,
+   "file": "val2014/COCO_val2014_000000110156.jpg"
+  },
+  {
+   "image_id": 110369,
+   "file": "val2014/COCO_val2014_000000110369.jpg"
+  },
+  {
+   "image_id": 110630,
+   "file": "val2014/COCO_val2014_000000110630.jpg"
+  },
+  {
+   "image_id": 110857,
+   "file": "val2014/COCO_val2014_000000110857.jpg"
+  },
+  {
+   "image_id": 112093,
+   "file": "val2014/COCO_val2014_000000112093.jpg"
+  },
+  {
+   "image_id": 112394,
+   "file": "val2014/COCO_val2014_000000112394.jpg"
+  },
+  {
+   "image_id": 113836,
+   "file": "val2014/COCO_val2014_000000113836.jpg"
+  },
+  {
+   "image_id": 114348,
+   "file": "val2014/COCO_val2014_000000114348.jpg"
+  },
+  {
+   "image_id": 118069,
+   "file": "val2014/COCO_val2014_000000118069.jpg"
+  },
+  {
+   "image_id": 118367,
+   "file": "val2014/COCO_val2014_000000118367.jpg"
+  },
+  {
+   "image_id": 118432,
+   "file": "val2014/COCO_val2014_000000118432.jpg"
+  },
+  {
+   "image_id": 119414,
+   "file": "val2014/COCO_val2014_000000119414.jpg"
+  },
+  {
+   "image_id": 122007,
+   "file": "val2014/COCO_val2014_000000122007.jpg"
+  },
+  {
+   "image_id": 122161,
+   "file": "val2014/COCO_val2014_000000122161.jpg"
+  },
+  {
+   "image_id": 124647,
+   "file": "val2014/COCO_val2014_000000124647.jpg"
+  },
+  {
+   "image_id": 124952,
+   "file": "val2014/COCO_val2014_000000124952.jpg"
+  },
+  {
+   "image_id": 125129,
+   "file": "val2014/COCO_val2014_000000125129.jpg"
+  },
+  {
+   "image_id": 126538,
+   "file": "val2014/COCO_val2014_000000126538.jpg"
+  },
+  {
+   "image_id": 127263,
+   "file": "val2014/COCO_val2014_000000127263.jpg"
+  },
+  {
+   "image_id": 127671,
+   "file": "val2014/COCO_val2014_000000127671.jpg"
+  },
+  {
+   "image_id": 128812,
+   "file": "val2014/COCO_val2014_000000128812.jpg"
+  },
+  {
+   "image_id": 131847,
+   "file": "val2014/COCO_val2014_000000131847.jpg"
+  },
+  {
+   "image_id": 132776,
+   "file": "val2014/COCO_val2014_000000132776.jpg"
+  },
+  {
+   "image_id": 133380,
+   "file": "val2014/COCO_val2014_000000133380.jpg"
+  },
+  {
+   "image_id": 134255,
+   "file": "val2014/COCO_val2014_000000134255.jpg"
+  },
+  {
+   "image_id": 135578,
+   "file": "val2014/COCO_val2014_000000135578.jpg"
+  },
+  {
+   "image_id": 138970,
+   "file": "val2014/COCO_val2014_000000138970.jpg"
+  },
+  {
+   "image_id": 139567,
+   "file": "val2014/COCO_val2014_000000139567.jpg"
+  },
+  {
+   "image_id": 141256,
+   "file": "val2014/COCO_val2014_000000141256.jpg"
+  },
+  {
+   "image_id": 141587,
+   "file": "val2014/COCO_val2014_000000141587.jpg"
+  },
+  {
+   "image_id": 142189,
+   "file": "val2014/COCO_val2014_000000142189.jpg"
+  },
+  {
+   "image_id": 142246,
+   "file": "val2014/COCO_val2014_000000142246.jpg"
+  },
+  {
+   "image_id": 143554,
+   "file": "val2014/COCO_val2014_000000143554.jpg"
+  },
+  {
+   "image_id": 144064,
+   "file": "val2014/COCO_val2014_000000144064.jpg"
+  },
+  {
+   "image_id": 144122,
+   "file": "val2014/COCO_val2014_000000144122.jpg"
+  },
+  {
+   "image_id": 145727,
+   "file": "val2014/COCO_val2014_000000145727.jpg"
+  },
+  {
+   "image_id": 146767,
+   "file": "val2014/COCO_val2014_000000146767.jpg"
+  },
+  {
+   "image_id": 147415,
+   "file": "val2014/COCO_val2014_000000147415.jpg"
+  },
+  {
+   "image_id": 147556,
+   "file": "val2014/COCO_val2014_000000147556.jpg"
+  },
+  {
+   "image_id": 148977,
+   "file": "val2014/COCO_val2014_000000148977.jpg"
+  },
+  {
+   "image_id": 149371,
+   "file": "val2014/COCO_val2014_000000149371.jpg"
+  },
+  {
+   "image_id": 151480,
+   "file": "val2014/COCO_val2014_000000151480.jpg"
+  },
+  {
+   "image_id": 151970,
+   "file": "val2014/COCO_val2014_000000151970.jpg"
+  },
+  {
+   "image_id": 152398,
+   "file": "val2014/COCO_val2014_000000152398.jpg"
+  },
+  {
+   "image_id": 154241,
+   "file": "val2014/COCO_val2014_000000154241.jpg"
+  },
+  {
+   "image_id": 154670,
+   "file": "val2014/COCO_val2014_000000154670.jpg"
+  },
+  {
+   "image_id": 156572,
+   "file": "val2014/COCO_val2014_000000156572.jpg"
+  },
+  {
+   "image_id": 157102,
+   "file": "val2014/COCO_val2014_000000157102.jpg"
+  },
+  {
+   "image_id": 159742,
+   "file": "val2014/COCO_val2014_000000159742.jpg"
+  },
+  {
+   "image_id": 161144,
+   "file": "val2014/COCO_val2014_000000161144.jpg"
+  },
+  {
+   "image_id": 165029,
+   "file": "val2014/COCO_val2014_000000165029.jpg"
+  },
+  {
+   "image_id": 168991,
+   "file": "val2014/COCO_val2014_000000168991.jpg"
+  },
+  {
+   "image_id": 170250,
+   "file": "val2014/COCO_val2014_000000170250.jpg"
+  },
+  {
+   "image_id": 171199,
+   "file": "val2014/COCO_val2014_000000171199.jpg"
+  },
+  {
+   "image_id": 172648,
+   "file": "val2014/COCO_val2014_000000172648.jpg"
+  },
+  {
+   "image_id": 172733,
+   "file": "val2014/COCO_val2014_000000172733.jpg"
+  },
+  {
+   "image_id": 174567,
+   "file": "val2014/COCO_val2014_000000174567.jpg"
+  },
+  {
+   "image_id": 175864,
+   "file": "val2014/COCO_val2014_000000175864.jpg"
+  },
+  {
+   "image_id": 177453,
+   "file": "val2014/COCO_val2014_000000177453.jpg"
+  },
+  {
+   "image_id": 178748,
+   "file": "val2014/COCO_val2014_000000178748.jpg"
+  },
+  {
+   "image_id": 178818,
+   "file": "val2014/COCO_val2014_000000178818.jpg"
+  },
+  {
+   "image_id": 179921,
+   "file": "val2014/COCO_val2014_000000179921.jpg"
+  },
+  {
+   "image_id": 181169,
+   "file": "val2014/COCO_val2014_000000181169.jpg"
+  },
+  {
+   "image_id": 181572,
+   "file": "val2014/COCO_val2014_000000181572.jpg"
+  },
+  {
+   "image_id": 181859,
+   "file": "val2014/COCO_val2014_000000181859.jpg"
+  },
+  {
+   "image_id": 182334,
+   "file": "val2014/COCO_val2014_000000182334.jpg"
+  },
+  {
+   "image_id": 182441,
+   "file": "val2014/COCO_val2014_000000182441.jpg"
+  },
+  {
+   "image_id": 184773,
+   "file": "val2014/COCO_val2014_000000184773.jpg"
+  },
+  {
+   "image_id": 184902,
+   "file": "val2014/COCO_val2014_000000184902.jpg"
+  },
+  {
+   "image_id": 187610,
+   "file": "val2014/COCO_val2014_000000187610.jpg"
+  },
+  {
+   "image_id": 187776,
+   "file": "val2014/COCO_val2014_000000187776.jpg"
+  },
+  {
+   "image_id": 188192,
+   "file": "val2014/COCO_val2014_000000188192.jpg"
+  },
+  {
+   "image_id": 189376,
+   "file": "val2014/COCO_val2014_000000189376.jpg"
+  },
+  {
+   "image_id": 191240,
+   "file": "val2014/COCO_val2014_000000191240.jpg"
+  },
+  {
+   "image_id": 191842,
+   "file": "val2014/COCO_val2014_000000191842.jpg"
+  },
+  {
+   "image_id": 192730,
+   "file": "val2014/COCO_val2014_000000192730.jpg"
+  },
+  {
+   "image_id": 192788,
+   "file": "val2014/COCO_val2014_000000192788.jpg"
+  },
+  {
+   "image_id": 193881,
+   "file": "val2014/COCO_val2014_000000193881.jpg"
+  },
+  {
+   "image_id": 194756,
+   "file": "val2014/COCO_val2014_000000194756.jpg"
+  },
+  {
+   "image_id": 195275,
+   "file": "val2014/COCO_val2014_000000195275.jpg"
+  },
+  {
+   "image_id": 195790,
+   "file": "val2014/COCO_val2014_000000195790.jpg"
+  },
+  {
+   "image_id": 196490,
+   "file": "val2014/COCO_val2014_000000196490.jpg"
+  },
+  {
+   "image_id": 199319,
+   "file": "val2014/COCO_val2014_000000199319.jpg"
+  },
+  {
+   "image_id": 201148,
+   "file": "val2014/COCO_val2014_000000201148.jpg"
+  },
+  {
+   "image_id": 202913,
+   "file": "val2014/COCO_val2014_000000202913.jpg"
+  },
+  {
+   "image_id": 203636,
+   "file": "val2014/COCO_val2014_000000203636.jpg"
+  },
+  {
+   "image_id": 205577,
+   "file": "val2014/COCO_val2014_000000205577.jpg"
+  },
+  {
+   "image_id": 206705,
+   "file": "val2014/COCO_val2014_000000206705.jpg"
+  },
+  {
+   "image_id": 206851,
+   "file": "val2014/COCO_val2014_000000206851.jpg"
+  },
+  {
+   "image_id": 207913,
+   "file": "val2014/COCO_val2014_000000207913.jpg"
+  },
+  {
+   "image_id": 208311,
+   "file": "val2014/COCO_val2014_000000208311.jpg"
+  },
+  {
+   "image_id": 208589,
+   "file": "val2014/COCO_val2014_000000208589.jpg"
+  },
+  {
+   "image_id": 208623,
+   "file": "val2014/COCO_val2014_000000208623.jpg"
+  },
+  {
+   "image_id": 209048,
+   "file": "val2014/COCO_val2014_000000209048.jpg"
+  },
+  {
+   "image_id": 209904,
+   "file": "val2014/COCO_val2014_000000209904.jpg"
+  },
+  {
+   "image_id": 211204,
+   "file": "val2014/COCO_val2014_000000211204.jpg"
+  },
+  {
+   "image_id": 218988,
+   "file": "val2014/COCO_val2014_000000218988.jpg"
+  },
+  {
+   "image_id": 220171,
+   "file": "val2014/COCO_val2014_000000220171.jpg"
+  },
+  {
+   "image_id": 222863,
+   "file": "val2014/COCO_val2014_000000222863.jpg"
+  },
+  {
+   "image_id": 223032,
+   "file": "val2014/COCO_val2014_000000223032.jpg"
+  },
+  {
+   "image_id": 223241,
+   "file": "val2014/COCO_val2014_000000223241.jpg"
+  },
+  {
+   "image_id": 223300,
+   "file": "val2014/COCO_val2014_000000223300.jpg"
+  },
+  {
+   "image_id": 224051,
+   "file": "val2014/COCO_val2014_000000224051.jpg"
+  },
+  {
+   "image_id": 225299,
+   "file": "val2014/COCO_val2014_000000225299.jpg"
+  },
+  {
+   "image_id": 225792,
+   "file": "val2014/COCO_val2014_000000225792.jpg"
+  },
+  {
+   "image_id": 226629,
+   "file": "val2014/COCO_val2014_000000226629.jpg"
+  },
+  {
+   "image_id": 233124,
+   "file": "val2014/COCO_val2014_000000233124.jpg"
+  },
+  {
+   "image_id": 233139,
+   "file": "val2014/COCO_val2014_000000233139.jpg"
+  },
+  {
+   "image_id": 233370,
+   "file": "val2014/COCO_val2014_000000233370.jpg"
+  },
+  {
+   "image_id": 236068,
+   "file": "val2014/COCO_val2014_000000236068.jpg"
+  },
+  {
+   "image_id": 238449,
+   "file": "val2014/COCO_val2014_000000238449.jpg"
+  },
+  {
+   "image_id": 238700,
+   "file": "val2014/COCO_val2014_000000238700.jpg"
+  },
+  {
+   "image_id": 241503,
+   "file": "val2014/COCO_val2014_000000241503.jpg"
+  },
+  {
+   "image_id": 242103,
+   "file": "val2014/COCO_val2014_000000242103.jpg"
+  },
+  {
+   "image_id": 242909,
+   "file": "val2014/COCO_val2014_000000242909.jpg"
+  },
+  {
+   "image_id": 243090,
+   "file": "val2014/COCO_val2014_000000243090.jpg"
+  },
+  {
+   "image_id": 243213,
+   "file": "val2014/COCO_val2014_000000243213.jpg"
+  },
+  {
+   "image_id": 243344,
+   "file": "val2014/COCO_val2014_000000243344.jpg"
+  },
+  {
+   "image_id": 243955,
+   "file": "val2014/COCO_val2014_000000243955.jpg"
+  },
+  {
+   "image_id": 244339,
+   "file": "val2014/COCO_val2014_000000244339.jpg"
+  },
+  {
+   "image_id": 246597,
+   "file": "val2014/COCO_val2014_000000246597.jpg"
+  },
+  {
+   "image_id": 253964,
+   "file": "val2014/COCO_val2014_000000253964.jpg"
+  },
+  {
+   "image_id": 255315,
+   "file": "val2014/COCO_val2014_000000255315.jpg"
+  },
+  {
+   "image_id": 255401,
+   "file": "val2014/COCO_val2014_000000255401.jpg"
+  },
+  {
+   "image_id": 258089,
+   "file": "val2014/COCO_val2014_000000258089.jpg"
+  },
+  {
+   "image_id": 258588,
+   "file": "val2014/COCO_val2014_000000258588.jpg"
+  },
+  {
+   "image_id": 258911,
+   "file": "val2014/COCO_val2014_000000258911.jpg"
+  },
+  {
+   "image_id": 262148,
+   "file": "val2014/COCO_val2014_000000262148.jpg"
+  },
+  {
+   "image_id": 263223,
+   "file": "val2014/COCO_val2014_000000263223.jpg"
+  },
+  {
+   "image_id": 263866,
+   "file": "val2014/COCO_val2014_000000263866.jpg"
+  },
+  {
+   "image_id": 265816,
+   "file": "val2014/COCO_val2014_000000265816.jpg"
+  },
+  {
+   "image_id": 270705,
+   "file": "val2014/COCO_val2014_000000270705.jpg"
+  },
+  {
+   "image_id": 271402,
+   "file": "val2014/COCO_val2014_000000271402.jpg"
+  },
+  {
+   "image_id": 271471,
+   "file": "val2014/COCO_val2014_000000271471.jpg"
+  },
+  {
+   "image_id": 273493,
+   "file": "val2014/COCO_val2014_000000273493.jpg"
+  },
+  {
+   "image_id": 273618,
+   "file": "val2014/COCO_val2014_000000273618.jpg"
+  },
+  {
+   "image_id": 273784,
+   "file": "val2014/COCO_val2014_000000273784.jpg"
+  },
+  {
+   "image_id": 274398,
+   "file": "val2014/COCO_val2014_000000274398.jpg"
+  },
+  {
+   "image_id": 275611,
+   "file": "val2014/COCO_val2014_000000275611.jpg"
+  },
+  {
+   "image_id": 277521,
+   "file": "val2014/COCO_val2014_000000277521.jpg"
+  },
+  {
+   "image_id": 278747,
+   "file": "val2014/COCO_val2014_000000278747.jpg"
+  },
+  {
+   "image_id": 280360,
+   "file": "val2014/COCO_val2014_000000280360.jpg"
+  },
+  {
+   "image_id": 282113,
+   "file": "val2014/COCO_val2014_000000282113.jpg"
+  },
+  {
+   "image_id": 283113,
+   "file": "val2014/COCO_val2014_000000283113.jpg"
+  },
+  {
+   "image_id": 283772,
+   "file": "val2014/COCO_val2014_000000283772.jpg"
+  },
+  {
+   "image_id": 284350,
+   "file": "val2014/COCO_val2014_000000284350.jpg"
+  },
+  {
+   "image_id": 285352,
+   "file": "val2014/COCO_val2014_000000285352.jpg"
+  },
+  {
+   "image_id": 285645,
+   "file": "val2014/COCO_val2014_000000285645.jpg"
+  },
+  {
+   "image_id": 285929,
+   "file": "val2014/COCO_val2014_000000285929.jpg"
+  },
+  {
+   "image_id": 286010,
+   "file": "val2014/COCO_val2014_000000286010.jpg"
+  },
+  {
+   "image_id": 286717,
+   "file": "val2014/COCO_val2014_000000286717.jpg"
+  },
+  {
+   "image_id": 292647,
+   "file": "val2014/COCO_val2014_000000292647.jpg"
+  },
+  {
+   "image_id": 294763,
+   "file": "val2014/COCO_val2014_000000294763.jpg"
+  },
+  {
+   "image_id": 294831,
+   "file": "val2014/COCO_val2014_000000294831.jpg"
+  },
+  {
+   "image_id": 295440,
+   "file": "val2014/COCO_val2014_000000295440.jpg"
+  },
+  {
+   "image_id": 296236,
+   "file": "val2014/COCO_val2014_000000296236.jpg"
+  },
+  {
+   "image_id": 298699,
+   "file": "val2014/COCO_val2014_000000298699.jpg"
+  },
+  {
+   "image_id": 299601,
+   "file": "val2014/COCO_val2014_000000299601.jpg"
+  },
+  {
+   "image_id": 300000,
+   "file": "val2014/COCO_val2014_000000300000.jpg"
+  },
+  {
+   "image_id": 300848,
+   "file": "val2014/COCO_val2014_000000300848.jpg"
+  },
+  {
+   "image_id": 302375,
+   "file": "val2014/COCO_val2014_000000302375.jpg"
+  },
+  {
+   "image_id": 304217,
+   "file": "val2014/COCO_val2014_000000304217.jpg"
+  },
+  {
+   "image_id": 305000,
+   "file": "val2014/COCO_val2014_000000305000.jpg"
+  },
+  {
+   "image_id": 307034,
+   "file": "val2014/COCO_val2014_000000307034.jpg"
+  },
+  {
+   "image_id": 307292,
+   "file": "val2014/COCO_val2014_000000307292.jpg"
+  },
+  {
+   "image_id": 308235,
+   "file": "val2014/COCO_val2014_000000308235.jpg"
+  },
+  {
+   "image_id": 308894,
+   "file": "val2014/COCO_val2014_000000308894.jpg"
+  },
+  {
+   "image_id": 311922,
+   "file": "val2014/COCO_val2014_000000311922.jpg"
+  },
+  {
+   "image_id": 313182,
+   "file": "val2014/COCO_val2014_000000313182.jpg"
+  },
+  {
+   "image_id": 314016,
+   "file": "val2014/COCO_val2014_000000314016.jpg"
+  },
+  {
+   "image_id": 315352,
+   "file": "val2014/COCO_val2014_000000315352.jpg"
+  },
+  {
+   "image_id": 315434,
+   "file": "val2014/COCO_val2014_000000315434.jpg"
+  },
+  {
+   "image_id": 315524,
+   "file": "val2014/COCO_val2014_000000315524.jpg"
+  },
+  {
+   "image_id": 315769,
+   "file": "val2014/COCO_val2014_000000315769.jpg"
+  },
+  {
+   "image_id": 316041,
+   "file": "val2014/COCO_val2014_000000316041.jpg"
+  },
+  {
+   "image_id": 316240,
+   "file": "val2014/COCO_val2014_000000316240.jpg"
+  },
+  {
+   "image_id": 316795,
+   "file": "val2014/COCO_val2014_000000316795.jpg"
+  },
+  {
+   "image_id": 317070,
+   "file": "val2014/COCO_val2014_000000317070.jpg"
+  },
+  {
+   "image_id": 317999,
+   "file": "val2014/COCO_val2014_000000317999.jpg"
+  },
+  {
+   "image_id": 318618,
+   "file": "val2014/COCO_val2014_000000318618.jpg"
+  },
+  {
+   "image_id": 319051,
+   "file": "val2014/COCO_val2014_000000319051.jpg"
+  },
+  {
+   "image_id": 319350,
+   "file": "val2014/COCO_val2014_000000319350.jpg"
+  },
+  {
+   "image_id": 319931,
+   "file": "val2014/COCO_val2014_000000319931.jpg"
+  },
+  {
+   "image_id": 321811,
+   "file": "val2014/COCO_val2014_000000321811.jpg"
+  },
+  {
+   "image_id": 323356,
+   "file": "val2014/COCO_val2014_000000323356.jpg"
+  },
+  {
+   "image_id": 325027,
+   "file": "val2014/COCO_val2014_000000325027.jpg"
+  },
+  {
+   "image_id": 327567,
+   "file": "val2014/COCO_val2014_000000327567.jpg"
+  },
+  {
+   "image_id": 327961,
+   "file": "val2014/COCO_val2014_000000327961.jpg"
+  },
+  {
+   "image_id": 331455,
+   "file": "val2014/COCO_val2014_000000331455.jpg"
+  },
+  {
+   "image_id": 333434,
+   "file": "val2014/COCO_val2014_000000333434.jpg"
+  },
+  {
+   "image_id": 333756,
+   "file": "val2014/COCO_val2014_000000333756.jpg"
+  },
+  {
+   "image_id": 334760,
+   "file": "val2014/COCO_val2014_000000334760.jpg"
+  },
+  {
+   "image_id": 338703,
+   "file": "val2014/COCO_val2014_000000338703.jpg"
+  },
+  {
+   "image_id": 339356,
+   "file": "val2014/COCO_val2014_000000339356.jpg"
+  },
+  {
+   "image_id": 340209,
+   "file": "val2014/COCO_val2014_000000340209.jpg"
+  },
+  {
+   "image_id": 340637,
+   "file": "val2014/COCO_val2014_000000340637.jpg"
+  },
+  {
+   "image_id": 340642,
+   "file": "val2014/COCO_val2014_000000340642.jpg"
+  },
+  {
+   "image_id": 341128,
+   "file": "val2014/COCO_val2014_000000341128.jpg"
+  },
+  {
+   "image_id": 343599,
+   "file": "val2014/COCO_val2014_000000343599.jpg"
+  },
+  {
+   "image_id": 344197,
+   "file": "val2014/COCO_val2014_000000344197.jpg"
+  },
+  {
+   "image_id": 349184,
+   "file": "val2014/COCO_val2014_000000349184.jpg"
+  },
+  {
+   "image_id": 349579,
+   "file": "val2014/COCO_val2014_000000349579.jpg"
+  },
+  {
+   "image_id": 350522,
+   "file": "val2014/COCO_val2014_000000350522.jpg"
+  },
+  {
+   "image_id": 352127,
+   "file": "val2014/COCO_val2014_000000352127.jpg"
+  },
+  {
+   "image_id": 353136,
+   "file": "val2014/COCO_val2014_000000353136.jpg"
+  },
+  {
+   "image_id": 354165,
+   "file": "val2014/COCO_val2014_000000354165.jpg"
+  },
+  {
+   "image_id": 354533,
+   "file": "val2014/COCO_val2014_000000354533.jpg"
+  },
+  {
+   "image_id": 357265,
+   "file": "val2014/COCO_val2014_000000357265.jpg"
+  },
+  {
+   "image_id": 359086,
+   "file": "val2014/COCO_val2014_000000359086.jpg"
+  },
+  {
+   "image_id": 359676,
+   "file": "val2014/COCO_val2014_000000359676.jpg"
+  },
+  {
+   "image_id": 359838,
+   "file": "val2014/COCO_val2014_000000359838.jpg"
+  },
+  {
+   "image_id": 361739,
+   "file": "val2014/COCO_val2014_000000361739.jpg"
+  },
+  {
+   "image_id": 362159,
+   "file": "val2014/COCO_val2014_000000362159.jpg"
+  },
+  {
+   "image_id": 362368,
+   "file": "val2014/COCO_val2014_000000362368.jpg"
+  },
+  {
+   "image_id": 363508,
+   "file": "val2014/COCO_val2014_000000363508.jpg"
+  },
+  {
+   "image_id": 364340,
+   "file": "val2014/COCO_val2014_000000364340.jpg"
+  },
+  {
+   "image_id": 364592,
+   "file": "val2014/COCO_val2014_000000364592.jpg"
+  },
+  {
+   "image_id": 365094,
+   "file": "val2014/COCO_val2014_000000365094.jpg"
+  },
+  {
+   "image_id": 366508,
+   "file": "val2014/COCO_val2014_000000366508.jpg"
+  },
+  {
+   "image_id": 367579,
+   "file": "val2014/COCO_val2014_000000367579.jpg"
+  },
+  {
+   "image_id": 368117,
+   "file": "val2014/COCO_val2014_000000368117.jpg"
+  },
+  {
+   "image_id": 368528,
+   "file": "val2014/COCO_val2014_000000368528.jpg"
+  },
+  {
+   "image_id": 371250,
+   "file": "val2014/COCO_val2014_000000371250.jpg"
+  },
+  {
+   "image_id": 371395,
+   "file": "val2014/COCO_val2014_000000371395.jpg"
+  },
+  {
+   "image_id": 374574,
+   "file": "val2014/COCO_val2014_000000374574.jpg"
+  },
+  {
+   "image_id": 375426,
+   "file": "val2014/COCO_val2014_000000375426.jpg"
+  },
+  {
+   "image_id": 376891,
+   "file": "val2014/COCO_val2014_000000376891.jpg"
+  },
+  {
+   "image_id": 377946,
+   "file": "val2014/COCO_val2014_000000377946.jpg"
+  },
+  {
+   "image_id": 378673,
+   "file": "val2014/COCO_val2014_000000378673.jpg"
+  },
+  {
+   "image_id": 381032,
+   "file": "val2014/COCO_val2014_000000381032.jpg"
+  },
+  {
+   "image_id": 381360,
+   "file": "val2014/COCO_val2014_000000381360.jpg"
+  },
+  {
+   "image_id": 382743,
+   "file": "val2014/COCO_val2014_000000382743.jpg"
+  },
+  {
+   "image_id": 384981,
+   "file": "val2014/COCO_val2014_000000384981.jpg"
+  },
+  {
+   "image_id": 386164,
+   "file": "val2014/COCO_val2014_000000386164.jpg"
+  },
+  {
+   "image_id": 388643,
+   "file": "val2014/COCO_val2014_000000388643.jpg"
+  },
+  {
+   "image_id": 391006,
+   "file": "val2014/COCO_val2014_000000391006.jpg"
+  },
+  {
+   "image_id": 392878,
+   "file": "val2014/COCO_val2014_000000392878.jpg"
+  },
+  {
+   "image_id": 396209,
+   "file": "val2014/COCO_val2014_000000396209.jpg"
+  },
+  {
+   "image_id": 396691,
+   "file": "val2014/COCO_val2014_000000396691.jpg"
+  },
+  {
+   "image_id": 396779,
+   "file": "val2014/COCO_val2014_000000396779.jpg"
+  },
+  {
+   "image_id": 399851,
+   "file": "val2014/COCO_val2014_000000399851.jpg"
+  },
+  {
+   "image_id": 399957,
+   "file": "val2014/COCO_val2014_000000399957.jpg"
+  },
+  {
+   "image_id": 399991,
+   "file": "val2014/COCO_val2014_000000399991.jpg"
+  },
+  {
+   "image_id": 400453,
+   "file": "val2014/COCO_val2014_000000400453.jpg"
+  },
+  {
+   "image_id": 401860,
+   "file": "val2014/COCO_val2014_000000401860.jpg"
+  },
+  {
+   "image_id": 402788,
+   "file": "val2014/COCO_val2014_000000402788.jpg"
+  },
+  {
+   "image_id": 404886,
+   "file": "val2014/COCO_val2014_000000404886.jpg"
+  },
+  {
+   "image_id": 404931,
+   "file": "val2014/COCO_val2014_000000404931.jpg"
+  },
+  {
+   "image_id": 406908,
+   "file": "val2014/COCO_val2014_000000406908.jpg"
+  },
+  {
+   "image_id": 407260,
+   "file": "val2014/COCO_val2014_000000407260.jpg"
+  },
+  {
+   "image_id": 407524,
+   "file": "val2014/COCO_val2014_000000407524.jpg"
+  },
+  {
+   "image_id": 407717,
+   "file": "val2014/COCO_val2014_000000407717.jpg"
+  },
+  {
+   "image_id": 410885,
+   "file": "val2014/COCO_val2014_000000410885.jpg"
+  },
+  {
+   "image_id": 412807,
+   "file": "val2014/COCO_val2014_000000412807.jpg"
+  },
+  {
+   "image_id": 414078,
+   "file": "val2014/COCO_val2014_000000414078.jpg"
+  },
+  {
+   "image_id": 414664,
+   "file": "val2014/COCO_val2014_000000414664.jpg"
+  },
+  {
+   "image_id": 421072,
+   "file": "val2014/COCO_val2014_000000421072.jpg"
+  },
+  {
+   "image_id": 421361,
+   "file": "val2014/COCO_val2014_000000421361.jpg"
+  },
+  {
+   "image_id": 423576,
+   "file": "val2014/COCO_val2014_000000423576.jpg"
+  },
+  {
+   "image_id": 423971,
+   "file": "val2014/COCO_val2014_000000423971.jpg"
+  },
+  {
+   "image_id": 424776,
+   "file": "val2014/COCO_val2014_000000424776.jpg"
+  },
+  {
+   "image_id": 425620,
+   "file": "val2014/COCO_val2014_000000425620.jpg"
+  },
+  {
+   "image_id": 426166,
+   "file": "val2014/COCO_val2014_000000426166.jpg"
+  },
+  {
+   "image_id": 426532,
+   "file": "val2014/COCO_val2014_000000426532.jpg"
+  },
+  {
+   "image_id": 429142,
+   "file": "val2014/COCO_val2014_000000429142.jpg"
+  },
+  {
+   "image_id": 429913,
+   "file": "val2014/COCO_val2014_000000429913.jpg"
+  },
+  {
+   "image_id": 431570,
+   "file": "val2014/COCO_val2014_000000431570.jpg"
+  },
+  {
+   "image_id": 436044,
+   "file": "val2014/COCO_val2014_000000436044.jpg"
+  },
+  {
+   "image_id": 436348,
+   "file": "val2014/COCO_val2014_000000436348.jpg"
+  },
+  {
+   "image_id": 436385,
+   "file": "val2014/COCO_val2014_000000436385.jpg"
+  },
+  {
+   "image_id": 436467,
+   "file": "val2014/COCO_val2014_000000436467.jpg"
+  },
+  {
+   "image_id": 438535,
+   "file": "val2014/COCO_val2014_000000438535.jpg"
+  },
+  {
+   "image_id": 443537,
+   "file": "val2014/COCO_val2014_000000443537.jpg"
+  },
+  {
+   "image_id": 443969,
+   "file": "val2014/COCO_val2014_000000443969.jpg"
+  },
+  {
+   "image_id": 444444,
+   "file": "val2014/COCO_val2014_000000444444.jpg"
+  },
+  {
+   "image_id": 444722,
+   "file": "val2014/COCO_val2014_000000444722.jpg"
+  },
+  {
+   "image_id": 448627,
+   "file": "val2014/COCO_val2014_000000448627.jpg"
+  },
+  {
+   "image_id": 448697,
+   "file": "val2014/COCO_val2014_000000448697.jpg"
+  },
+  {
+   "image_id": 448871,
+   "file": "val2014/COCO_val2014_000000448871.jpg"
+  },
+  {
+   "image_id": 449274,
+   "file": "val2014/COCO_val2014_000000449274.jpg"
+  },
+  {
+   "image_id": 449634,
+   "file": "val2014/COCO_val2014_000000449634.jpg"
+  },
+  {
+   "image_id": 451234,
+   "file": "val2014/COCO_val2014_000000451234.jpg"
+  },
+  {
+   "image_id": 452122,
+   "file": "val2014/COCO_val2014_000000452122.jpg"
+  },
+  {
+   "image_id": 452899,
+   "file": "val2014/COCO_val2014_000000452899.jpg"
+  },
+  {
+   "image_id": 453013,
+   "file": "val2014/COCO_val2014_000000453013.jpg"
+  },
+  {
+   "image_id": 453302,
+   "file": "val2014/COCO_val2014_000000453302.jpg"
+  },
+  {
+   "image_id": 454252,
+   "file": "val2014/COCO_val2014_000000454252.jpg"
+  },
+  {
+   "image_id": 454957,
+   "file": "val2014/COCO_val2014_000000454957.jpg"
+  },
+  {
+   "image_id": 454978,
+   "file": "val2014/COCO_val2014_000000454978.jpg"
+  },
+  {
+   "image_id": 456519,
+   "file": "val2014/COCO_val2014_000000456519.jpg"
+  },
+  {
+   "image_id": 456552,
+   "file": "val2014/COCO_val2014_000000456552.jpg"
+  },
+  {
+   "image_id": 457249,
+   "file": "val2014/COCO_val2014_000000457249.jpg"
+  },
+  {
+   "image_id": 457718,
+   "file": "val2014/COCO_val2014_000000457718.jpg"
+  },
+  {
+   "image_id": 460505,
+   "file": "val2014/COCO_val2014_000000460505.jpg"
+  },
+  {
+   "image_id": 461278,
+   "file": "val2014/COCO_val2014_000000461278.jpg"
+  },
+  {
+   "image_id": 462345,
+   "file": "val2014/COCO_val2014_000000462345.jpg"
+  },
+  {
+   "image_id": 462784,
+   "file": "val2014/COCO_val2014_000000462784.jpg"
+  },
+  {
+   "image_id": 463211,
+   "file": "val2014/COCO_val2014_000000463211.jpg"
+  },
+  {
+   "image_id": 463459,
+   "file": "val2014/COCO_val2014_000000463459.jpg"
+  },
+  {
+   "image_id": 464286,
+   "file": "val2014/COCO_val2014_000000464286.jpg"
+  },
+  {
+   "image_id": 465862,
+   "file": "val2014/COCO_val2014_000000465862.jpg"
+  },
+  {
+   "image_id": 466392,
+   "file": "val2014/COCO_val2014_000000466392.jpg"
+  },
+  {
+   "image_id": 467062,
+   "file": "val2014/COCO_val2014_000000467062.jpg"
+  },
+  {
+   "image_id": 467067,
+   "file": "val2014/COCO_val2014_000000467067.jpg"
+  },
+  {
+   "image_id": 467578,
+   "file": "val2014/COCO_val2014_000000467578.jpg"
+  },
+  {
+   "image_id": 467721,
+   "file": "val2014/COCO_val2014_000000467721.jpg"
+  },
+  {
+   "image_id": 468541,
+   "file": "val2014/COCO_val2014_000000468541.jpg"
+  },
+  {
+   "image_id": 469961,
+   "file": "val2014/COCO_val2014_000000469961.jpg"
+  },
+  {
+   "image_id": 470513,
+   "file": "val2014/COCO_val2014_000000470513.jpg"
+  },
+  {
+   "image_id": 471179,
+   "file": "val2014/COCO_val2014_000000471179.jpg"
+  },
+  {
+   "image_id": 471497,
+   "file": "val2014/COCO_val2014_000000471497.jpg"
+  },
+  {
+   "image_id": 474608,
+   "file": "val2014/COCO_val2014_000000474608.jpg"
+  },
+  {
+   "image_id": 475667,
+   "file": "val2014/COCO_val2014_000000475667.jpg"
+  },
+  {
+   "image_id": 476552,
+   "file": "val2014/COCO_val2014_000000476552.jpg"
+  },
+  {
+   "image_id": 476925,
+   "file": "val2014/COCO_val2014_000000476925.jpg"
+  },
+  {
+   "image_id": 478858,
+   "file": "val2014/COCO_val2014_000000478858.jpg"
+  },
+  {
+   "image_id": 480000,
+   "file": "val2014/COCO_val2014_000000480000.jpg"
+  },
+  {
+   "image_id": 480720,
+   "file": "val2014/COCO_val2014_000000480720.jpg"
+  },
+  {
+   "image_id": 483348,
+   "file": "val2014/COCO_val2014_000000483348.jpg"
+  },
+  {
+   "image_id": 488697,
+   "file": "val2014/COCO_val2014_000000488697.jpg"
+  },
+  {
+   "image_id": 490620,
+   "file": "val2014/COCO_val2014_000000490620.jpg"
+  },
+  {
+   "image_id": 491497,
+   "file": "val2014/COCO_val2014_000000491497.jpg"
+  },
+  {
+   "image_id": 492552,
+   "file": "val2014/COCO_val2014_000000492552.jpg"
+  },
+  {
+   "image_id": 492817,
+   "file": "val2014/COCO_val2014_000000492817.jpg"
+  },
+  {
+   "image_id": 493284,
+   "file": "val2014/COCO_val2014_000000493284.jpg"
+  },
+  {
+   "image_id": 494404,
+   "file": "val2014/COCO_val2014_000000494404.jpg"
+  },
+  {
+   "image_id": 495349,
+   "file": "val2014/COCO_val2014_000000495349.jpg"
+  },
+  {
+   "image_id": 497067,
+   "file": "val2014/COCO_val2014_000000497067.jpg"
+  },
+  {
+   "image_id": 497719,
+   "file": "val2014/COCO_val2014_000000497719.jpg"
+  },
+  {
+   "image_id": 499095,
+   "file": "val2014/COCO_val2014_000000499095.jpg"
+  },
+  {
+   "image_id": 500780,
+   "file": "val2014/COCO_val2014_000000500780.jpg"
+  },
+  {
+   "image_id": 501491,
+   "file": "val2014/COCO_val2014_000000501491.jpg"
+  },
+  {
+   "image_id": 502852,
+   "file": "val2014/COCO_val2014_000000502852.jpg"
+  },
+  {
+   "image_id": 502959,
+   "file": "val2014/COCO_val2014_000000502959.jpg"
+  },
+  {
+   "image_id": 504824,
+   "file": "val2014/COCO_val2014_000000504824.jpg"
+  },
+  {
+   "image_id": 506872,
+   "file": "val2014/COCO_val2014_000000506872.jpg"
+  },
+  {
+   "image_id": 508672,
+   "file": "val2014/COCO_val2014_000000508672.jpg"
+  },
+  {
+   "image_id": 512793,
+   "file": "val2014/COCO_val2014_000000512793.jpg"
+  },
+  {
+   "image_id": 515540,
+   "file": "val2014/COCO_val2014_000000515540.jpg"
+  },
+  {
+   "image_id": 515727,
+   "file": "val2014/COCO_val2014_000000515727.jpg"
+  },
+  {
+   "image_id": 517687,
+   "file": "val2014/COCO_val2014_000000517687.jpg"
+  },
+  {
+   "image_id": 518234,
+   "file": "val2014/COCO_val2014_000000518234.jpg"
+  },
+  {
+   "image_id": 519208,
+   "file": "val2014/COCO_val2014_000000519208.jpg"
+  },
+  {
+   "image_id": 519359,
+   "file": "val2014/COCO_val2014_000000519359.jpg"
+  },
+  {
+   "image_id": 520787,
+   "file": "val2014/COCO_val2014_000000520787.jpg"
+  },
+  {
+   "image_id": 521306,
+   "file": "val2014/COCO_val2014_000000521306.jpg"
+  },
+  {
+   "image_id": 521879,
+   "file": "val2014/COCO_val2014_000000521879.jpg"
+  },
+  {
+   "image_id": 523816,
+   "file": "val2014/COCO_val2014_000000523816.jpg"
+  },
+  {
+   "image_id": 523978,
+   "file": "val2014/COCO_val2014_000000523978.jpg"
+  },
+  {
+   "image_id": 524173,
+   "file": "val2014/COCO_val2014_000000524173.jpg"
+  },
+  {
+   "image_id": 526030,
+   "file": "val2014/COCO_val2014_000000526030.jpg"
+  },
+  {
+   "image_id": 526737,
+   "file": "val2014/COCO_val2014_000000526737.jpg"
+  },
+  {
+   "image_id": 529691,
+   "file": "val2014/COCO_val2014_000000529691.jpg"
+  },
+  {
+   "image_id": 531707,
+   "file": "val2014/COCO_val2014_000000531707.jpg"
+  },
+  {
+   "image_id": 532695,
+   "file": "val2014/COCO_val2014_000000532695.jpg"
+  },
+  {
+   "image_id": 533485,
+   "file": "val2014/COCO_val2014_000000533485.jpg"
+  },
+  {
+   "image_id": 533979,
+   "file": "val2014/COCO_val2014_000000533979.jpg"
+  },
+  {
+   "image_id": 534605,
+   "file": "val2014/COCO_val2014_000000534605.jpg"
+  },
+  {
+   "image_id": 536653,
+   "file": "val2014/COCO_val2014_000000536653.jpg"
+  },
+  {
+   "image_id": 537574,
+   "file": "val2014/COCO_val2014_000000537574.jpg"
+  },
+  {
+   "image_id": 540636,
+   "file": "val2014/COCO_val2014_000000540636.jpg"
+  },
+  {
+   "image_id": 540714,
+   "file": "val2014/COCO_val2014_000000540714.jpg"
+  },
+  {
+   "image_id": 541202,
+   "file": "val2014/COCO_val2014_000000541202.jpg"
+  },
+  {
+   "image_id": 542089,
+   "file": "val2014/COCO_val2014_000000542089.jpg"
+  },
+  {
+   "image_id": 542625,
+   "file": "val2014/COCO_val2014_000000542625.jpg"
+  },
+  {
+   "image_id": 543300,
+   "file": "val2014/COCO_val2014_000000543300.jpg"
+  },
+  {
+   "image_id": 546964,
+   "file": "val2014/COCO_val2014_000000546964.jpg"
+  },
+  {
+   "image_id": 549012,
+   "file": "val2014/COCO_val2014_000000549012.jpg"
+  },
+  {
+   "image_id": 549797,
+   "file": "val2014/COCO_val2014_000000549797.jpg"
+  },
+  {
+   "image_id": 553442,
+   "file": "val2014/COCO_val2014_000000553442.jpg"
+  },
+  {
+   "image_id": 556083,
+   "file": "val2014/COCO_val2014_000000556083.jpg"
+  },
+  {
+   "image_id": 556341,
+   "file": "val2014/COCO_val2014_000000556341.jpg"
+  },
+  {
+   "image_id": 557552,
+   "file": "val2014/COCO_val2014_000000557552.jpg"
+  },
+  {
+   "image_id": 557732,
+   "file": "val2014/COCO_val2014_000000557732.jpg"
+  },
+  {
+   "image_id": 558483,
+   "file": "val2014/COCO_val2014_000000558483.jpg"
+  },
+  {
+   "image_id": 559656,
+   "file": "val2014/COCO_val2014_000000559656.jpg"
+  },
+  {
+   "image_id": 560010,
+   "file": "val2014/COCO_val2014_000000560010.jpg"
+  },
+  {
+   "image_id": 561938,
+   "file": "val2014/COCO_val2014_000000561938.jpg"
+  },
+  {
+   "image_id": 562345,
+   "file": "val2014/COCO_val2014_000000562345.jpg"
+  },
+  {
+   "image_id": 567013,
+   "file": "val2014/COCO_val2014_000000567013.jpg"
+  },
+  {
+   "image_id": 568325,
+   "file": "val2014/COCO_val2014_000000568325.jpg"
+  },
+  {
+   "image_id": 568961,
+   "file": "val2014/COCO_val2014_000000568961.jpg"
+  },
+  {
+   "image_id": 569096,
+   "file": "val2014/COCO_val2014_000000569096.jpg"
+  },
+  {
+   "image_id": 570736,
+   "file": "val2014/COCO_val2014_000000570736.jpg"
+  },
+  {
+   "image_id": 570756,
+   "file": "val2014/COCO_val2014_000000570756.jpg"
+  },
+  {
+   "image_id": 572226,
+   "file": "val2014/COCO_val2014_000000572226.jpg"
+  },
+  {
+   "image_id": 573896,
+   "file": "val2014/COCO_val2014_000000573896.jpg"
+  },
+  {
+   "image_id": 573962,
+   "file": "val2014/COCO_val2014_000000573962.jpg"
+  },
+  {
+   "image_id": 574138,
+   "file": "val2014/COCO_val2014_000000574138.jpg"
+  },
+  {
+   "image_id": 574633,
+   "file": "val2014/COCO_val2014_000000574633.jpg"
+  },
+  {
+   "image_id": 575135,
+   "file": "val2014/COCO_val2014_000000575135.jpg"
+  },
+  {
+   "image_id": 575643,
+   "file": "val2014/COCO_val2014_000000575643.jpg"
+  },
+  {
+   "image_id": 577024,
+   "file": "val2014/COCO_val2014_000000577024.jpg"
+  },
+  {
+   "image_id": 577524,
+   "file": "val2014/COCO_val2014_000000577524.jpg"
+  },
+  {
+   "image_id": 578740,
+   "file": "val2014/COCO_val2014_000000578740.jpg"
+  },
+  {
+   "image_id": 578848,
+   "file": "val2014/COCO_val2014_000000578848.jpg"
+  },
+  {
+   "image_id": 579548,
+   "file": "val2014/COCO_val2014_000000579548.jpg"
+  },
+  {
+   "image_id": 581332,
+   "file": "val2014/COCO_val2014_000000581332.jpg"
+  },
+  {
+   "image_id": 581886,
+   "file": "val2014/COCO_val2014_000000581886.jpg"
+  }
+ ],
+ "vqa": [
+  {
+   "question_id": 636002,
+   "image_id": 636,
+   "file": "val2014/COCO_val2014_000000000636.jpg",
+   "question": "Is this picture real?"
+  },
+  {
+   "question_id": 1626001,
+   "image_id": 1626,
+   "file": "val2014/COCO_val2014_000000001626.jpg",
+   "question": "What are the people doing?"
+  },
+  {
+   "question_id": 2753002,
+   "image_id": 2753,
+   "file": "val2014/COCO_val2014_000000002753.jpg",
+   "question": "What color is the toy the dog is holding?"
+  },
+  {
+   "question_id": 2890000,
+   "image_id": 2890,
+   "file": "val2014/COCO_val2014_000000002890.jpg",
+   "question": "What is happening to the brown truck?"
+  },
+  {
+   "question_id": 3001001,
+   "image_id": 3001,
+   "file": "val2014/COCO_val2014_000000003001.jpg",
+   "question": "What kind of food is this?"
+  },
+  {
+   "question_id": 6393002,
+   "image_id": 6393,
+   "file": "val2014/COCO_val2014_000000006393.jpg",
+   "question": "Is she wearing scissors around her neck?"
+  },
+  {
+   "question_id": 7072001,
+   "image_id": 7072,
+   "file": "val2014/COCO_val2014_000000007072.jpg",
+   "question": "Was this photo taken at the park?"
+  },
+  {
+   "question_id": 7556000,
+   "image_id": 7556,
+   "file": "val2014/COCO_val2014_000000007556.jpg",
+   "question": "Are the insides convex or concave?"
+  },
+  {
+   "question_id": 8218000,
+   "image_id": 8218,
+   "file": "val2014/COCO_val2014_000000008218.jpg",
+   "question": "Is this a tower clock?"
+  },
+  {
+   "question_id": 8803000,
+   "image_id": 8803,
+   "file": "val2014/COCO_val2014_000000008803.jpg",
+   "question": "Where are the shadows?"
+  },
+  {
+   "question_id": 9217002,
+   "image_id": 9217,
+   "file": "val2014/COCO_val2014_000000009217.jpg",
+   "question": "Is that clock the Big Ben?"
+  },
+  {
+   "question_id": 9236011,
+   "image_id": 9236,
+   "file": "val2014/COCO_val2014_000000009236.jpg",
+   "question": "What color is the dishwasher?"
+  },
+  {
+   "question_id": 10837003,
+   "image_id": 10837,
+   "file": "val2014/COCO_val2014_000000010837.jpg",
+   "question": "Do the players shown have possession of the ball?"
+  },
+  {
+   "question_id": 13525002,
+   "image_id": 13525,
+   "file": "val2014/COCO_val2014_000000013525.jpg",
+   "question": "Do the pillowcase have any decorative design on them or are they plain white?"
+  },
+  {
+   "question_id": 14473003,
+   "image_id": 14473,
+   "file": "val2014/COCO_val2014_000000014473.jpg",
+   "question": "How many workers are shown?"
+  },
+  {
+   "question_id": 18770003,
+   "image_id": 18770,
+   "file": "val2014/COCO_val2014_000000018770.jpg",
+   "question": "What color is the man's suit?"
+  },
+  {
+   "question_id": 19904001,
+   "image_id": 19904,
+   "file": "val2014/COCO_val2014_000000019904.jpg",
+   "question": "What kind of motorcycles are these?"
+  },
+  {
+   "question_id": 22176005,
+   "image_id": 22176,
+   "file": "val2014/COCO_val2014_000000022176.jpg",
+   "question": "What type of scene is this?"
+  },
+  {
+   "question_id": 22892002,
+   "image_id": 22892,
+   "file": "val2014/COCO_val2014_000000022892.jpg",
+   "question": "Is the dog looking at the cat?"
+  },
+  {
+   "question_id": 23034001,
+   "image_id": 23034,
+   "file": "val2014/COCO_val2014_000000023034.jpg",
+   "question": "Is this a rocky trail?"
+  },
+  {
+   "question_id": 23731001,
+   "image_id": 23731,
+   "file": "val2014/COCO_val2014_000000023731.jpg",
+   "question": "What is sleeping on the chair?"
+  },
+  {
+   "question_id": 24343000,
+   "image_id": 24343,
+   "file": "val2014/COCO_val2014_000000024343.jpg",
+   "question": "What biker gang do these two belong too?"
+  },
+  {
+   "question_id": 25521001,
+   "image_id": 25521,
+   "file": "val2014/COCO_val2014_000000025521.jpg",
+   "question": "Was this taken during day or night?"
+  },
+  {
+   "question_id": 26209009,
+   "image_id": 26209,
+   "file": "val2014/COCO_val2014_000000026209.jpg",
+   "question": "What color is his jacket?"
+  },
+  {
+   "question_id": 26665002,
+   "image_id": 26665,
+   "file": "val2014/COCO_val2014_000000026665.jpg",
+   "question": "How many species of animals are in this picture?"
+  },
+  {
+   "question_id": 27186000,
+   "image_id": 27186,
+   "file": "val2014/COCO_val2014_000000027186.jpg",
+   "question": "How many people playing the game?"
+  },
+  {
+   "question_id": 27620002,
+   "image_id": 27620,
+   "file": "val2014/COCO_val2014_000000027620.jpg",
+   "question": "What is in the window?"
+  },
+  {
+   "question_id": 29094002,
+   "image_id": 29094,
+   "file": "val2014/COCO_val2014_000000029094.jpg",
+   "question": "How many sheep can be seen?"
+  },
+  {
+   "question_id": 31000001,
+   "image_id": 31000,
+   "file": "val2014/COCO_val2014_000000031000.jpg",
+   "question": "Do you think oranges taste good?"
+  },
+  {
+   "question_id": 32990002,
+   "image_id": 32990,
+   "file": "val2014/COCO_val2014_000000032990.jpg",
+   "question": "Is the floor black and white?"
+  },
+  {
+   "question_id": 33830000,
+   "image_id": 33830,
+   "file": "val2014/COCO_val2014_000000033830.jpg",
+   "question": "Does this make you sad?"
+  },
+  {
+   "question_id": 34080001,
+   "image_id": 34080,
+   "file": "val2014/COCO_val2014_000000034080.jpg",
+   "question": "How much change is laying next to the scissors?"
+  },
+  {
+   "question_id": 34482000,
+   "image_id": 34482,
+   "file": "val2014/COCO_val2014_000000034482.jpg",
+   "question": "What is written?"
+  },
+  {
+   "question_id": 34904000,
+   "image_id": 34904,
+   "file": "val2014/COCO_val2014_000000034904.jpg",
+   "question": "How many benches are there?"
+  },
+  {
+   "question_id": 35825000,
+   "image_id": 35825,
+   "file": "val2014/COCO_val2014_000000035825.jpg",
+   "question": "What color is her shirt?"
+  },
+  {
+   "question_id": 38048000,
+   "image_id": 38048,
+   "file": "val2014/COCO_val2014_000000038048.jpg",
+   "question": "What color is the hydrant's valve cover?"
+  },
+  {
+   "question_id": 38666000,
+   "image_id": 38666,
+   "file": "val2014/COCO_val2014_000000038666.jpg",
+   "question": "What body part is the boy holding the bear by?"
+  },
+  {
+   "question_id": 38678000,
+   "image_id": 38678,
+   "file": "val2014/COCO_val2014_000000038678.jpg",
+   "question": "What is she holding up?"
+  },
+  {
+   "question_id": 38938002,
+   "image_id": 38938,
+   "file": "val2014/COCO_val2014_000000038938.jpg",
+   "question": "How many drawers are there?"
+  },
+  {
+   "question_id": 39731002,
+   "image_id": 39731,
+   "file": "val2014/COCO_val2014_000000039731.jpg",
+   "question": "Is it important to wear black or white in order to skateboard?"
+  },
+  {
+   "question_id": 41397000,
+   "image_id": 41397,
+   "file": "val2014/COCO_val2014_000000041397.jpg",
+   "question": "Is there snow on the ground?"
+  },
+  {
+   "question_id": 44112000,
+   "image_id": 44112,
+   "file": "val2014/COCO_val2014_000000044112.jpg",
+   "question": "Where is the bottle of Coke located?"
+  },
+  {
+   "question_id": 46011001,
+   "image_id": 46011,
+   "file": "val2014/COCO_val2014_000000046011.jpg",
+   "question": "Are weather conditions suitable to fly this plane?"
+  },
+  {
+   "question_id": 46077002,
+   "image_id": 46077,
+   "file": "val2014/COCO_val2014_000000046077.jpg",
+   "question": "Is everyone wearing a helmet?"
+  },
+  {
+   "question_id": 47394003,
+   "image_id": 47394,
+   "file": "val2014/COCO_val2014_000000047394.jpg",
+   "question": "What game is being played?"
+  },
+  {
+   "question_id": 49893001,
+   "image_id": 49893,
+   "file": "val2014/COCO_val2014_000000049893.jpg",
+   "question": "What colors are the court?"
+  },
+  {
+   "question_id": 50309000,
+   "image_id": 50309,
+   "file": "val2014/COCO_val2014_000000050309.jpg",
+   "question": "Is there a mountain in the background?"
+  },
+  {
+   "question_id": 52827003,
+   "image_id": 52827,
+   "file": "val2014/COCO_val2014_000000052827.jpg",
+   "question": "Are there people in the water?"
+  },
+  {
+   "question_id": 55466006,
+   "image_id": 55466,
+   "file": "val2014/COCO_val2014_000000055466.jpg",
+   "question": "Is the cat wearing a collar?"
+  },
+  {
+   "question_id": 56326001,
+   "image_id": 56326,
+   "file": "val2014/COCO_val2014_000000056326.jpg",
+   "question": "How many veggies are on the plate?"
+  },
+  {
+   "question_id": 57286001,
+   "image_id": 57286,
+   "file": "val2014/COCO_val2014_000000057286.jpg",
+   "question": "How many skaters have helmets?"
+  },
+  {
+   "question_id": 59383001,
+   "image_id": 59383,
+   "file": "val2014/COCO_val2014_000000059383.jpg",
+   "question": "Where are the tiles?"
+  },
+  {
+   "question_id": 61564005,
+   "image_id": 61564,
+   "file": "val2014/COCO_val2014_000000061564.jpg",
+   "question": "What are the elephants doing with their trunks?"
+  },
+  {
+   "question_id": 65969002,
+   "image_id": 65969,
+   "file": "val2014/COCO_val2014_000000065969.jpg",
+   "question": "Is the ocean nearby?"
+  },
+  {
+   "question_id": 65981001,
+   "image_id": 65981,
+   "file": "val2014/COCO_val2014_000000065981.jpg",
+   "question": "Is train close to destination?"
+  },
+  {
+   "question_id": 67532002,
+   "image_id": 67532,
+   "file": "val2014/COCO_val2014_000000067532.jpg",
+   "question": "Is the kid using braces?"
+  },
+  {
+   "question_id": 68120002,
+   "image_id": 68120,
+   "file": "val2014/COCO_val2014_000000068120.jpg",
+   "question": "What are the men riding on?"
+  },
+  {
+   "question_id": 70020006,
+   "image_id": 70020,
+   "file": "val2014/COCO_val2014_000000070020.jpg",
+   "question": "What color are the woman's shorts?"
+  },
+  {
+   "question_id": 71171012,
+   "image_id": 71171,
+   "file": "val2014/COCO_val2014_000000071171.jpg",
+   "question": "What are the two vegetable in the dish?"
+  },
+  {
+   "question_id": 72011000,
+   "image_id": 72011,
+   "file": "val2014/COCO_val2014_000000072011.jpg",
+   "question": "Are there people playing Frisbee in the foreground?"
+  },
+  {
+   "question_id": 72873006,
+   "image_id": 72873,
+   "file": "val2014/COCO_val2014_000000072873.jpg",
+   "question": "How many windows are there?"
+  },
+  {
+   "question_id": 73527001,
+   "image_id": 73527,
+   "file": "val2014/COCO_val2014_000000073527.jpg",
+   "question": "What language is on the signs?"
+  },
+  {
+   "question_id": 74181002,
+   "image_id": 74181,
+   "file": "val2014/COCO_val2014_000000074181.jpg",
+   "question": "Do you see pink suitcases?"
+  },
+  {
+   "question_id": 75162004,
+   "image_id": 75162,
+   "file": "val2014/COCO_val2014_000000075162.jpg",
+   "question": "Why is the zebra facing away?"
+  },
+  {
+   "question_id": 75600005,
+   "image_id": 75600,
+   "file": "val2014/COCO_val2014_000000075600.jpg",
+   "question": "What comes after SBS?"
+  },
+  {
+   "question_id": 76292002,
+   "image_id": 76292,
+   "file": "val2014/COCO_val2014_000000076292.jpg",
+   "question": "Is the girl swinging?"
+  },
+  {
+   "question_id": 76329003,
+   "image_id": 76329,
+   "file": "val2014/COCO_val2014_000000076329.jpg",
+   "question": "What city is the photo in?"
+  },
+  {
+   "question_id": 78979000,
+   "image_id": 78979,
+   "file": "val2014/COCO_val2014_000000078979.jpg",
+   "question": "What is on the screen behind the plane?"
+  },
+  {
+   "question_id": 79545002,
+   "image_id": 79545,
+   "file": "val2014/COCO_val2014_000000079545.jpg",
+   "question": "How many animals are standing?"
+  },
+  {
+   "question_id": 79686003,
+   "image_id": 79686,
+   "file": "val2014/COCO_val2014_000000079686.jpg",
+   "question": "Is the lamp on or off?"
+  },
+  {
+   "question_id": 79992003,
+   "image_id": 79992,
+   "file": "val2014/COCO_val2014_000000079992.jpg",
+   "question": "Which food contains milk?"
+  },
+  {
+   "question_id": 80328003,
+   "image_id": 80328,
+   "file": "val2014/COCO_val2014_000000080328.jpg",
+   "question": "Is this a city or country sitting?"
+  },
+  {
+   "question_id": 81354000,
+   "image_id": 81354,
+   "file": "val2014/COCO_val2014_000000081354.jpg",
+   "question": "Is the scissor rusted?"
+  },
+  {
+   "question_id": 81656000,
+   "image_id": 81656,
+   "file": "val2014/COCO_val2014_000000081656.jpg",
+   "question": "How many suitcases are here?"
+  },
+  {
+   "question_id": 85183002,
+   "image_id": 85183,
+   "file": "val2014/COCO_val2014_000000085183.jpg",
+   "question": "Do both people have their eyes open?"
+  },
+  {
+   "question_id": 86516000,
+   "image_id": 86516,
+   "file": "val2014/COCO_val2014_000000086516.jpg",
+   "question": "Are they at the beach?"
+  },
+  {
+   "question_id": 87470004,
+   "image_id": 87470,
+   "file": "val2014/COCO_val2014_000000087470.jpg",
+   "question": "Could this rode accommodate large trucks?"
+  },
+  {
+   "question_id": 92177005,
+   "image_id": 92177,
+   "file": "val2014/COCO_val2014_000000092177.jpg",
+   "question": "Is this a birthday cake?"
+  },
+  {
+   "question_id": 92416001,
+   "image_id": 92416,
+   "file": "val2014/COCO_val2014_000000092416.jpg",
+   "question": "Is he holding a beer?"
+  },
+  {
+   "question_id": 92678000,
+   "image_id": 92678,
+   "file": "val2014/COCO_val2014_000000092678.jpg",
+   "question": "Is this a man or woman?"
+  },
+  {
+   "question_id": 95161002,
+   "image_id": 95161,
+   "file": "val2014/COCO_val2014_000000095161.jpg",
+   "question": "What style building is seen here?"
+  },
+  {
+   "question_id": 95702001,
+   "image_id": 95702,
+   "file": "val2014/COCO_val2014_000000095702.jpg",
+   "question": "What color is the horse?"
+  },
+  {
+   "question_id": 95786000,
+   "image_id": 95786,
+   "file": "val2014/COCO_val2014_000000095786.jpg",
+   "question": "What do the pieces appear to be made of?"
+  },
+  {
+   "question_id": 97924001,
+   "image_id": 97924,
+   "file": "val2014/COCO_val2014_000000097924.jpg",
+   "question": "How many legs total?"
+  },
+  {
+   "question_id": 98284000,
+   "image_id": 98284,
+   "file": "val2014/COCO_val2014_000000098284.jpg",
+   "question": "Is the boy wearing glasses?"
+  },
+  {
+   "question_id": 98322000,
+   "image_id": 98322,
+   "file": "val2014/COCO_val2014_000000098322.jpg",
+   "question": "Is the people happy?"
+  },
+  {
+   "question_id": 100306001,
+   "image_id": 100306,
+   "file": "val2014/COCO_val2014_000000100306.jpg",
+   "question": "What season is it?"
+  },
+  {
+   "question_id": 101473001,
+   "image_id": 101473,
+   "file": "val2014/COCO_val2014_000000101473.jpg",
+   "question": "What brand of phone is on the right?"
+  },
+  {
+   "question_id": 102466001,
+   "image_id": 102466,
+   "file": "val2014/COCO_val2014_000000102466.jpg",
+   "question": "What is the boat carrying?"
+  },
+  {
+   "question_id": 106909002,
+   "image_id": 106909,
+   "file": "val2014/COCO_val2014_000000106909.jpg",
+   "question": "Is this in China?"
+  },
+  {
+   "question_id": 107108000,
+   "image_id": 107108,
+   "file": "val2014/COCO_val2014_000000107108.jpg",
+   "question": "Is there a vegetable on the plate?"
+  },
+  {
+   "question_id": 108193003,
+   "image_id": 108193,
+   "file": "val2014/COCO_val2014_000000108193.jpg",
+   "question": "Were the oats used to make this food?"
+  },
+  {
+   "question_id": 109434001,
+   "image_id": 109434,
+   "file": "val2014/COCO_val2014_000000109434.jpg",
+   "question": "Are the lights on?"
+  },
+  {
+   "question_id": 110877000,
+   "image_id": 110877,
+   "file": "val2014/COCO_val2014_000000110877.jpg",
+   "question": "What are the surfers wearing?"
+  },
+  {
+   "question_id": 112988001,
+   "image_id": 112988,
+   "file": "val2014/COCO_val2014_000000112988.jpg",
+   "question": "How many pieces are left?"
+  },
+  {
+   "question_id": 113040002,
+   "image_id": 113040,
+   "file": "val2014/COCO_val2014_000000113040.jpg",
+   "question": "How many things are on the tray?"
+  },
+  {
+   "question_id": 113556002,
+   "image_id": 113556,
+   "file": "val2014/COCO_val2014_000000113556.jpg",
+   "question": "What is on top of the computer monitor?"
+  },
+  {
+   "question_id": 114941011,
+   "image_id": 114941,
+   "file": "val2014/COCO_val2014_000000114941.jpg",
+   "question": "What color is the stripe on the side of the train?"
+  },
+  {
+   "question_id": 115118003,
+   "image_id": 115118,
+   "file": "val2014/COCO_val2014_000000115118.jpg",
+   "question": "How fast would this train normally be going?"
+  },
+  {
+   "question_id": 115846000,
+   "image_id": 115846,
+   "file": "val2014/COCO_val2014_000000115846.jpg",
+   "question": "How big is glass?"
+  },
+  {
+   "question_id": 116017005,
+   "image_id": 116017,
+   "file": "val2014/COCO_val2014_000000116017.jpg",
+   "question": "How many neckties are the men wearing?"
+  },
+  {
+   "question_id": 116208000,
+   "image_id": 116208,
+   "file": "val2014/COCO_val2014_000000116208.jpg",
+   "question": "How many pizzas are visible?"
+  },
+  {
+   "question_id": 117458007,
+   "image_id": 117458,
+   "file": "val2014/COCO_val2014_000000117458.jpg",
+   "question": "Bike riders are racing or riding in normal speed only?"
+  },
+  {
+   "question_id": 117525000,
+   "image_id": 117525,
+   "file": "val2014/COCO_val2014_000000117525.jpg",
+   "question": "How many different ornaments?"
+  },
+  {
+   "question_id": 120007005,
+   "image_id": 120007,
+   "file": "val2014/COCO_val2014_000000120007.jpg",
+   "question": "What are they taking a photo of?"
+  },
+  {
+   "question_id": 122606004,
+   "image_id": 122606,
+   "file": "val2014/COCO_val2014_000000122606.jpg",
+   "question": "What is the license plate?"
+  },
+  {
+   "question_id": 123836005,
+   "image_id": 123836,
+   "file": "val2014/COCO_val2014_000000123836.jpg",
+   "question": "Which animals are in the picture?"
+  },
+  {
+   "question_id": 124659001,
+   "image_id": 124659,
+   "file": "val2014/COCO_val2014_000000124659.jpg",
+   "question": "How many sources of light are observable in the picture?"
+  },
+  {
+   "question_id": 124952001,
+   "image_id": 124952,
+   "file": "val2014/COCO_val2014_000000124952.jpg",
+   "question": "Which vehicle is closest to the white line?"
+  },
+  {
+   "question_id": 126299000,
+   "image_id": 126299,
+   "file": "val2014/COCO_val2014_000000126299.jpg",
+   "question": "What color is the middle oven?"
+  },
+  {
+   "question_id": 126324002,
+   "image_id": 126324,
+   "file": "val2014/COCO_val2014_000000126324.jpg",
+   "question": "What color is the cat?"
+  },
+  {
+   "question_id": 126502002,
+   "image_id": 126502,
+   "file": "val2014/COCO_val2014_000000126502.jpg",
+   "question": "Is the bird sitting on a man-made object?"
+  },
+  {
+   "question_id": 126766002,
+   "image_id": 126766,
+   "file": "val2014/COCO_val2014_000000126766.jpg",
+   "question": "Is there a trash can?"
+  },
+  {
+   "question_id": 128675011,
+   "image_id": 128675,
+   "file": "val2014/COCO_val2014_000000128675.jpg",
+   "question": "What is the person standing on?"
+  },
+  {
+   "question_id": 129645001,
+   "image_id": 129645,
+   "file": "val2014/COCO_val2014_000000129645.jpg",
+   "question": "What kind of jewelry is he wearing?"
+  },
+  {
+   "question_id": 130566001,
+   "image_id": 130566,
+   "file": "val2014/COCO_val2014_000000130566.jpg",
+   "question": "How many of the trains cars have red on them?"
+  },
+  {
+   "question_id": 130826001,
+   "image_id": 130826,
+   "file": "val2014/COCO_val2014_000000130826.jpg",
+   "question": "What is the woman on the right sitting on?"
+  },
+  {
+   "question_id": 131089003,
+   "image_id": 131089,
+   "file": "val2014/COCO_val2014_000000131089.jpg",
+   "question": "Is there a chain link fence in the image?"
+  },
+  {
+   "question_id": 133210001,
+   "image_id": 133210,
+   "file": "val2014/COCO_val2014_000000133210.jpg",
+   "question": "What color is the carpet?"
+  },
+  {
+   "question_id": 133867000,
+   "image_id": 133867,
+   "file": "val2014/COCO_val2014_000000133867.jpg",
+   "question": "In what city do you think this photo was taken?"
+  },
+  {
+   "question_id": 134167001,
+   "image_id": 134167,
+   "file": "val2014/COCO_val2014_000000134167.jpg",
+   "question": "What is the name of the animal laying on the ground?"
+  },
+  {
+   "question_id": 134964002,
+   "image_id": 134964,
+   "file": "val2014/COCO_val2014_000000134964.jpg",
+   "question": "Where and when to watch the show represented on the cake?"
+  },
+  {
+   "question_id": 135281001,
+   "image_id": 135281,
+   "file": "val2014/COCO_val2014_000000135281.jpg",
+   "question": "What are the women walking beside?"
+  },
+  {
+   "question_id": 135578017,
+   "image_id": 135578,
+   "file": "val2014/COCO_val2014_000000135578.jpg",
+   "question": "Is anyone looking at the vegetables?"
+  },
+  {
+   "question_id": 136117007,
+   "image_id": 136117,
+   "file": "val2014/COCO_val2014_000000136117.jpg",
+   "question": "How much are the brown boxes?"
+  },
+  {
+   "question_id": 136642000,
+   "image_id": 136642,
+   "file": "val2014/COCO_val2014_000000136642.jpg",
+   "question": "Is the batter wearing a blue Jersey?"
+  },
+  {
+   "question_id": 138675004,
+   "image_id": 138675,
+   "file": "val2014/COCO_val2014_000000138675.jpg",
+   "question": "Is the person at the top or bottom of the slope?"
+  },
+  {
+   "question_id": 139567004,
+   "image_id": 139567,
+   "file": "val2014/COCO_val2014_000000139567.jpg",
+   "question": "Is that a horse?"
+  },
+  {
+   "question_id": 140444002,
+   "image_id": 140444,
+   "file": "val2014/COCO_val2014_000000140444.jpg",
+   "question": "How many dogs are on the cake?"
+  },
+  {
+   "question_id": 140929000,
+   "image_id": 140929,
+   "file": "val2014/COCO_val2014_000000140929.jpg",
+   "question": "What holds the clock up?"
+  },
+  {
+   "question_id": 145831001,
+   "image_id": 145831,
+   "file": "val2014/COCO_val2014_000000145831.jpg",
+   "question": "Where was the photo taken?"
+  },
+  {
+   "question_id": 145873003,
+   "image_id": 145873,
+   "file": "val2014/COCO_val2014_000000145873.jpg",
+   "question": "What is the color of the sky?"
+  },
+  {
+   "question_id": 147068000,
+   "image_id": 147068,
+   "file": "val2014/COCO_val2014_000000147068.jpg",
+   "question": "Is this a carnival?"
+  },
+  {
+   "question_id": 147685003,
+   "image_id": 147685,
+   "file": "val2014/COCO_val2014_000000147685.jpg",
+   "question": "What color hat is the male wearing?"
+  },
+  {
+   "question_id": 147915001,
+   "image_id": 147915,
+   "file": "val2014/COCO_val2014_000000147915.jpg",
+   "question": "Is it a four way intersection?"
+  },
+  {
+   "question_id": 148568003,
+   "image_id": 148568,
+   "file": "val2014/COCO_val2014_000000148568.jpg",
+   "question": "What are the people feeding?"
+  },
+  {
+   "question_id": 153631000,
+   "image_id": 153631,
+   "file": "val2014/COCO_val2014_000000153631.jpg",
+   "question": "What color are her socks?"
+  },
+  {
+   "question_id": 153782000,
+   "image_id": 153782,
+   "file": "val2014/COCO_val2014_000000153782.jpg",
+   "question": "Is this a 3-D photo?"
+  },
+  {
+   "question_id": 154095001,
+   "image_id": 154095,
+   "file": "val2014/COCO_val2014_000000154095.jpg",
+   "question": "What color is the fruit on the television?"
+  },
+  {
+   "question_id": 158744000,
+   "image_id": 158744,
+   "file": "val2014/COCO_val2014_000000158744.jpg",
+   "question": "Are there two pieces of white furniture?"
+  },
+  {
+   "question_id": 161586002,
+   "image_id": 161586,
+   "file": "val2014/COCO_val2014_000000161586.jpg",
+   "question": "What color is the boy sock?"
+  },
+  {
+   "question_id": 162445005,
+   "image_id": 162445,
+   "file": "val2014/COCO_val2014_000000162445.jpg",
+   "question": "What is the man holding?"
+  },
+  {
+   "question_id": 163118004,
+   "image_id": 163118,
+   "file": "val2014/COCO_val2014_000000163118.jpg",
+   "question": "What are they playing with?"
+  },
+  {
+   "question_id": 165009004,
+   "image_id": 165009,
+   "file": "val2014/COCO_val2014_000000165009.jpg",
+   "question": "What is on the woman's head?"
+  },
+  {
+   "question_id": 167549002,
+   "image_id": 167549,
+   "file": "val2014/COCO_val2014_000000167549.jpg",
+   "question": "Is the bear alive?"
+  },
+  {
+   "question_id": 168683006,
+   "image_id": 168683,
+   "file": "val2014/COCO_val2014_000000168683.jpg",
+   "question": "What's on the man's head?"
+  },
+  {
+   "question_id": 171199000,
+   "image_id": 171199,
+   "file": "val2014/COCO_val2014_000000171199.jpg",
+   "question": "Are there any green peppers on the pizza?"
+  },
+  {
+   "question_id": 174567005,
+   "image_id": 174567,
+   "file": "val2014/COCO_val2014_000000174567.jpg",
+   "question": "What does the image in red represent?"
+  },
+  {
+   "question_id": 174594003,
+   "image_id": 174594,
+   "file": "val2014/COCO_val2014_000000174594.jpg",
+   "question": "Where are the people playing?"
+  },
+  {
+   "question_id": 176312001,
+   "image_id": 176312,
+   "file": "val2014/COCO_val2014_000000176312.jpg",
+   "question": "What information is the lady looking for?"
+  },
+  {
+   "question_id": 176330001,
+   "image_id": 176330,
+   "file": "val2014/COCO_val2014_000000176330.jpg",
+   "question": "Is the sink clean?"
+  },
+  {
+   "question_id": 177453000,
+   "image_id": 177453,
+   "file": "val2014/COCO_val2014_000000177453.jpg",
+   "question": "Is the giraffe eating from a tree?"
+  },
+  {
+   "question_id": 177489002,
+   "image_id": 177489,
+   "file": "val2014/COCO_val2014_000000177489.jpg",
+   "question": "What room is this?"
+  },
+  {
+   "question_id": 177535001,
+   "image_id": 177535,
+   "file": "val2014/COCO_val2014_000000177535.jpg",
+   "question": "Is the weather misty?"
+  },
+  {
+   "question_id": 178578000,
+   "image_id": 178578,
+   "file": "val2014/COCO_val2014_000000178578.jpg",
+   "question": "What is the person inside of?"
+  },
+  {
+   "question_id": 179720002,
+   "image_id": 179720,
+   "file": "val2014/COCO_val2014_000000179720.jpg",
+   "question": "How many people are dining?"
+  },
+  {
+   "question_id": 180798002,
+   "image_id": 180798,
+   "file": "val2014/COCO_val2014_000000180798.jpg",
+   "question": "How old does the phone look?"
+  },
+  {
+   "question_id": 181572002,
+   "image_id": 181572,
+   "file": "val2014/COCO_val2014_000000181572.jpg",
+   "question": "What is the design on the arm part of the bench?"
+  },
+  {
+   "question_id": 181870002,
+   "image_id": 181870,
+   "file": "val2014/COCO_val2014_000000181870.jpg",
+   "question": "Who has glasses?"
+  },
+  {
+   "question_id": 182784002,
+   "image_id": 182784,
+   "file": "val2014/COCO_val2014_000000182784.jpg",
+   "question": "Is the cow a pet?"
+  },
+  {
+   "question_id": 185789002,
+   "image_id": 185789,
+   "file": "val2014/COCO_val2014_000000185789.jpg",
+   "question": "Is there a garbage can in the picture?"
+  },
+  {
+   "question_id": 185922001,
+   "image_id": 185922,
+   "file": "val2014/COCO_val2014_000000185922.jpg",
+   "question": "How many bikes are pictured?"
+  },
+  {
+   "question_id": 190705002,
+   "image_id": 190705,
+   "file": "val2014/COCO_val2014_000000190705.jpg",
+   "question": "Is the toilet lid up?"
+  },
+  {
+   "question_id": 191096006,
+   "image_id": 191096,
+   "file": "val2014/COCO_val2014_000000191096.jpg",
+   "question": "Where is the bat located?"
+  },
+  {
+   "question_id": 192932002,
+   "image_id": 192932,
+   "file": "val2014/COCO_val2014_000000192932.jpg",
+   "question": "Is the person posing for the camera?"
+  },
+  {
+   "question_id": 193349000,
+   "image_id": 193349,
+   "file": "val2014/COCO_val2014_000000193349.jpg",
+   "question": "Are these men on the same team?"
+  },
+  {
+   "question_id": 193494002,
+   "image_id": 193494,
+   "file": "val2014/COCO_val2014_000000193494.jpg",
+   "question": "What theme is the room?"
+  },
+  {
+   "question_id": 194120000,
+   "image_id": 194120,
+   "file": "val2014/COCO_val2014_000000194120.jpg",
+   "question": "Is the window open?"
+  },
+  {
+   "question_id": 195542009,
+   "image_id": 195542,
+   "file": "val2014/COCO_val2014_000000195542.jpg",
+   "question": "Is the keyboard wireless?"
+  },
+  {
+   "question_id": 196521000,
+   "image_id": 196521,
+   "file": "val2014/COCO_val2014_000000196521.jpg",
+   "question": "Where is the window?"
+  },
+  {
+   "question_id": 196715005,
+   "image_id": 196715,
+   "file": "val2014/COCO_val2014_000000196715.jpg",
+   "question": "Where is the truck parked?"
+  },
+  {
+   "question_id": 197461002,
+   "image_id": 197461,
+   "file": "val2014/COCO_val2014_000000197461.jpg",
+   "question": "Is it a sunny day?"
+  },
+  {
+   "question_id": 198176002,
+   "image_id": 198176,
+   "file": "val2014/COCO_val2014_000000198176.jpg",
+   "question": "What is on the bench?"
+  },
+  {
+   "question_id": 199203005,
+   "image_id": 199203,
+   "file": "val2014/COCO_val2014_000000199203.jpg",
+   "question": "How many ovens can be seen?"
+  },
+  {
+   "question_id": 200961002,
+   "image_id": 200961,
+   "file": "val2014/COCO_val2014_000000200961.jpg",
+   "question": "Is the individual in the picture standing upright?"
+  },
+  {
+   "question_id": 202944002,
+   "image_id": 202944,
+   "file": "val2014/COCO_val2014_000000202944.jpg",
+   "question": "What utensil is in this dish?"
+  },
+  {
+   "question_id": 203629003,
+   "image_id": 203629,
+   "file": "val2014/COCO_val2014_000000203629.jpg",
+   "question": "Is the woman angry?"
+  },
+  {
+   "question_id": 203669012,
+   "image_id": 203669,
+   "file": "val2014/COCO_val2014_000000203669.jpg",
+   "question": "What is the man doing?"
+  },
+  {
+   "question_id": 205863003,
+   "image_id": 205863,
+   "file": "val2014/COCO_val2014_000000205863.jpg",
+   "question": "What console does the game on the table belong to?"
+  },
+  {
+   "question_id": 205866004,
+   "image_id": 205866,
+   "file": "val2014/COCO_val2014_000000205866.jpg",
+   "question": "What is the front of the canoe propped up on?"
+  },
+  {
+   "question_id": 206783003,
+   "image_id": 206783,
+   "file": "val2014/COCO_val2014_000000206783.jpg",
+   "question": "What color is the soil?"
+  },
+  {
+   "question_id": 207853001,
+   "image_id": 207853,
+   "file": "val2014/COCO_val2014_000000207853.jpg",
+   "question": "IS there water in the background?"
+  },
+  {
+   "question_id": 207913000,
+   "image_id": 207913,
+   "file": "val2014/COCO_val2014_000000207913.jpg",
+   "question": "How many giraffes are facing left?"
+  },
+  {
+   "question_id": 208623000,
+   "image_id": 208623,
+   "file": "val2014/COCO_val2014_000000208623.jpg",
+   "question": "How many males are present?"
+  },
+  {
+   "question_id": 208871000,
+   "image_id": 208871,
+   "file": "val2014/COCO_val2014_000000208871.jpg",
+   "question": "Who wears blue jeans?"
+  },
+  {
+   "question_id": 209420003,
+   "image_id": 209420,
+   "file": "val2014/COCO_val2014_000000209420.jpg",
+   "question": "Are the trees bare?"
+  },
+  {
+   "question_id": 209808001,
+   "image_id": 209808,
+   "file": "val2014/COCO_val2014_000000209808.jpg",
+   "question": "Is this a hamburger?"
+  },
+  {
+   "question_id": 212351002,
+   "image_id": 212351,
+   "file": "val2014/COCO_val2014_000000212351.jpg",
+   "question": "How many planes are flying?"
+  },
+  {
+   "question_id": 215356000,
+   "image_id": 215356,
+   "file": "val2014/COCO_val2014_000000215356.jpg",
+   "question": "Is there a brick sidewalk in this picture?"
+  },
+  {
+   "question_id": 215408005,
+   "image_id": 215408,
+   "file": "val2014/COCO_val2014_000000215408.jpg",
+   "question": "How many clocks are in the photo?"
+  },
+  {
+   "question_id": 215744003,
+   "image_id": 215744,
+   "file": "val2014/COCO_val2014_000000215744.jpg",
+   "question": "What color is the dog?"
+  },
+  {
+   "question_id": 216726002,
+   "image_id": 216726,
+   "file": "val2014/COCO_val2014_000000216726.jpg",
+   "question": "Is it a  bakery?"
+  },
+  {
+   "question_id": 217156008,
+   "image_id": 217156,
+   "file": "val2014/COCO_val2014_000000217156.jpg",
+   "question": "Is there an old fashioned vehicle in this picture?"
+  },
+  {
+   "question_id": 217468002,
+   "image_id": 217468,
+   "file": "val2014/COCO_val2014_000000217468.jpg",
+   "question": "Is there water?"
+  },
+  {
+   "question_id": 217951002,
+   "image_id": 217951,
+   "file": "val2014/COCO_val2014_000000217951.jpg",
+   "question": "Is there snow on mountains?"
+  },
+  {
+   "question_id": 218988001,
+   "image_id": 218988,
+   "file": "val2014/COCO_val2014_000000218988.jpg",
+   "question": "What brand is the microwave?"
+  },
+  {
+   "question_id": 218996000,
+   "image_id": 218996,
+   "file": "val2014/COCO_val2014_000000218996.jpg",
+   "question": "What brand is the chipboard?"
+  },
+  {
+   "question_id": 219315002,
+   "image_id": 219315,
+   "file": "val2014/COCO_val2014_000000219315.jpg",
+   "question": "What is the topping on the doughnut?"
+  },
+  {
+   "question_id": 219928001,
+   "image_id": 219928,
+   "file": "val2014/COCO_val2014_000000219928.jpg",
+   "question": "What are these people protesting?"
+  },
+  {
+   "question_id": 221155002,
+   "image_id": 221155,
+   "file": "val2014/COCO_val2014_000000221155.jpg",
+   "question": "What gas station is in the distance?"
+  },
+  {
+   "question_id": 223738002,
+   "image_id": 223738,
+   "file": "val2014/COCO_val2014_000000223738.jpg",
+   "question": "Is a playground in the background?"
+  },
+  {
+   "question_id": 224051002,
+   "image_id": 224051,
+   "file": "val2014/COCO_val2014_000000224051.jpg",
+   "question": "Is anyone riding the bike?"
+  },
+  {
+   "question_id": 224675000,
+   "image_id": 224675,
+   "file": "val2014/COCO_val2014_000000224675.jpg",
+   "question": "Where are they?"
+  },
+  {
+   "question_id": 225786001,
+   "image_id": 225786,
+   "file": "val2014/COCO_val2014_000000225786.jpg",
+   "question": "What shape is the kite?"
+  },
+  {
+   "question_id": 230669002,
+   "image_id": 230669,
+   "file": "val2014/COCO_val2014_000000230669.jpg",
+   "question": "How many birds are there?"
+  },
+  {
+   "question_id": 230679002,
+   "image_id": 230679,
+   "file": "val2014/COCO_val2014_000000230679.jpg",
+   "question": "Is the boy feeding the giraffe his lunch?"
+  },
+  {
+   "question_id": 230987000,
+   "image_id": 230987,
+   "file": "val2014/COCO_val2014_000000230987.jpg",
+   "question": "Are stationeries in the table?"
+  },
+  {
+   "question_id": 231685002,
+   "image_id": 231685,
+   "file": "val2014/COCO_val2014_000000231685.jpg",
+   "question": "Does the bird have food in its mouth?"
+  },
+  {
+   "question_id": 232173000,
+   "image_id": 232173,
+   "file": "val2014/COCO_val2014_000000232173.jpg",
+   "question": "What color is the floor?"
+  },
+  {
+   "question_id": 233830004,
+   "image_id": 233830,
+   "file": "val2014/COCO_val2014_000000233830.jpg",
+   "question": "What kind of food is this?"
+  },
+  {
+   "question_id": 234633003,
+   "image_id": 234633,
+   "file": "val2014/COCO_val2014_000000234633.jpg",
+   "question": "Does anyone have luggage in their hand?"
+  },
+  {
+   "question_id": 236690001,
+   "image_id": 236690,
+   "file": "val2014/COCO_val2014_000000236690.jpg",
+   "question": "What color is the water?"
+  },
+  {
+   "question_id": 237501002,
+   "image_id": 237501,
+   "file": "val2014/COCO_val2014_000000237501.jpg",
+   "question": "What color is the bear?"
+  },
+  {
+   "question_id": 237618002,
+   "image_id": 237618,
+   "file": "val2014/COCO_val2014_000000237618.jpg",
+   "question": "How many horses are there?"
+  },
+  {
+   "question_id": 238449002,
+   "image_id": 238449,
+   "file": "val2014/COCO_val2014_000000238449.jpg",
+   "question": "Is this a man or boy?"
+  },
+  {
+   "question_id": 240637000,
+   "image_id": 240637,
+   "file": "val2014/COCO_val2014_000000240637.jpg",
+   "question": "Is the dog tucked in bed or eating?"
+  },
+  {
+   "question_id": 242103001,
+   "image_id": 242103,
+   "file": "val2014/COCO_val2014_000000242103.jpg",
+   "question": "Is the food asian?"
+  },
+  {
+   "question_id": 244487005,
+   "image_id": 244487,
+   "file": "val2014/COCO_val2014_000000244487.jpg",
+   "question": "Are both planes on the ground?"
+  },
+  {
+   "question_id": 246876001,
+   "image_id": 246876,
+   "file": "val2014/COCO_val2014_000000246876.jpg",
+   "question": "Can this animal eat the leaves?"
+  },
+  {
+   "question_id": 250311002,
+   "image_id": 250311,
+   "file": "val2014/COCO_val2014_000000250311.jpg",
+   "question": "Is there a plant in the kitchen?"
+  },
+  {
+   "question_id": 254814017,
+   "image_id": 254814,
+   "file": "val2014/COCO_val2014_000000254814.jpg",
+   "question": "Is this an airport?"
+  },
+  {
+   "question_id": 254838002,
+   "image_id": 254838,
+   "file": "val2014/COCO_val2014_000000254838.jpg",
+   "question": "Is the person in this picture wearing shoes?"
+  },
+  {
+   "question_id": 256250004,
+   "image_id": 256250,
+   "file": "val2014/COCO_val2014_000000256250.jpg",
+   "question": "How many giraffes are in the image?"
+  },
+  {
+   "question_id": 260307001,
+   "image_id": 260307,
+   "file": "val2014/COCO_val2014_000000260307.jpg",
+   "question": "The one way sign is pointing to which side of the picture?"
+  },
+  {
+   "question_id": 262175002,
+   "image_id": 262175,
+   "file": "val2014/COCO_val2014_000000262175.jpg",
+   "question": "What is the man wearing on his head?"
+  },
+  {
+   "question_id": 262391001,
+   "image_id": 262391,
+   "file": "val2014/COCO_val2014_000000262391.jpg",
+   "question": "Are the curtains too long for the windows?"
+  },
+  {
+   "question_id": 263258003,
+   "image_id": 263258,
+   "file": "val2014/COCO_val2014_000000263258.jpg",
+   "question": "What is the color of the fence?"
+  },
+  {
+   "question_id": 266348006,
+   "image_id": 266348,
+   "file": "val2014/COCO_val2014_000000266348.jpg",
+   "question": "Was this taken at night?"
+  },
+  {
+   "question_id": 266977001,
+   "image_id": 266977,
+   "file": "val2014/COCO_val2014_000000266977.jpg",
+   "question": "How far is the person from the water?"
+  },
+  {
+   "question_id": 267515000,
+   "image_id": 267515,
+   "file": "val2014/COCO_val2014_000000267515.jpg",
+   "question": "How many people here needed to brush their teeth?"
+  },
+  {
+   "question_id": 268363008,
+   "image_id": 268363,
+   "file": "val2014/COCO_val2014_000000268363.jpg",
+   "question": "What shape is the stuffed toy?"
+  },
+  {
+   "question_id": 268375000,
+   "image_id": 268375,
+   "file": "val2014/COCO_val2014_000000268375.jpg",
+   "question": "How do these animals eat?"
+  },
+  {
+   "question_id": 268944004,
+   "image_id": 268944,
+   "file": "val2014/COCO_val2014_000000268944.jpg",
+   "question": "Is there steps?"
+  },
+  {
+   "question_id": 270386001,
+   "image_id": 270386,
+   "file": "val2014/COCO_val2014_000000270386.jpg",
+   "question": "Is this a one way street?"
+  },
+  {
+   "question_id": 271471002,
+   "image_id": 271471,
+   "file": "val2014/COCO_val2014_000000271471.jpg",
+   "question": "Does this fruit grow on vines?"
+  },
+  {
+   "question_id": 273772001,
+   "image_id": 273772,
+   "file": "val2014/COCO_val2014_000000273772.jpg",
+   "question": "What is the book sitting on?"
+  },
+  {
+   "question_id": 273784000,
+   "image_id": 273784,
+   "file": "val2014/COCO_val2014_000000273784.jpg",
+   "question": "Is there a car in the garage?"
+  },
+  {
+   "question_id": 275611008,
+   "image_id": 275611,
+   "file": "val2014/COCO_val2014_000000275611.jpg",
+   "question": "Is this supposed to be a personal pan pizza?"
+  },
+  {
+   "question_id": 276408003,
+   "image_id": 276408,
+   "file": "val2014/COCO_val2014_000000276408.jpg",
+   "question": "What number of gravel pebbles are on the ground?"
+  },
+  {
+   "question_id": 276458002,
+   "image_id": 276458,
+   "file": "val2014/COCO_val2014_000000276458.jpg",
+   "question": "Where is the shore?"
+  },
+  {
+   "question_id": 277051004,
+   "image_id": 277051,
+   "file": "val2014/COCO_val2014_000000277051.jpg",
+   "question": "Is this outdoors or indoors?"
+  },
+  {
+   "question_id": 277440000,
+   "image_id": 277440,
+   "file": "val2014/COCO_val2014_000000277440.jpg",
+   "question": "Is there an open book in the picture?"
+  },
+  {
+   "question_id": 278437000,
+   "image_id": 278437,
+   "file": "val2014/COCO_val2014_000000278437.jpg",
+   "question": "How many cows?"
+  },
+  {
+   "question_id": 279085001,
+   "image_id": 279085,
+   "file": "val2014/COCO_val2014_000000279085.jpg",
+   "question": "Windows or apple product?"
+  },
+  {
+   "question_id": 280360001,
+   "image_id": 280360,
+   "file": "val2014/COCO_val2014_000000280360.jpg",
+   "question": "Do soldiers parachute from these planes?"
+  },
+  {
+   "question_id": 280734002,
+   "image_id": 280734,
+   "file": "val2014/COCO_val2014_000000280734.jpg",
+   "question": "Is this a delivery pizza?"
+  },
+  {
+   "question_id": 281102000,
+   "image_id": 281102,
+   "file": "val2014/COCO_val2014_000000281102.jpg",
+   "question": "How many people are visible?"
+  },
+  {
+   "question_id": 281455022,
+   "image_id": 281455,
+   "file": "val2014/COCO_val2014_000000281455.jpg",
+   "question": "Is this photo oriented so that its horizon and the real horizon are parallel?"
+  },
+  {
+   "question_id": 281782010,
+   "image_id": 281782,
+   "file": "val2014/COCO_val2014_000000281782.jpg",
+   "question": "What color is the car?"
+  },
+  {
+   "question_id": 281972002,
+   "image_id": 281972,
+   "file": "val2014/COCO_val2014_000000281972.jpg",
+   "question": "What are this team's colors?"
+  },
+  {
+   "question_id": 282130001,
+   "image_id": 282130,
+   "file": "val2014/COCO_val2014_000000282130.jpg",
+   "question": "Where in this scene would you most likely attend a funeral?"
+  },
+  {
+   "question_id": 283012000,
+   "image_id": 283012,
+   "file": "val2014/COCO_val2014_000000283012.jpg",
+   "question": "How many people are in the scene?"
+  },
+  {
+   "question_id": 283910001,
+   "image_id": 283910,
+   "file": "val2014/COCO_val2014_000000283910.jpg",
+   "question": "What are the yellow objects?"
+  },
+  {
+   "question_id": 283977004,
+   "image_id": 283977,
+   "file": "val2014/COCO_val2014_000000283977.jpg",
+   "question": "What is the boy wearing on his back?"
+  },
+  {
+   "question_id": 289469001,
+   "image_id": 289469,
+   "file": "val2014/COCO_val2014_000000289469.jpg",
+   "question": "Is this breakfast?"
+  },
+  {
+   "question_id": 289754001,
+   "image_id": 289754,
+   "file": "val2014/COCO_val2014_000000289754.jpg",
+   "question": "Is there a zebra in this picture?"
+  },
+  {
+   "question_id": 289883000,
+   "image_id": 289883,
+   "file": "val2014/COCO_val2014_000000289883.jpg",
+   "question": "Is the bus going straight?"
+  },
+  {
+   "question_id": 292301006,
+   "image_id": 292301,
+   "file": "val2014/COCO_val2014_000000292301.jpg",
+   "question": "What is in the bag on the table?"
+  },
+  {
+   "question_id": 292590000,
+   "image_id": 292590,
+   "file": "val2014/COCO_val2014_000000292590.jpg",
+   "question": "IS it cold outside?"
+  },
+  {
+   "question_id": 293022002,
+   "image_id": 293022,
+   "file": "val2014/COCO_val2014_000000293022.jpg",
+   "question": "What is the fence made out of?"
+  },
+  {
+   "question_id": 296243003,
+   "image_id": 296243,
+   "file": "val2014/COCO_val2014_000000296243.jpg",
+   "question": "Is this a beach?"
+  },
+  {
+   "question_id": 298290000,
+   "image_id": 298290,
+   "file": "val2014/COCO_val2014_000000298290.jpg",
+   "question": "What color are the wine bottle tops?"
+  },
+  {
+   "question_id": 299448003,
+   "image_id": 299448,
+   "file": "val2014/COCO_val2014_000000299448.jpg",
+   "question": "Is the train crowded?"
+  },
+  {
+   "question_id": 299550002,
+   "image_id": 299550,
+   "file": "val2014/COCO_val2014_000000299550.jpg",
+   "question": "What color are the fixtures?"
+  },
+  {
+   "question_id": 300848000,
+   "image_id": 300848,
+   "file": "val2014/COCO_val2014_000000300848.jpg",
+   "question": "What game are they playing?"
+  },
+  {
+   "question_id": 301817006,
+   "image_id": 301817,
+   "file": "val2014/COCO_val2014_000000301817.jpg",
+   "question": "What color is the building with the clock on it?"
+  },
+  {
+   "question_id": 302030001,
+   "image_id": 302030,
+   "file": "val2014/COCO_val2014_000000302030.jpg",
+   "question": "What operating system's insignia can you see on the laptop frame?"
+  },
+  {
+   "question_id": 302806003,
+   "image_id": 302806,
+   "file": "val2014/COCO_val2014_000000302806.jpg",
+   "question": "What is on top of the toaster?"
+  },
+  {
+   "question_id": 305609000,
+   "image_id": 305609,
+   "file": "val2014/COCO_val2014_000000305609.jpg",
+   "question": "Is this breakfast?"
+  },
+  {
+   "question_id": 307523013,
+   "image_id": 307523,
+   "file": "val2014/COCO_val2014_000000307523.jpg",
+   "question": "Will the man fall?"
+  },
+  {
+   "question_id": 307993003,
+   "image_id": 307993,
+   "file": "val2014/COCO_val2014_000000307993.jpg",
+   "question": "What is hanging from the rear view mirror?"
+  },
+  {
+   "question_id": 310262004,
+   "image_id": 310262,
+   "file": "val2014/COCO_val2014_000000310262.jpg",
+   "question": "What is growing on the trees?"
+  },
+  {
+   "question_id": 310618001,
+   "image_id": 310618,
+   "file": "val2014/COCO_val2014_000000310618.jpg",
+   "question": "Where was this photo taken?"
+  },
+  {
+   "question_id": 311465001,
+   "image_id": 311465,
+   "file": "val2014/COCO_val2014_000000311465.jpg",
+   "question": "Is this sport tennis or badminton?"
+  },
+  {
+   "question_id": 313182006,
+   "image_id": 313182,
+   "file": "val2014/COCO_val2014_000000313182.jpg",
+   "question": "Is the door open?"
+  },
+  {
+   "question_id": 314251001,
+   "image_id": 314251,
+   "file": "val2014/COCO_val2014_000000314251.jpg",
+   "question": "How many trees are by the road?"
+  },
+  {
+   "question_id": 316795002,
+   "image_id": 316795,
+   "file": "val2014/COCO_val2014_000000316795.jpg",
+   "question": "What kind of horse is this?"
+  },
+  {
+   "question_id": 318813000,
+   "image_id": 318813,
+   "file": "val2014/COCO_val2014_000000318813.jpg",
+   "question": "Is this a rainy day?"
+  },
+  {
+   "question_id": 321214001,
+   "image_id": 321214,
+   "file": "val2014/COCO_val2014_000000321214.jpg",
+   "question": "What color is the frosting?"
+  },
+  {
+   "question_id": 321542000,
+   "image_id": 321542,
+   "file": "val2014/COCO_val2014_000000321542.jpg",
+   "question": "How many spires below Big Ben's clock?"
+  },
+  {
+   "question_id": 321866003,
+   "image_id": 321866,
+   "file": "val2014/COCO_val2014_000000321866.jpg",
+   "question": "How many hygiene items are shown?"
+  },
+  {
+   "question_id": 325157000,
+   "image_id": 325157,
+   "file": "val2014/COCO_val2014_000000325157.jpg",
+   "question": "Is this a school picture?"
+  },
+  {
+   "question_id": 325593002,
+   "image_id": 325593,
+   "file": "val2014/COCO_val2014_000000325593.jpg",
+   "question": "What type of writing is visible?"
+  },
+  {
+   "question_id": 326344000,
+   "image_id": 326344,
+   "file": "val2014/COCO_val2014_000000326344.jpg",
+   "question": "What color is the knife?"
+  },
+  {
+   "question_id": 326911006,
+   "image_id": 326911,
+   "file": "val2014/COCO_val2014_000000326911.jpg",
+   "question": "Is the dog tied up?"
+  },
+  {
+   "question_id": 328433001,
+   "image_id": 328433,
+   "file": "val2014/COCO_val2014_000000328433.jpg",
+   "question": "How many benches are in the photo?"
+  },
+  {
+   "question_id": 330051003,
+   "image_id": 330051,
+   "file": "val2014/COCO_val2014_000000330051.jpg",
+   "question": "What shape is the shorthand of the watch?"
+  },
+  {
+   "question_id": 330699002,
+   "image_id": 330699,
+   "file": "val2014/COCO_val2014_000000330699.jpg",
+   "question": "Is the man going to fall of his board?"
+  },
+  {
+   "question_id": 333286002,
+   "image_id": 333286,
+   "file": "val2014/COCO_val2014_000000333286.jpg",
+   "question": "How many people are pictured?"
+  },
+  {
+   "question_id": 333665003,
+   "image_id": 333665,
+   "file": "val2014/COCO_val2014_000000333665.jpg",
+   "question": "Is there a bald man in the picture?"
+  },
+  {
+   "question_id": 334085000,
+   "image_id": 334085,
+   "file": "val2014/COCO_val2014_000000334085.jpg",
+   "question": "Will the baby eat pizza?"
+  },
+  {
+   "question_id": 334371002,
+   "image_id": 334371,
+   "file": "val2014/COCO_val2014_000000334371.jpg",
+   "question": "What type of buses are these?"
+  },
+  {
+   "question_id": 334760003,
+   "image_id": 334760,
+   "file": "val2014/COCO_val2014_000000334760.jpg",
+   "question": "Is the man sitting on something?"
+  },
+  {
+   "question_id": 335099002,
+   "image_id": 335099,
+   "file": "val2014/COCO_val2014_000000335099.jpg",
+   "question": "Are these dogs inside the house?"
+  },
+  {
+   "question_id": 335800002,
+   "image_id": 335800,
+   "file": "val2014/COCO_val2014_000000335800.jpg",
+   "question": "What street was this photo taken on?"
+  },
+  {
+   "question_id": 336777001,
+   "image_id": 336777,
+   "file": "val2014/COCO_val2014_000000336777.jpg",
+   "question": "Is there access to the balcony?"
+  },
+  {
+   "question_id": 337705002,
+   "image_id": 337705,
+   "file": "val2014/COCO_val2014_000000337705.jpg",
+   "question": "How many people are in the photo?"
+  },
+  {
+   "question_id": 340642002,
+   "image_id": 340642,
+   "file": "val2014/COCO_val2014_000000340642.jpg",
+   "question": "What kind of icing is that?"
+  },
+  {
+   "question_id": 341010002,
+   "image_id": 341010,
+   "file": "val2014/COCO_val2014_000000341010.jpg",
+   "question": "What colors are the umbrella?"
+  },
+  {
+   "question_id": 341393005,
+   "image_id": 341393,
+   "file": "val2014/COCO_val2014_000000341393.jpg",
+   "question": "What color is the dog?"
+  },
+  {
+   "question_id": 343914000,
+   "image_id": 343914,
+   "file": "val2014/COCO_val2014_000000343914.jpg",
+   "question": "What is the floor made out of?"
+  },
+  {
+   "question_id": 345029003,
+   "image_id": 345029,
+   "file": "val2014/COCO_val2014_000000345029.jpg",
+   "question": "Is this a two player sport?"
+  },
+  {
+   "question_id": 346638003,
+   "image_id": 346638,
+   "file": "val2014/COCO_val2014_000000346638.jpg",
+   "question": "What beverage is in this picture?"
+  },
+  {
+   "question_id": 348701001,
+   "image_id": 348701,
+   "file": "val2014/COCO_val2014_000000348701.jpg",
+   "question": "What protective gear is this boy wearing?"
+  },
+  {
+   "question_id": 349185000,
+   "image_id": 349185,
+   "file": "val2014/COCO_val2014_000000349185.jpg",
+   "question": "What is the truck doing?"
+  },
+  {
+   "question_id": 350959000,
+   "image_id": 350959,
+   "file": "val2014/COCO_val2014_000000350959.jpg",
+   "question": "Is the grass alive?"
+  },
+  {
+   "question_id": 351034004,
+   "image_id": 351034,
+   "file": "val2014/COCO_val2014_000000351034.jpg",
+   "question": "What is the brand of these two phones?"
+  },
+  {
+   "question_id": 351149001,
+   "image_id": 351149,
+   "file": "val2014/COCO_val2014_000000351149.jpg",
+   "question": "How many toilet lids are open?"
+  },
+  {
+   "question_id": 353536001,
+   "image_id": 353536,
+   "file": "val2014/COCO_val2014_000000353536.jpg",
+   "question": "Are the dishes clean or dirty?"
+  },
+  {
+   "question_id": 353644000,
+   "image_id": 353644,
+   "file": "val2014/COCO_val2014_000000353644.jpg",
+   "question": "Is the girl in the white shirt crying?"
+  },
+  {
+   "question_id": 353695001,
+   "image_id": 353695,
+   "file": "val2014/COCO_val2014_000000353695.jpg",
+   "question": "What is the goat standing on?"
+  },
+  {
+   "question_id": 354533001,
+   "image_id": 354533,
+   "file": "val2014/COCO_val2014_000000354533.jpg",
+   "question": "Is the bike in motion?"
+  },
+  {
+   "question_id": 355137002,
+   "image_id": 355137,
+   "file": "val2014/COCO_val2014_000000355137.jpg",
+   "question": "Is the person male or female?"
+  },
+  {
+   "question_id": 357978000,
+   "image_id": 357978,
+   "file": "val2014/COCO_val2014_000000357978.jpg",
+   "question": "What game are these ladies playing?"
+  },
+  {
+   "question_id": 358055002,
+   "image_id": 358055,
+   "file": "val2014/COCO_val2014_000000358055.jpg",
+   "question": "What color is the wall?"
+  },
+  {
+   "question_id": 361177002,
+   "image_id": 361177,
+   "file": "val2014/COCO_val2014_000000361177.jpg",
+   "question": "Is the dog trying to type?"
+  },
+  {
+   "question_id": 363188001,
+   "image_id": 363188,
+   "file": "val2014/COCO_val2014_000000363188.jpg",
+   "question": "Is this in a United States city?"
+  },
+  {
+   "question_id": 364113000,
+   "image_id": 364113,
+   "file": "val2014/COCO_val2014_000000364113.jpg",
+   "question": "Is the road paved?"
+  },
+  {
+   "question_id": 364166005,
+   "image_id": 364166,
+   "file": "val2014/COCO_val2014_000000364166.jpg",
+   "question": "Are both zebras facing the same direction?"
+  },
+  {
+   "question_id": 368222000,
+   "image_id": 368222,
+   "file": "val2014/COCO_val2014_000000368222.jpg",
+   "question": "What is the person doing to the device?"
+  },
+  {
+   "question_id": 368994002,
+   "image_id": 368994,
+   "file": "val2014/COCO_val2014_000000368994.jpg",
+   "question": "What item decorates the sign?"
+  },
+  {
+   "question_id": 369913001,
+   "image_id": 369913,
+   "file": "val2014/COCO_val2014_000000369913.jpg",
+   "question": "What the person holding?"
+  },
+  {
+   "question_id": 371135001,
+   "image_id": 371135,
+   "file": "val2014/COCO_val2014_000000371135.jpg",
+   "question": "What sport is the person in the picture playing?"
+  },
+  {
+   "question_id": 372252002,
+   "image_id": 372252,
+   "file": "val2014/COCO_val2014_000000372252.jpg",
+   "question": "What are zebras doing?"
+  },
+  {
+   "question_id": 374574001,
+   "image_id": 374574,
+   "file": "val2014/COCO_val2014_000000374574.jpg",
+   "question": "Are extraterrestrials playing a game of Go?"
+  },
+  {
+   "question_id": 375285001,
+   "image_id": 375285,
+   "file": "val2014/COCO_val2014_000000375285.jpg",
+   "question": "Do any look ready to go into the water?"
+  },
+  {
+   "question_id": 375484001,
+   "image_id": 375484,
+   "file": "val2014/COCO_val2014_000000375484.jpg",
+   "question": "What is the thing on the left of the computer?"
+  },
+  {
+   "question_id": 375915001,
+   "image_id": 375915,
+   "file": "val2014/COCO_val2014_000000375915.jpg",
+   "question": "What color is the plate beside the pizza?"
+  },
+  {
+   "question_id": 376322002,
+   "image_id": 376322,
+   "file": "val2014/COCO_val2014_000000376322.jpg",
+   "question": "In what restaurant are they?"
+  },
+  {
+   "question_id": 376677002,
+   "image_id": 376677,
+   "file": "val2014/COCO_val2014_000000376677.jpg",
+   "question": "Is it day time?"
+  },
+  {
+   "question_id": 378506000,
+   "image_id": 378506,
+   "file": "val2014/COCO_val2014_000000378506.jpg",
+   "question": "How many bags are shown?"
+  },
+  {
+   "question_id": 378667001,
+   "image_id": 378667,
+   "file": "val2014/COCO_val2014_000000378667.jpg",
+   "question": "Does this person have gloves on?"
+  },
+  {
+   "question_id": 380300000,
+   "image_id": 380300,
+   "file": "val2014/COCO_val2014_000000380300.jpg",
+   "question": "What is the red bottle represent?"
+  },
+  {
+   "question_id": 383018001,
+   "image_id": 383018,
+   "file": "val2014/COCO_val2014_000000383018.jpg",
+   "question": "Are the trees higher than the house?"
+  },
+  {
+   "question_id": 385378003,
+   "image_id": 385378,
+   "file": "val2014/COCO_val2014_000000385378.jpg",
+   "question": "How many clocks?"
+  },
+  {
+   "question_id": 388988000,
+   "image_id": 388988,
+   "file": "val2014/COCO_val2014_000000388988.jpg",
+   "question": "Is the candle lit?"
+  },
+  {
+   "question_id": 391940002,
+   "image_id": 391940,
+   "file": "val2014/COCO_val2014_000000391940.jpg",
+   "question": "What is hanging from the woman's neck?"
+  },
+  {
+   "question_id": 393004002,
+   "image_id": 393004,
+   "file": "val2014/COCO_val2014_000000393004.jpg",
+   "question": "Is the player leaning over?"
+  },
+  {
+   "question_id": 393410000,
+   "image_id": 393410,
+   "file": "val2014/COCO_val2014_000000393410.jpg",
+   "question": "Is this a propeller plane?"
+  },
+  {
+   "question_id": 395644002,
+   "image_id": 395644,
+   "file": "val2014/COCO_val2014_000000395644.jpg",
+   "question": "Does the end table have room on it?"
+  },
+  {
+   "question_id": 396542003,
+   "image_id": 396542,
+   "file": "val2014/COCO_val2014_000000396542.jpg",
+   "question": "What color are the pants?"
+  },
+  {
+   "question_id": 396692002,
+   "image_id": 396692,
+   "file": "val2014/COCO_val2014_000000396692.jpg",
+   "question": "What # train is on the right?"
+  },
+  {
+   "question_id": 396779001,
+   "image_id": 396779,
+   "file": "val2014/COCO_val2014_000000396779.jpg",
+   "question": "How many animals are in the water?"
+  },
+  {
+   "question_id": 397041002,
+   "image_id": 397041,
+   "file": "val2014/COCO_val2014_000000397041.jpg",
+   "question": "Is there cheese in this sandwich?"
+  },
+  {
+   "question_id": 397404006,
+   "image_id": 397404,
+   "file": "val2014/COCO_val2014_000000397404.jpg",
+   "question": "What is the rounded cabinet on the right meant to hold?"
+  },
+  {
+   "question_id": 399205000,
+   "image_id": 399205,
+   "file": "val2014/COCO_val2014_000000399205.jpg",
+   "question": "Where are the white athletic shoes?"
+  },
+  {
+   "question_id": 399296000,
+   "image_id": 399296,
+   "file": "val2014/COCO_val2014_000000399296.jpg",
+   "question": "Are there two different kinds of hot dogs being cooked?"
+  },
+  {
+   "question_id": 399703002,
+   "image_id": 399703,
+   "file": "val2014/COCO_val2014_000000399703.jpg",
+   "question": "Is this fire hydrant properly put together?"
+  },
+  {
+   "question_id": 402000000,
+   "image_id": 402000,
+   "file": "val2014/COCO_val2014_000000402000.jpg",
+   "question": "Is little red riding hood safe on the beach?"
+  },
+  {
+   "question_id": 402588002,
+   "image_id": 402588,
+   "file": "val2014/COCO_val2014_000000402588.jpg",
+   "question": "Who is the girl in the blue jacket looking at?"
+  },
+  {
+   "question_id": 402674001,
+   "image_id": 402674,
+   "file": "val2014/COCO_val2014_000000402674.jpg",
+   "question": "This image demonstrates what common aspect of astigmatism?"
+  },
+  {
+   "question_id": 403864001,
+   "image_id": 403864,
+   "file": "val2014/COCO_val2014_000000403864.jpg",
+   "question": "How many windshield wipers are present?"
+  },
+  {
+   "question_id": 404128001,
+   "image_id": 404128,
+   "file": "val2014/COCO_val2014_000000404128.jpg",
+   "question": "Is the propeller of the plane moving?"
+  },
+  {
+   "question_id": 404338011,
+   "image_id": 404338,
+   "file": "val2014/COCO_val2014_000000404338.jpg",
+   "question": "What is a km?"
+  },
+  {
+   "question_id": 405811005,
+   "image_id": 405811,
+   "file": "val2014/COCO_val2014_000000405811.jpg",
+   "question": "Is there a white cow?"
+  },
+  {
+   "question_id": 407072001,
+   "image_id": 407072,
+   "file": "val2014/COCO_val2014_000000407072.jpg",
+   "question": "What time of day is this?"
+  },
+  {
+   "question_id": 408049002,
+   "image_id": 408049,
+   "file": "val2014/COCO_val2014_000000408049.jpg",
+   "question": "Where are the people on the snow?"
+  },
+  {
+   "question_id": 408327003,
+   "image_id": 408327,
+   "file": "val2014/COCO_val2014_000000408327.jpg",
+   "question": "What sport is this person dressed to play?"
+  },
+  {
+   "question_id": 408621001,
+   "image_id": 408621,
+   "file": "val2014/COCO_val2014_000000408621.jpg",
+   "question": "What is the building behind the bus?"
+  },
+  {
+   "question_id": 408818001,
+   "image_id": 408818,
+   "file": "val2014/COCO_val2014_000000408818.jpg",
+   "question": "If the man steps forward, will he fall onto the track?"
+  },
+  {
+   "question_id": 410641002,
+   "image_id": 410641,
+   "file": "val2014/COCO_val2014_000000410641.jpg",
+   "question": "Is this a chocolate cake?"
+  },
+  {
+   "question_id": 410880000,
+   "image_id": 410880,
+   "file": "val2014/COCO_val2014_000000410880.jpg",
+   "question": "Is the teddy bear outside of a bar?"
+  },
+  {
+   "question_id": 411138002,
+   "image_id": 411138,
+   "file": "val2014/COCO_val2014_000000411138.jpg",
+   "question": "Is this indoor or outdoor?"
+  },
+  {
+   "question_id": 412767001,
+   "image_id": 412767,
+   "file": "val2014/COCO_val2014_000000412767.jpg",
+   "question": "What beverage would go with this?"
+  },
+  {
+   "question_id": 413419002,
+   "image_id": 413419,
+   "file": "val2014/COCO_val2014_000000413419.jpg",
+   "question": "IS IT 5 PASS 12?"
+  },
+  {
+   "question_id": 413955002,
+   "image_id": 413955,
+   "file": "val2014/COCO_val2014_000000413955.jpg",
+   "question": "Are there a lot of spectators?"
+  },
+  {
+   "question_id": 416668000,
+   "image_id": 416668,
+   "file": "val2014/COCO_val2014_000000416668.jpg",
+   "question": "What brand of toothpaste do these people use?"
+  },
+  {
+   "question_id": 417696001,
+   "image_id": 417696,
+   "file": "val2014/COCO_val2014_000000417696.jpg",
+   "question": "Is the clock inside or out?"
+  },
+  {
+   "question_id": 419228006,
+   "image_id": 419228,
+   "file": "val2014/COCO_val2014_000000419228.jpg",
+   "question": "What color is the bear?"
+  },
+  {
+   "question_id": 419859000,
+   "image_id": 419859,
+   "file": "val2014/COCO_val2014_000000419859.jpg",
+   "question": "Is this a singing bird?"
+  },
+  {
+   "question_id": 420313000,
+   "image_id": 420313,
+   "file": "val2014/COCO_val2014_000000420313.jpg",
+   "question": "Is it a cake?"
+  },
+  {
+   "question_id": 420666010,
+   "image_id": 420666,
+   "file": "val2014/COCO_val2014_000000420666.jpg",
+   "question": "Is this a greasy food?"
+  },
+  {
+   "question_id": 421072001,
+   "image_id": 421072,
+   "file": "val2014/COCO_val2014_000000421072.jpg",
+   "question": "Where are the dogs playing?"
+  },
+  {
+   "question_id": 422517001,
+   "image_id": 422517,
+   "file": "val2014/COCO_val2014_000000422517.jpg",
+   "question": "How many people are on the bench?"
+  },
+  {
+   "question_id": 422545001,
+   "image_id": 422545,
+   "file": "val2014/COCO_val2014_000000422545.jpg",
+   "question": "What is the guy in the picture riding?"
+  },
+  {
+   "question_id": 423005002,
+   "image_id": 423005,
+   "file": "val2014/COCO_val2014_000000423005.jpg",
+   "question": "Is it cloudy?"
+  },
+  {
+   "question_id": 423141001,
+   "image_id": 423141,
+   "file": "val2014/COCO_val2014_000000423141.jpg",
+   "question": "What color is the bottle?"
+  },
+  {
+   "question_id": 423309002,
+   "image_id": 423309,
+   "file": "val2014/COCO_val2014_000000423309.jpg",
+   "question": "What color is the pan?"
+  },
+  {
+   "question_id": 424432001,
+   "image_id": 424432,
+   "file": "val2014/COCO_val2014_000000424432.jpg",
+   "question": "Are the animals looking at each other?"
+  },
+  {
+   "question_id": 424975002,
+   "image_id": 424975,
+   "file": "val2014/COCO_val2014_000000424975.jpg",
+   "question": "What color is the tree?"
+  },
+  {
+   "question_id": 425475000,
+   "image_id": 425475,
+   "file": "val2014/COCO_val2014_000000425475.jpg",
+   "question": "Is this an adult beverage?"
+  },
+  {
+   "question_id": 427338001,
+   "image_id": 427338,
+   "file": "val2014/COCO_val2014_000000427338.jpg",
+   "question": "What is the walkway made out of?"
+  },
+  {
+   "question_id": 431891002,
+   "image_id": 431891,
+   "file": "val2014/COCO_val2014_000000431891.jpg",
+   "question": "What food is to the left of the carrots?"
+  },
+  {
+   "question_id": 432120000,
+   "image_id": 432120,
+   "file": "val2014/COCO_val2014_000000432120.jpg",
+   "question": "What animal is visible in the mirror?"
+  },
+  {
+   "question_id": 432534004,
+   "image_id": 432534,
+   "file": "val2014/COCO_val2014_000000432534.jpg",
+   "question": "What's the colors of the bucket?"
+  },
+  {
+   "question_id": 432657000,
+   "image_id": 432657,
+   "file": "val2014/COCO_val2014_000000432657.jpg",
+   "question": "Is the batter wearing a helmet?"
+  },
+  {
+   "question_id": 433804006,
+   "image_id": 433804,
+   "file": "val2014/COCO_val2014_000000433804.jpg",
+   "question": "Can you see any alligators?"
+  },
+  {
+   "question_id": 433883016,
+   "image_id": 433883,
+   "file": "val2014/COCO_val2014_000000433883.jpg",
+   "question": "Who is this table not reserved for?"
+  },
+  {
+   "question_id": 433892002,
+   "image_id": 433892,
+   "file": "val2014/COCO_val2014_000000433892.jpg",
+   "question": "What is the speed limit?"
+  },
+  {
+   "question_id": 436252000,
+   "image_id": 436252,
+   "file": "val2014/COCO_val2014_000000436252.jpg",
+   "question": "What is the man riding?"
+  },
+  {
+   "question_id": 438269001,
+   "image_id": 438269,
+   "file": "val2014/COCO_val2014_000000438269.jpg",
+   "question": "What colors is the bird?"
+  },
+  {
+   "question_id": 438721000,
+   "image_id": 438721,
+   "file": "val2014/COCO_val2014_000000438721.jpg",
+   "question": "Where is the ball?"
+  },
+  {
+   "question_id": 439180003,
+   "image_id": 439180,
+   "file": "val2014/COCO_val2014_000000439180.jpg",
+   "question": "What color fabric is the horse on the right wearing?"
+  },
+  {
+   "question_id": 439326005,
+   "image_id": 439326,
+   "file": "val2014/COCO_val2014_000000439326.jpg",
+   "question": "Does this animal swim well?"
+  },
+  {
+   "question_id": 439589002,
+   "image_id": 439589,
+   "file": "val2014/COCO_val2014_000000439589.jpg",
+   "question": "How many trains?"
+  },
+  {
+   "question_id": 445668007,
+   "image_id": 445668,
+   "file": "val2014/COCO_val2014_000000445668.jpg",
+   "question": "Is the sand hot or cold?"
+  },
+  {
+   "question_id": 448871002,
+   "image_id": 448871,
+   "file": "val2014/COCO_val2014_000000448871.jpg",
+   "question": "Was this taken during the day?"
+  },
+  {
+   "question_id": 449180001,
+   "image_id": 449180,
+   "file": "val2014/COCO_val2014_000000449180.jpg",
+   "question": "What is the number above the Roman numeral, XII?"
+  },
+  {
+   "question_id": 449191004,
+   "image_id": 449191,
+   "file": "val2014/COCO_val2014_000000449191.jpg",
+   "question": "How many men are shown?"
+  },
+  {
+   "question_id": 450037002,
+   "image_id": 450037,
+   "file": "val2014/COCO_val2014_000000450037.jpg",
+   "question": "Are those horses being trained?"
+  },
+  {
+   "question_id": 450559002,
+   "image_id": 450559,
+   "file": "val2014/COCO_val2014_000000450559.jpg",
+   "question": "What color is the grass?"
+  },
+  {
+   "question_id": 452122001,
+   "image_id": 452122,
+   "file": "val2014/COCO_val2014_000000452122.jpg",
+   "question": "Are there people inside?"
+  },
+  {
+   "question_id": 453283001,
+   "image_id": 453283,
+   "file": "val2014/COCO_val2014_000000453283.jpg",
+   "question": "What is on the plate?"
+  },
+  {
+   "question_id": 455675001,
+   "image_id": 455675,
+   "file": "val2014/COCO_val2014_000000455675.jpg",
+   "question": "How many bicycles do you see?"
+  },
+  {
+   "question_id": 456046000,
+   "image_id": 456046,
+   "file": "val2014/COCO_val2014_000000456046.jpg",
+   "question": "What type of art on the train?"
+  },
+  {
+   "question_id": 457717000,
+   "image_id": 457717,
+   "file": "val2014/COCO_val2014_000000457717.jpg",
+   "question": "Is this a healthy meal?"
+  },
+  {
+   "question_id": 458558002,
+   "image_id": 458558,
+   "file": "val2014/COCO_val2014_000000458558.jpg",
+   "question": "Is this person airborne?"
+  },
+  {
+   "question_id": 460682000,
+   "image_id": 460682,
+   "file": "val2014/COCO_val2014_000000460682.jpg",
+   "question": "Is this flat terrain?"
+  },
+  {
+   "question_id": 463283000,
+   "image_id": 463283,
+   "file": "val2014/COCO_val2014_000000463283.jpg",
+   "question": "What fruit is on top?"
+  },
+  {
+   "question_id": 463454002,
+   "image_id": 463454,
+   "file": "val2014/COCO_val2014_000000463454.jpg",
+   "question": "How many people are in the photo?"
+  },
+  {
+   "question_id": 463918001,
+   "image_id": 463918,
+   "file": "val2014/COCO_val2014_000000463918.jpg",
+   "question": "What color are the game controllers?"
+  },
+  {
+   "question_id": 464092000,
+   "image_id": 464092,
+   "file": "val2014/COCO_val2014_000000464092.jpg",
+   "question": "What is on the bench?"
+  },
+  {
+   "question_id": 465911006,
+   "image_id": 465911,
+   "file": "val2014/COCO_val2014_000000465911.jpg",
+   "question": "Are there banners for products in the background?"
+  },
+  {
+   "question_id": 466422000,
+   "image_id": 466422,
+   "file": "val2014/COCO_val2014_000000466422.jpg",
+   "question": "How many players do you see?"
+  },
+  {
+   "question_id": 467067002,
+   "image_id": 467067,
+   "file": "val2014/COCO_val2014_000000467067.jpg",
+   "question": "What is the man holding in his hands?"
+  },
+  {
+   "question_id": 467755001,
+   "image_id": 467755,
+   "file": "val2014/COCO_val2014_000000467755.jpg",
+   "question": "Is the giraffe in the wild?"
+  },
+  {
+   "question_id": 468363001,
+   "image_id": 468363,
+   "file": "val2014/COCO_val2014_000000468363.jpg",
+   "question": "What is the green thing?"
+  },
+  {
+   "question_id": 468704000,
+   "image_id": 468704,
+   "file": "val2014/COCO_val2014_000000468704.jpg",
+   "question": "What time does the clock show?"
+  },
+  {
+   "question_id": 469618002,
+   "image_id": 469618,
+   "file": "val2014/COCO_val2014_000000469618.jpg",
+   "question": "What is on the table?"
+  },
+  {
+   "question_id": 469777002,
+   "image_id": 469777,
+   "file": "val2014/COCO_val2014_000000469777.jpg",
+   "question": "Are the elephant in the wild?"
+  },
+  {
+   "question_id": 470417000,
+   "image_id": 470417,
+   "file": "val2014/COCO_val2014_000000470417.jpg",
+   "question": "What are the people doing in the water?"
+  },
+  {
+   "question_id": 471179001,
+   "image_id": 471179,
+   "file": "val2014/COCO_val2014_000000471179.jpg",
+   "question": "How many black cows are behind  a fence?"
+  },
+  {
+   "question_id": 473406001,
+   "image_id": 473406,
+   "file": "val2014/COCO_val2014_000000473406.jpg",
+   "question": "Is someone teaching her child good eating habits?"
+  },
+  {
+   "question_id": 474608003,
+   "image_id": 474608,
+   "file": "val2014/COCO_val2014_000000474608.jpg",
+   "question": "What brand name is on the cup near the dj's hand?"
+  },
+  {
+   "question_id": 476754000,
+   "image_id": 476754,
+   "file": "val2014/COCO_val2014_000000476754.jpg",
+   "question": "What is the name of the theater in the background?"
+  },
+  {
+   "question_id": 479030003,
+   "image_id": 479030,
+   "file": "val2014/COCO_val2014_000000479030.jpg",
+   "question": "Is this a freight train?"
+  },
+  {
+   "question_id": 480605001,
+   "image_id": 480605,
+   "file": "val2014/COCO_val2014_000000480605.jpg",
+   "question": "Is the plane flying?"
+  },
+  {
+   "question_id": 482690002,
+   "image_id": 482690,
+   "file": "val2014/COCO_val2014_000000482690.jpg",
+   "question": "Is this an old person sport?"
+  },
+  {
+   "question_id": 484145002,
+   "image_id": 484145,
+   "file": "val2014/COCO_val2014_000000484145.jpg",
+   "question": "Is this man peeved?"
+  },
+  {
+   "question_id": 486046001,
+   "image_id": 486046,
+   "file": "val2014/COCO_val2014_000000486046.jpg",
+   "question": "How many zebras are there?"
+  },
+  {
+   "question_id": 487525002,
+   "image_id": 487525,
+   "file": "val2014/COCO_val2014_000000487525.jpg",
+   "question": "Is the shower head stationary?"
+  },
+  {
+   "question_id": 488219018,
+   "image_id": 488219,
+   "file": "val2014/COCO_val2014_000000488219.jpg",
+   "question": "What is the guy holding?"
+  },
+  {
+   "question_id": 489611014,
+   "image_id": 489611,
+   "file": "val2014/COCO_val2014_000000489611.jpg",
+   "question": "What is the girl holding?"
+  },
+  {
+   "question_id": 490643001,
+   "image_id": 490643,
+   "file": "val2014/COCO_val2014_000000490643.jpg",
+   "question": "Are all the animals adult?"
+  },
+  {
+   "question_id": 491497001,
+   "image_id": 491497,
+   "file": "val2014/COCO_val2014_000000491497.jpg",
+   "question": "Is the television turned on?"
+  },
+  {
+   "question_id": 491947000,
+   "image_id": 491947,
+   "file": "val2014/COCO_val2014_000000491947.jpg",
+   "question": "Is he a DJ?"
+  },
+  {
+   "question_id": 492067003,
+   "image_id": 492067,
+   "file": "val2014/COCO_val2014_000000492067.jpg",
+   "question": "Who owns this plane?"
+  },
+  {
+   "question_id": 494566001,
+   "image_id": 494566,
+   "file": "val2014/COCO_val2014_000000494566.jpg",
+   "question": "How many people skiing?"
+  },
+  {
+   "question_id": 495349000,
+   "image_id": 495349,
+   "file": "val2014/COCO_val2014_000000495349.jpg",
+   "question": "How high is the seat on the bike?"
+  },
+  {
+   "question_id": 495985001,
+   "image_id": 495985,
+   "file": "val2014/COCO_val2014_000000495985.jpg",
+   "question": "What kind of bat is the person holding?"
+  },
+  {
+   "question_id": 496525002,
+   "image_id": 496525,
+   "file": "val2014/COCO_val2014_000000496525.jpg",
+   "question": "Which one of the screens uses an antenna?"
+  },
+  {
+   "question_id": 496597002,
+   "image_id": 496597,
+   "file": "val2014/COCO_val2014_000000496597.jpg",
+   "question": "Where is the sun?"
+  },
+  {
+   "question_id": 497034000,
+   "image_id": 497034,
+   "file": "val2014/COCO_val2014_000000497034.jpg",
+   "question": "Is this a hotel room?"
+  },
+  {
+   "question_id": 499198001,
+   "image_id": 499198,
+   "file": "val2014/COCO_val2014_000000499198.jpg",
+   "question": "Is this guy shredding that gnarly wave brrahhhh?"
+  },
+  {
+   "question_id": 499423000,
+   "image_id": 499423,
+   "file": "val2014/COCO_val2014_000000499423.jpg",
+   "question": "What time does the clock read?"
+  },
+  {
+   "question_id": 499755001,
+   "image_id": 499755,
+   "file": "val2014/COCO_val2014_000000499755.jpg",
+   "question": "What is in the girls hand?"
+  },
+  {
+   "question_id": 502671000,
+   "image_id": 502671,
+   "file": "val2014/COCO_val2014_000000502671.jpg",
+   "question": "What Indian leader popularized this man's style of collar?"
+  },
+  {
+   "question_id": 503183001,
+   "image_id": 503183,
+   "file": "val2014/COCO_val2014_000000503183.jpg",
+   "question": "Are the doll's eyes open?"
+  },
+  {
+   "question_id": 504248003,
+   "image_id": 504248,
+   "file": "val2014/COCO_val2014_000000504248.jpg",
+   "question": "What color is the rug between the toilet and tub?"
+  },
+  {
+   "question_id": 506201002,
+   "image_id": 506201,
+   "file": "val2014/COCO_val2014_000000506201.jpg",
+   "question": "Which jacket is not black?"
+  },
+  {
+   "question_id": 506416002,
+   "image_id": 506416,
+   "file": "val2014/COCO_val2014_000000506416.jpg",
+   "question": "Is there a bridge in the photo?"
+  },
+  {
+   "question_id": 508917002,
+   "image_id": 508917,
+   "file": "val2014/COCO_val2014_000000508917.jpg",
+   "question": "Where are the people?"
+  },
+  {
+   "question_id": 509656000,
+   "image_id": 509656,
+   "file": "val2014/COCO_val2014_000000509656.jpg",
+   "question": "Do these animals graze freely in the wild?"
+  },
+  {
+   "question_id": 509819001,
+   "image_id": 509819,
+   "file": "val2014/COCO_val2014_000000509819.jpg",
+   "question": "What does the lettering on the pencil read?"
+  },
+  {
+   "question_id": 516143001,
+   "image_id": 516143,
+   "file": "val2014/COCO_val2014_000000516143.jpg",
+   "question": "Is the arrow pointing up or down?"
+  },
+  {
+   "question_id": 518551002,
+   "image_id": 518551,
+   "file": "val2014/COCO_val2014_000000518551.jpg",
+   "question": "Is there vegetation in the picture?"
+  },
+  {
+   "question_id": 518729007,
+   "image_id": 518729,
+   "file": "val2014/COCO_val2014_000000518729.jpg",
+   "question": "Is there more than one giraffe in this photo?"
+  },
+  {
+   "question_id": 519815003,
+   "image_id": 519815,
+   "file": "val2014/COCO_val2014_000000519815.jpg",
+   "question": "Are there curtains on the window?"
+  },
+  {
+   "question_id": 520508000,
+   "image_id": 520508,
+   "file": "val2014/COCO_val2014_000000520508.jpg",
+   "question": "Is this person going uphill?"
+  },
+  {
+   "question_id": 520918000,
+   "image_id": 520918,
+   "file": "val2014/COCO_val2014_000000520918.jpg",
+   "question": "Is the station crowded?"
+  },
+  {
+   "question_id": 521306017,
+   "image_id": 521306,
+   "file": "val2014/COCO_val2014_000000521306.jpg",
+   "question": "What is this boy doing?"
+  },
+  {
+   "question_id": 525763001,
+   "image_id": 525763,
+   "file": "val2014/COCO_val2014_000000525763.jpg",
+   "question": "What is this?"
+  },
+  {
+   "question_id": 526364002,
+   "image_id": 526364,
+   "file": "val2014/COCO_val2014_000000526364.jpg",
+   "question": "Is the stove gas or electric?"
+  },
+  {
+   "question_id": 527248000,
+   "image_id": 527248,
+   "file": "val2014/COCO_val2014_000000527248.jpg",
+   "question": "How many clocks in the tower?"
+  },
+  {
+   "question_id": 528962004,
+   "image_id": 528962,
+   "file": "val2014/COCO_val2014_000000528962.jpg",
+   "question": "Does the truck have windshield wipers?"
+  },
+  {
+   "question_id": 530207000,
+   "image_id": 530207,
+   "file": "val2014/COCO_val2014_000000530207.jpg",
+   "question": "Is there a man with a safety vest?"
+  },
+  {
+   "question_id": 531163001,
+   "image_id": 531163,
+   "file": "val2014/COCO_val2014_000000531163.jpg",
+   "question": "How many women are in the photo?"
+  },
+  {
+   "question_id": 531602001,
+   "image_id": 531602,
+   "file": "val2014/COCO_val2014_000000531602.jpg",
+   "question": "Is there toothpaste on the toothbrush?"
+  },
+  {
+   "question_id": 532211002,
+   "image_id": 532211,
+   "file": "val2014/COCO_val2014_000000532211.jpg",
+   "question": "Is the boy listening to music?"
+  },
+  {
+   "question_id": 532610000,
+   "image_id": 532610,
+   "file": "val2014/COCO_val2014_000000532610.jpg",
+   "question": "Are the dishes in the white container clean?"
+  },
+  {
+   "question_id": 537589003,
+   "image_id": 537589,
+   "file": "val2014/COCO_val2014_000000537589.jpg",
+   "question": "Is this Grand Central?"
+  },
+  {
+   "question_id": 539079000,
+   "image_id": 539079,
+   "file": "val2014/COCO_val2014_000000539079.jpg",
+   "question": "Whose shadow do you see?"
+  },
+  {
+   "question_id": 541202000,
+   "image_id": 541202,
+   "file": "val2014/COCO_val2014_000000541202.jpg",
+   "question": "Why is there a fence up?"
+  },
+  {
+   "question_id": 542150002,
+   "image_id": 542150,
+   "file": "val2014/COCO_val2014_000000542150.jpg",
+   "question": "How many toothbrushes are in this image?"
+  },
+  {
+   "question_id": 542388002,
+   "image_id": 542388,
+   "file": "val2014/COCO_val2014_000000542388.jpg",
+   "question": "What type of clothing is the man wearing?"
+  },
+  {
+   "question_id": 545441001,
+   "image_id": 545441,
+   "file": "val2014/COCO_val2014_000000545441.jpg",
+   "question": "What is the baby holding?"
+  },
+  {
+   "question_id": 546067000,
+   "image_id": 546067,
+   "file": "val2014/COCO_val2014_000000546067.jpg",
+   "question": "What is the man doing over the elephant?"
+  },
+  {
+   "question_id": 546965000,
+   "image_id": 546965,
+   "file": "val2014/COCO_val2014_000000546965.jpg",
+   "question": "How many cars are parked?"
+  },
+  {
+   "question_id": 553942003,
+   "image_id": 553942,
+   "file": "val2014/COCO_val2014_000000553942.jpg",
+   "question": "What type of scene would one find this skate park?"
+  },
+  {
+   "question_id": 553968001,
+   "image_id": 553968,
+   "file": "val2014/COCO_val2014_000000553968.jpg",
+   "question": "How many pillows are visible?"
+  },
+  {
+   "question_id": 554291000,
+   "image_id": 554291,
+   "file": "val2014/COCO_val2014_000000554291.jpg",
+   "question": "Is there a writing utensil nearby?"
+  },
+  {
+   "question_id": 554618004,
+   "image_id": 554618,
+   "file": "val2014/COCO_val2014_000000554618.jpg",
+   "question": "What is positioned outside the window?"
+  },
+  {
+   "question_id": 557998000,
+   "image_id": 557998,
+   "file": "val2014/COCO_val2014_000000557998.jpg",
+   "question": "Has the pen been used?"
+  },
+  {
+   "question_id": 558585001,
+   "image_id": 558585,
+   "file": "val2014/COCO_val2014_000000558585.jpg",
+   "question": "How many ducklings are there?"
+  },
+  {
+   "question_id": 562592000,
+   "image_id": 562592,
+   "file": "val2014/COCO_val2014_000000562592.jpg",
+   "question": "What can be seen in the mirror?"
+  },
+  {
+   "question_id": 562628010,
+   "image_id": 562628,
+   "file": "val2014/COCO_val2014_000000562628.jpg",
+   "question": "How many papers are above the monitors?"
+  },
+  {
+   "question_id": 565031010,
+   "image_id": 565031,
+   "file": "val2014/COCO_val2014_000000565031.jpg",
+   "question": "How many bikes are there?"
+  },
+  {
+   "question_id": 567922000,
+   "image_id": 567922,
+   "file": "val2014/COCO_val2014_000000567922.jpg",
+   "question": "Are there people on the platform?"
+  },
+  {
+   "question_id": 568318009,
+   "image_id": 568318,
+   "file": "val2014/COCO_val2014_000000568318.jpg",
+   "question": "Are the bottles full or empty?"
+  },
+  {
+   "question_id": 569059002,
+   "image_id": 569059,
+   "file": "val2014/COCO_val2014_000000569059.jpg",
+   "question": "What color is the keyboard?"
+  },
+  {
+   "question_id": 573067000,
+   "image_id": 573067,
+   "file": "val2014/COCO_val2014_000000573067.jpg",
+   "question": "Is this a bull or a heifer?"
+  },
+  {
+   "question_id": 576363001,
+   "image_id": 576363,
+   "file": "val2014/COCO_val2014_000000576363.jpg",
+   "question": "Where are these people shopping?"
+  },
+  {
+   "question_id": 576369002,
+   "image_id": 576369,
+   "file": "val2014/COCO_val2014_000000576369.jpg",
+   "question": "Is there a top to keep the coffee from spilling?"
+  },
+  {
+   "question_id": 577024002,
+   "image_id": 577024,
+   "file": "val2014/COCO_val2014_000000577024.jpg",
+   "question": "What is the number showing on the transit?"
+  },
+  {
+   "question_id": 577524003,
+   "image_id": 577524,
+   "file": "val2014/COCO_val2014_000000577524.jpg",
+   "question": "How many giraffes are in the picture?"
+  },
+  {
+   "question_id": 579548000,
+   "image_id": 579548,
+   "file": "val2014/COCO_val2014_000000579548.jpg",
+   "question": "What color are the computers?"
+  },
+  {
+   "question_id": 579664000,
+   "image_id": 579664,
+   "file": "val2014/COCO_val2014_000000579664.jpg",
+   "question": "What type of fruit is this?"
+  },
+  {
+   "question_id": 579759001,
+   "image_id": 579759,
+   "file": "val2014/COCO_val2014_000000579759.jpg",
+   "question": "What color bathing suit is the woman wearing?"
+  },
+  {
+   "question_id": 580835002,
+   "image_id": 580835,
+   "file": "val2014/COCO_val2014_000000580835.jpg",
+   "question": "Is the plant ready for harvest?"
+  },
+  {
+   "question_id": 581482002,
+   "image_id": 581482,
+   "file": "val2014/COCO_val2014_000000581482.jpg",
+   "question": "Is this clock made of wood?"
+  }
+ ]
+}

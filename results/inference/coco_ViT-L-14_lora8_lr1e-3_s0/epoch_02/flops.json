@@ -1,0 +1,7 @@
+{
+ "encoder_gflops": 155.53265664,
+ "caption_decode_gflops": 13.601396736,
+ "answer_decode_gflops": 4.1411584,
+ "images": 3,
+ "decoding": "beam3"
+}
