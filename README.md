@@ -29,7 +29,7 @@ Training and measurement run on one MacBook Pro (M4 Pro), on its GPU through PyT
 | 5 | `greenvl/decode.py`, `greenvl/metrics.py`, `greenvl/chair.py`, `greenvl/vqa_metrics.py`, `scripts/05_evaluate.py`: decoding (greedy, beam 3, beam 5) and evaluation: BLEU-4, CIDEr, SPICE, CLIPScore, CHAIR, VQA accuracy, VQA-CE, each with a 95 % bootstrap interval | done 30 Sep; checked on the 1e-3 pilot (`results/eval/`) |
 | 6 | `scripts/06_encoder_check.py`, `scripts/07_reference_run.py`: encoder check (ViT-L/14 vs ViT-B/32, quarter-epoch pilots, rule fixed in advance), then the reference run on COCO + VQA v2 | encoder check done 2 Oct: ViT-L/14 (`results/encoder_check/summary.md`); seed 0 done 2 Oct, 3 epochs (`results/reference/`); seeds 1-2 deferred |
 | 7 | `greenvl/inference.py`, `scripts/08_measure_inference.py`: energy, latency, memory, size and FLOPs per caption and per answer at batch 1 (idle subtraction, 5 repetitions, randomised order) | done 3 Oct for the reference model, FP32 (`results/inference/`) |
-| 8 | Inference-side sweep on the trained model: precision (FP16, INT8, NF4 on encoder, decoder, both) and decoding (greedy, beam 3, beam 5). Training-side factors dropped on 2 Oct (one trained configuration) | |
+| 8 | `greenvl/precision.py`, `scripts/09_evaluate_variants.py`, `scripts/10_measure_variants.py`: inference-side sweep on the trained model, precision (FP16, INT8, NF4 on encoder, decoder, both) and caption decoding (greedy, beam 3, beam 5); accuracy on Karpathy test, cost measured component by component. Training-side factors dropped on 2 Oct (one trained configuration) | code ready and smoke-tested 3 Oct; runs pending |
 | 9 | CNN-LSTM baseline | |
 | 10 | Analysis: frontiers (RQ1), grounding score (RQ2), retention ratios (RQ3), Grad-CAM figures | |
 | 11 | Gradio demo with energy per caption | |
@@ -123,6 +123,20 @@ Runs the deployed pipeline one image or question at a time (image file -> CLIP p
 
 Close other apps, keep the Mac on AC power, and leave it alone while it runs: other work shows up in the measurement.
 
+## Step 8: inference configurations (Mac Terminal)
+
+```bash
+open scripts/variants_accuracy.command   # accuracy of every configuration on Karpathy test: password once, ~1.5-2 h
+open scripts/variants_energy.command     # energy, latency, memory: password once, ~2 h for 3 repetitions
+python scripts/10_measure_variants.py --summary-only     # rebuild energy.md and summary.md
+```
+
+Configurations (`greenvl/precision.py`), all of the trained reference model: FP32 (reference); the encoder, the decoder (mapping network + GPT-2 + both adapter sets) or both at FP16, INT8 or NF4, captions at beam 3; and FP32 captions with greedy and beam 5 decoding.
+
+`variants_accuracy.command` runs `09_evaluate_variants.py`: it caches Karpathy test features with the encoder at FP16, INT8 and NF4 (`02_extract_features.py --precision`), then scores every configuration on the full test split with `05_evaluate.py --precision` (all caption metrics, CHAIR, VQA, VQA-CE). `variants_energy.command` runs `10_measure_variants.py`: each repetition measures one idle window, then 26 windows in a shuffled order, 4 encoder windows (one per encoder precision, on the 1,000 step-7 subset images) and 22 decoding windows (each configuration's decoder, from its own encoder's embeddings), with a 20 s rest before each. A configuration's energy per caption or answer is its encoder window plus its decoding window. Every repetition includes FP32, so each configuration is also given relative to the FP32 of its own repetition. `--repeats 5` later adds two more repetitions without repeating the first three.
+
+Results: `results/variants/<run>/<checkpoint>/`: `accuracy.md`, `energy.md`, `summary.md` (accuracy and cost side by side), with `.json` versions, `energy.jsonl` (every window), `memory.json` (memory per configuration, encoder and decoder loaded together). Ctrl+C pauses either script; reopening resumes. Code check: `python scripts/10_measure_variants.py --n 8 --repeats 1 --pause 1 --idle-seconds 5 --warmup 2 --label _smoke --allow-gpu-only-energy`.
+
 ## Fixed implementation choices
 
 - Encoder: CLIP ViT-L/14 (chosen 2 Oct by the encoder check), frozen, features cached.
@@ -136,3 +150,4 @@ Close other apps, keep the Mac on AC power, and leave it alone while it runs: ot
 - CHAIR: Rohrbach et al.'s synonym list and rules; an image's objects are its COCO segmentation labels plus the objects its reference captions mention.
 - VQA accuracy: the official evaluator's normalisation and ten leave-one-out subsets (`greenvl/third_party/vqa_eval.py`).
 - Intervals: 1,000 bootstrap resamples of images, percentile 95 %; CHAIR_i and VQA accuracy resample each image with all its object mentions or questions.
+- Reduced precision (step 8): FP16 casts every weight; INT8 (LLM.int8, outlier threshold 6.0) and NF4 (bitsandbytes defaults) quantize the linear layers and keep everything else in FP16, computing in FP16. GPT-2's output layer shares its weights with the token embedding and stays FP16. The LoRA adapters stay unmerged in FP16, so one decoder serves both tasks. The mapping network goes with the decoder. Model size counts quantization scales.

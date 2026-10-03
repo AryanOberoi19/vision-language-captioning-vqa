@@ -1,9 +1,11 @@
 """End-to-end inference as deployed (methodology §8): image file -> CLIP encoder -> mapping network -> GPT-2, one
 image or question at a time. Used to measure energy per caption and per answer, latency, memory, size and FLOPs.
 
-A Pipeline wraps the frozen encoder with its image processor and a trained run (decode.load_run). encode() covers
-reading the image, preprocessing, and the encoder; caption() and answer() cover the mapping network and decoding
-(decode.generate_captions / answer_questions, so text is produced exactly as in evaluation).
+A Pipeline wraps the frozen encoder with its image processor and a trained run (decode.load_run), each at the
+precision of a configuration in greenvl/precision.py (FP32 reference; FP16, INT8, NF4 on the encoder, the decoder
+or both). encode() covers reading the image, preprocessing, and the encoder; caption() and answer() cover the
+mapping network and decoding (decode.generate_captions / answer_questions, so text is produced exactly as in
+evaluation).
 """
 from dataclasses import dataclass
 from pathlib import Path
@@ -11,11 +13,9 @@ from pathlib import Path
 import torch
 from PIL import Image
 
-from .decode import DECODING, answer_questions, generate_captions, load_run
+from .decode import DECODING, answer_questions, generate_captions
 from .device import synchronize
-from .model import IMAGE_MODELS
-
-PRECISIONS = ("fp32",)  # step 8 adds fp16, int8 and nf4 on the encoder, the decoder or both
+from .precision import CONFIGS, REFERENCE, compute_dtype, load_decoder, load_encoder, quant_state_bytes
 
 
 @dataclass
@@ -27,16 +27,20 @@ class Pipeline:
     device: torch.device
     cfg: dict
     checkpoint: Path
-    precision: str = "fp32"
+    config: str = REFERENCE
+
+    @property
+    def encoder_precision(self) -> str:
+        return CONFIGS[self.config][0]
+
+    @property
+    def decoder_precision(self) -> str:
+        return CONFIGS[self.config][1]
 
     @torch.inference_mode()
     def encode(self, image_path: Path) -> torch.Tensor:
         """Projected CLIP embedding of one image (float32, shape [dim]), as cached by 02_extract_features.py."""
-        with Image.open(image_path) as im:
-            pixels = self.processor(images=im.convert("RGB"), return_tensors="pt")["pixel_values"]
-        emb = self.encoder(pixel_values=pixels.to(self.device)).image_embeds[0].float()
-        synchronize(self.device)
-        return emb
+        return encode_image(self.encoder, self.processor, image_path, self.device, self.encoder_precision)
 
     def caption(self, emb: torch.Tensor, decoding: str) -> str:
         out = generate_captions(self.model, emb[None], decoding, batch_size=1, tokenizer=self.tokenizer)[0]
@@ -49,44 +53,53 @@ class Pipeline:
         return out
 
 
-def load_pipeline(run: str, checkpoint: str, device: torch.device, precision: str = "fp32") -> Pipeline:
-    from transformers import CLIPImageProcessor, CLIPVisionModelWithProjection
-    from transformers.utils import logging as hf_logging
+@torch.inference_mode()
+def encode_image(encoder, processor, image_path: Path, device: torch.device, precision: str) -> torch.Tensor:
+    with Image.open(image_path) as im:
+        pixels = processor(images=im.convert("RGB"), return_tensors="pt")["pixel_values"]
+    emb = encoder(pixel_values=pixels.to(device, compute_dtype(precision))).image_embeds[0].float()
+    synchronize(device)
+    return emb
 
+
+def load_pipeline(run: str, checkpoint: str, device: torch.device, config: str = REFERENCE) -> Pipeline:
     from .data import load_tokenizer
 
-    if precision not in PRECISIONS:
-        raise ValueError(f"precision must be one of {PRECISIONS}")
-    model, cfg, ckpt = load_run(run, checkpoint, device)
-    hf_id = IMAGE_MODELS[cfg["encoder"]][0]
-    level = hf_logging.get_verbosity()
-    hf_logging.set_verbosity_error()  # the vision-only class skips the text tower; not worth a report
-    try:
-        encoder = CLIPVisionModelWithProjection.from_pretrained(hf_id).to(device).eval()
-    finally:
-        hf_logging.set_verbosity(level)
-    processor = CLIPImageProcessor.from_pretrained(hf_id)
-    return Pipeline(encoder, processor, model, load_tokenizer(cfg["decoder"]), device, cfg, ckpt, precision)
+    if config not in CONFIGS:
+        raise ValueError(f"config must be one of {list(CONFIGS)}")
+    enc_p, dec_p = CONFIGS[config]
+    model, cfg, ckpt, _ = load_decoder(run, checkpoint, dec_p, device)
+    encoder, processor, _ = load_encoder(cfg["encoder"], enc_p, device)
+    return Pipeline(encoder, processor, model, load_tokenizer(cfg["decoder"]), device, cfg, ckpt, config)
 
 
 def tensor_bytes(module: torch.nn.Module) -> int:
-    """Storage of every parameter and buffer as held in memory (counts quantized storage as stored)."""
+    """Storage of every parameter and buffer as held in memory, quantized weights as stored plus their scales.
+    Tied weights (GPT-2's embedding and output layer) count once."""
     seen, total = set(), 0
     for t in [*module.parameters(), *module.buffers()]:
-        if id(t) in seen:  # tied weights (GPT-2's embedding and output layer) count once
+        if id(t) in seen:
             continue
         seen.add(id(t))
-        total += t.numel() * t.element_size()
+        total += t.numel() * t.element_size() + quant_state_bytes(t)
     return total
 
 
 def model_size_mb(p: Pipeline) -> dict:
-    """Size per component in MB. The decoder includes both LoRA adapter sets; the mapper is the mapping network."""
-    enc = tensor_bytes(p.encoder)
-    mapper = tensor_bytes(p.model.mapper)
-    dec = tensor_bytes(p.model.decoder)
-    return {"encoder": enc / 2**20, "mapper": mapper / 2**20, "decoder": dec / 2**20,
-            "total": (enc + mapper + dec) / 2**20}
+    """Size per component in MiB. The decoder includes both LoRA adapter sets; the mapper is the mapping network."""
+    return component_sizes(p.encoder, p.model)
+
+
+def component_sizes(encoder: torch.nn.Module | None, model: torch.nn.Module | None) -> dict:
+    out = {}
+    if encoder is not None:
+        out["encoder"] = tensor_bytes(encoder) / 2**20
+    if model is not None:
+        out["mapper"] = tensor_bytes(model.mapper) / 2**20
+        out["decoder"] = tensor_bytes(model.decoder) / 2**20
+    if len(out) == 3:
+        out["total"] = sum(out.values())
+    return out
 
 
 def count_flops(p: Pipeline, image_paths: list[Path], questions: list[str] | None, decoding: str) -> dict:
@@ -95,6 +108,8 @@ def count_flops(p: Pipeline, image_paths: list[Path], questions: list[str] | Non
     computed once, in fp32, for the reference precision."""
     from torch.utils.flop_counter import FlopCounterMode
 
+    if p.config != REFERENCE:
+        raise ValueError("FLOPs are counted on the FP32 reference pipeline")
     cpu = torch.device("cpu")
     pc = Pipeline(p.encoder.to(cpu), p.processor, p.model.to(cpu), p.tokenizer, cpu, p.cfg, p.checkpoint)
     enc, cap, ans = [], [], []
@@ -118,4 +133,5 @@ def count_flops(p: Pipeline, image_paths: list[Path], questions: list[str] | Non
             "images": len(image_paths), "decoding": decoding}
 
 
-__all__ = ["DECODING", "Pipeline", "PRECISIONS", "count_flops", "load_pipeline", "model_size_mb", "tensor_bytes"]
+__all__ = ["CONFIGS", "DECODING", "Pipeline", "component_sizes", "count_flops", "encode_image", "load_pipeline",
+           "model_size_mb", "tensor_bytes"]

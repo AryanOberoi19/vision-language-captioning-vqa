@@ -4,12 +4,15 @@
     python scripts/02_extract_features.py --encoder ViT-B/32
     python scripts/02_extract_features.py --encoder all
     python scripts/02_extract_features.py --encoder ViT-B/32 --limit 64      # smoke test, writes to features/_smoke
+    python scripts/02_extract_features.py --encoder ViT-L/14 --precision int8 --sets coco_test   # step 8
 
 Sets: coco_train, coco_val and coco_test (Karpathy 113,287 / 5,000 / 5,000), flickr8k (all 8,000), vizwiz_val
 (7,750). 139,037 images per encoder.
 
 Writes Datasets/features/<encoder>/<set>.pt = {"ids", "feats"}: projected CLIP image embeddings in float32,
 not normalised (the model normalises). Preprocessing is the encoder's own Hugging Face image processor.
+--precision fp16 | int8 | nf4 runs the encoder at that precision (greenvl/precision.py; step 8) and writes to
+Datasets/features/<encoder>_<precision>/.
 Logs time and energy per set to results/features/ (methodology §8: the one-time extraction is reported against
 the energy of re-encoding every epoch). Measures idle power for --idle-seconds first; close other apps.
 
@@ -37,6 +40,7 @@ from torch.utils.data import DataLoader, Dataset  # noqa: E402
 from greenvl import paths  # noqa: E402
 from greenvl.energy import EnergyMeter, awake_clock
 from greenvl.model import ENCODERS, IMAGE_MODELS, SCORER
+from greenvl.precision import PRECISIONS, compute_dtype, feature_name, load_encoder
 
 SETS = ["coco_train", "coco_val", "coco_test", "flickr8k", "vizwiz_val"]
 SHARD = 8192  # images per saved shard
@@ -78,13 +82,6 @@ class ImageSet(Dataset):
         return pixels, image_id
 
 
-def load_encoder(name):
-    from transformers import CLIPImageProcessor, CLIPVisionModelWithProjection
-
-    hf_id, _ = IMAGE_MODELS[name]
-    return CLIPVisionModelWithProjection.from_pretrained(hf_id), CLIPImageProcessor.from_pretrained(hf_id)
-
-
 def load_shards(parts: Path) -> list[dict]:
     """Complete shards in order; stops at the first gap (a shard file is written atomically)."""
     shards, end = [], 0
@@ -97,7 +94,7 @@ def load_shards(parts: Path) -> list[dict]:
     return shards
 
 
-def extract(model, processor, root, items, dev, batch, workers, parts: Path, meter, idle_w):
+def extract(model, processor, root, items, dev, batch, workers, parts: Path, meter, idle_w, dtype=torch.float32):
     """Encode items in order, saving a shard every SHARD images; resumes after the last complete shard."""
     parts.mkdir(parents=True, exist_ok=True)
     shards = load_shards(parts)
@@ -134,7 +131,7 @@ def extract(model, processor, root, items, dev, batch, workers, parts: Path, met
     t0 = begin()
     with torch.inference_mode():
         for pixels, image_ids in loader:
-            emb = model(pixel_values=pixels.to(dev)).image_embeds
+            emb = model(pixel_values=pixels.to(dev, dtype)).image_embeds
             buf_feats.append(emb.float().cpu())
             buf_ids.append(image_ids)
             if sum(len(x) for x in buf_ids) >= SHARD:
@@ -174,6 +171,7 @@ def main():
     ap.add_argument("--encoder", required=True, choices=list(IMAGE_MODELS) + ["all"],
                     help=f"a grid encoder, all three, or the CLIPScore scorer ({SCORER})")
     ap.add_argument("--sets", nargs="+", default=SETS, choices=SETS)
+    ap.add_argument("--precision", default="fp32", choices=PRECISIONS, help="encoder precision (step 8)")
     ap.add_argument("--batch", type=int, default=64)
     ap.add_argument("--workers", type=int, default=min(8, os.cpu_count() or 1))
     ap.add_argument("--device", default=None)
@@ -184,6 +182,8 @@ def main():
 
     dev = get_device(args.device)
     encoders = list(ENCODERS) if args.encoder == "all" else [args.encoder]
+    if args.precision != "fp32" and SCORER in encoders:
+        sys.exit("the CLIPScore scorer always runs in fp32")
     feat_root = paths.FEATURES / "_smoke" if args.limit else paths.FEATURES
     meter = EnergyMeter(dev.type)
     print(f"device {dev}, energy backend {meter.backend or meter.error}")
@@ -193,21 +193,22 @@ def main():
         print(f"idle power {idle_w:.3f} W over {idle['seconds']:.0f} s")
 
     for name in encoders:
-        out_dir = feat_root / encoder_slug(name)
+        fname = feature_name(name, args.precision)
+        out_dir = feat_root / encoder_slug(fname)
         out_dir.mkdir(parents=True, exist_ok=True)
-        model, processor = load_encoder(name)
-        model = model.to(dev).eval()
-        log = {"encoder": name, "hf_id": IMAGE_MODELS[name][0], "device": str(dev), "batch": args.batch,
+        model, processor, quantized = load_encoder(name, args.precision, dev)
+        log = {"encoder": name, "precision": args.precision, "quantized_layers": quantized,
+               "hf_id": IMAGE_MODELS[name][0], "device": str(dev), "batch": args.batch,
                "workers": args.workers, "timestamp": datetime.now().isoformat(timespec="seconds"),
                "versions": {p: md.version(p) for p in ("torch", "transformers", "pillow")},
                "idle_window": idle, "sets": {}}
         res_dir = paths.RESULTS / "features"
         res_dir.mkdir(parents=True, exist_ok=True)
-        log_path = res_dir / f"extract_{encoder_slug(name)}{'_smoke' if args.limit else ''}_{SESSION}.json"
+        log_path = res_dir / f"extract_{encoder_slug(fname)}{'_smoke' if args.limit else ''}_{SESSION}.json"
         for s in args.sets:
             path = out_dir / f"{s}.pt"
             if path.exists() and not args.overwrite:
-                print(f"  {name} {s}: exists, skipping ({path})")
+                print(f"  {fname} {s}: exists, skipping ({path})")
                 continue
             root, items = load_set(s)
             if args.limit:
@@ -215,13 +216,15 @@ def main():
             parts = out_dir / f"{s}.parts"
             if args.overwrite and parts.exists():
                 shutil.rmtree(parts)
-            r = combine(extract(model, processor, root, items, dev, args.batch, args.workers, parts, meter, idle_w))
+            r = combine(extract(model, processor, root, items, dev, args.batch, args.workers, parts, meter, idle_w,
+                                compute_dtype(args.precision)))
             ids, feats, seconds, energy = r["ids"], r["feats"], r["seconds"], r["energy"]
 
             assert ids.tolist() == [i for i, _ in items], "missing, duplicate or misordered ids"
             assert torch.isfinite(feats).all(), "non-finite embeddings"
             tmp = path.with_suffix(".tmp")
-            torch.save({"ids": ids, "feats": feats, "encoder": name, "hf_id": IMAGE_MODELS[name][0]}, tmp)
+            torch.save({"ids": ids, "feats": feats, "encoder": name, "precision": args.precision,
+                        "hf_id": IMAGE_MODELS[name][0]}, tmp)
             tmp.replace(path)
             shutil.rmtree(parts)
 
@@ -235,7 +238,7 @@ def main():
                     entry["j_per_image_above_idle"] = round(r["above_idle_j"] / len(items), 4)
             log["sets"][s] = entry
             log_path.write_text(json.dumps(log, indent=2, default=str))  # after every set, so a stop loses none
-            print(f"  {name} {s}: {len(items):,} images, {seconds:.0f} s, {entry['images_per_s']} img/s, "
+            print(f"  {fname} {s}: {len(items):,} images, {seconds:.0f} s, {entry['images_per_s']} img/s, "
                   f"{entry.get('j_per_image_above_idle', entry.get('j_per_image'))} J/image above idle")
         del model
     print("done")

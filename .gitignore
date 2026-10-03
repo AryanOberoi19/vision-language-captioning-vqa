@@ -17,8 +17,8 @@ __pycache__/
 *.part
 
 # Run-time files
-.lock
-console.log
+.lock*
+console*.log
 
 # Data and cached features live outside this folder (../Datasets); never add them here
 /Datasets/

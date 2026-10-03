@@ -4,6 +4,7 @@
     python scripts/05_evaluate.py --run coco_ViT-B-32_lora8_lr1e-3_s0 --select        # validation CIDEr per epoch
     python scripts/05_evaluate.py --run coco_ViT-B-32_lora8_lr1e-3_s0 --split test    # the selected checkpoint, all metrics
     python scripts/05_evaluate.py --run NAME --checkpoint step_004428.pt --split val --limit 500 --no-spice   # quick look
+    python scripts/05_evaluate.py --run NAME --checkpoint epoch_02.pt --precision both_int8      # step 8 configuration
 
 Captioning on the run's Karpathy split (COCO or Flickr8k): BLEU-4, CIDEr (primary), SPICE, CLIPScore with the
 out-of-grid scorer, CHAIR_i and CHAIR_s (COCO) and mean caption length. VQA (COCO runs): official accuracy on the
@@ -15,6 +16,11 @@ highest is the run's selected checkpoint (methodology §5), used by default afte
 
 Writes results/eval/<run>/<checkpoint>_<split>_<decoding>.json, with the captions and answers beside it. Generated
 text is reused when the same checkpoint, split and decoding are scored again (--redecode forces decoding).
+
+--precision runs a reduced-precision configuration of greenvl/precision.py (step 8): the decoder (mapping network,
+GPT-2, adapters) at its precision, and image features from the encoder at its precision, cached by
+02_extract_features.py --precision. Files are named <checkpoint>_<configuration>_<split>_...; the FP32 reference
+keeps the names above.
 """
 import argparse
 import json
@@ -37,6 +43,7 @@ from greenvl.data import FeatureStore  # noqa: E402
 from greenvl.decode import DECODING, answer_questions, generate_captions, load_run, weights_files  # noqa: E402
 from greenvl.metrics import CLIPScorer, caption_scores, cider, mean_ci, ptb_tokenize, ratio_ci  # noqa: E402
 from greenvl.model import IMAGE_MODELS, SCORER  # noqa: E402
+from greenvl.precision import CONFIGS, REFERENCE, config_tag, feature_name, load_decoder  # noqa: E402
 
 EVAL = paths.RESULTS / "eval"
 SELECTION_DECODING = "beam3"
@@ -66,6 +73,17 @@ def write_json(path: Path, obj):
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(obj, indent=1))
     tmp.replace(path)
+
+
+def features_of(cfg: dict, args) -> str:
+    """Feature set for the configuration: the encoder's own (FP32) or the one cached at reduced precision."""
+    precision = CONFIGS[args.precision][0]
+    name = feature_name(cfg["encoder"], precision)
+    if precision != "fp32" and not (paths.FEATURES / name.replace("/", "-") / f"coco_{args.split}.pt").exists():
+        sys.exit(f"no {args.split} features from {cfg['encoder']} at {precision}: run scripts/02_extract_features.py "
+                 f"--encoder {cfg['encoder']} --precision {precision} --sets coco_{args.split} "
+                 "(scripts/09_evaluate_variants.py does this)")
+    return name
 
 
 # ---------------------------------------------------------------- captions
@@ -114,7 +132,7 @@ def chair_ground_truth(split, image_ids):
 def score_captions(args, cfg, model, run_eval, stem, image_ids, device):
     family = cfg["data"]
     refs = references(family, args.split)
-    store = FeatureStore(cfg["encoder"], family, feature_sets(family, args.split))
+    store = FeatureStore(features_of(cfg, args), family, feature_sets(family, args.split))
     caps, seconds = decode_captions(model, store, image_ids, args.decoding, run_eval / f"{stem}_captions.json",
                                     args.redecode, args.batch)
     scorer = embeds = None
@@ -157,7 +175,7 @@ def score_vqa(args, cfg, model, run_eval, ckpt_stem, image_ids):
     if cached and [a["question_id"] for a in cached["answers"]] == qids:
         answers, seconds = [a["answer"] for a in cached["answers"]], cached.get("seconds")
     else:
-        store = FeatureStore(cfg["encoder"], "coco", feature_sets("coco", split))
+        store = FeatureStore(features_of(cfg, args), "coco", feature_sets("coco", split))
         feats = torch.stack([store.get(q["image_id"]) for q in questions])
         t0 = time.perf_counter()
         answers = answer_questions(model, feats, [q["question"] for q in questions], args.batch)
@@ -224,19 +242,25 @@ def select(args, device):
 def evaluate(args, device):
     run_eval = EVAL / args.run
     checkpoint = args.checkpoint or (load_json(run_eval / "selection.json") or {}).get("best")
-    model, cfg, ckpt = load_run(args.run, checkpoint, device)
+    if args.precision == REFERENCE:
+        model, cfg, ckpt = load_run(args.run, checkpoint, device)
+    else:
+        model, cfg, ckpt, _ = load_decoder(args.run, checkpoint, CONFIGS[args.precision][1], device)
     family = cfg["data"]
     image_ids = sorted(references(family, args.split))
     if args.limit:
         image_ids = image_ids[: args.limit]
-    stem = f"{ckpt.stem}_{args.split}_{args.decoding}"
+    tag = config_tag(ckpt.stem, args.precision)
+    stem = f"{tag}_{args.split}_{args.decoding}"
     result = {"run": args.run, "checkpoint": ckpt.name, "split": args.split, "decoding": args.decoding,
+              "precision": args.precision, "encoder_precision": CONFIGS[args.precision][0],
+              "decoder_precision": CONFIGS[args.precision][1],
               "limit": args.limit, "time": datetime.now().isoformat(timespec="seconds"), "device": str(device)}
     tasks = args.tasks or (["caption", "vqa"] if "vqa" in cfg["tasks"] else ["caption"])
     if "caption" in tasks:
         result["caption"] = score_captions(args, cfg, model, run_eval, stem, image_ids, device)
     if "vqa" in tasks:
-        result["vqa"] = score_vqa(args, cfg, model, run_eval, ckpt.stem, image_ids)
+        result["vqa"] = score_vqa(args, cfg, model, run_eval, tag, image_ids)
     write_json(run_eval / f"{stem}.json", result)
     print_summary(result)
     print(f"-> {run_eval / (stem + '.json')}")
@@ -246,7 +270,7 @@ def print_summary(r):
     def f(m, scale=100):
         return f"{scale * m['value']:.1f} [{scale * m['ci95'][0]:.1f}, {scale * m['ci95'][1]:.1f}]" if "ci95" in m \
             else f"{scale * m['value']:.1f}"
-    print(f"\n{r['run']} {r['checkpoint']} {r['split']} ({r['decoding']})")
+    print(f"\n{r['run']} {r['checkpoint']} {r.get('precision', REFERENCE)} {r['split']} ({r['decoding']})")
     c = r.get("caption")
     if c:
         parts = [f"{k} {f(c[k])}" for k in ("BLEU-4", "CIDEr", "SPICE", "CLIPScore", "CHAIR_i", "CHAIR_s") if k in c]
@@ -265,6 +289,8 @@ def main():
     ap.add_argument("--checkpoint", default=None, help="file in the run folder (default: selected, else newest)")
     ap.add_argument("--split", choices=["val", "test"], default="test")
     ap.add_argument("--decoding", choices=list(DECODING), default="beam3")
+    ap.add_argument("--precision", choices=list(CONFIGS), default=REFERENCE,
+                    help="reduced-precision configuration (greenvl/precision.py; step 8)")
     ap.add_argument("--tasks", nargs="+", choices=["caption", "vqa"], default=None)
     ap.add_argument("--limit", type=int, default=None, help="first N images of the split (quick checks)")
     ap.add_argument("--batch", type=int, default=64)
@@ -274,6 +300,8 @@ def main():
     ap.add_argument("--device", default=None)
     args = ap.parse_args()
     device = get_device(args.device)
+    if args.select and args.precision != REFERENCE:
+        sys.exit("--select chooses the checkpoint in FP32; drop --precision")
     select(args, device) if args.select else evaluate(args, device)
 
 

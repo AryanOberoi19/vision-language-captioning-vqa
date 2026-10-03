@@ -98,6 +98,7 @@ class CaptionVQAModel(nn.Module):
         self.prefix_len = prefix_len
         self.normalize_features = normalize_features
         self.task = TASKS[0]
+        self.compute_dtype = torch.float32  # FP16 when the decoder runs at reduced precision (greenvl/precision.py)
 
     @property
     def uses_adapters(self) -> bool:
@@ -114,7 +115,7 @@ class CaptionVQAModel(nn.Module):
         feats = feats.float()
         if self.normalize_features:
             feats = F.normalize(feats, dim=-1)
-        return self.mapper(feats)
+        return self.mapper(feats.to(self.compute_dtype))
 
     def embed(self, feats: torch.Tensor, input_ids: torch.Tensor, attention_mask: torch.Tensor):
         tokens = self.decoder.get_input_embeddings()(input_ids)

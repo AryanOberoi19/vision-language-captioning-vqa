@@ -165,6 +165,48 @@ Not specified in the paper, fixed in code (additions, no contradiction):
   - Batch 1 vs batch 64: the batch-1 encoder (0.957 J, ~19 images/s) costs about the same per image as feature caching at batch 64 (0.912 J, 23.8 images/s, incl. JPEG decoding). ViT-L/14 already fills the M4 Pro's GPU at batch 1, which bears on whether a batch-32 measurement adds anything (Differences item 1).
   - The energy boundary is SoC + DRAM. Display, SSD, fans and adapter losses are excluded, so wall-plug energy is higher.
 
+## Step 8: inference configurations (3 Oct; code ready and smoke-tested, runs pending)
+
+- Design (agreed with Aryan, 3 Oct):
+  - 11 configurations of the trained model, one factor at a time, nothing crossed: FP16, INT8 or NF4 on the encoder, the decoder or both (9, captions at beam 3), and FP32 captions with greedy and beam 5 (2). FP32 with beam 3 is the reference.
+  - The mapping network goes with the decoder: it exists only to feed GPT-2 and is a fifth of the decoder side (124 of 602 MiB). The LoRA adapters stay unmerged in FP16, so one decoder serves both tasks.
+  - Accuracy: every configuration on the full Karpathy test split, as in step 6b (scripts/09_evaluate_variants.py).
+  - Energy (scripts/10_measure_variants.py), per repetition: one 60 s idle window (re-measured if disturbed), then 26 windows in a shuffled order. There are 4 encoder windows, one per encoder precision, on the 1,000 step-7 subset images, and 22 decoding windows, one per configuration and task, each fed by the embeddings of its own encoder precision. A 20 s rest precedes each window.
+  - A configuration's J per caption (answer) = its encoder window's J per image + its decoding window's J per item. Step 7 summed the same two phases, measured as separate windows. Latency is summed per item the same way.
+  - Repetitions: 3 (Aryan, 3 Oct). Each repetition contains FP32, so every configuration is also given relative to the FP32 of its own repetition. Repetitions 4-5 can be added later, on another day, with `--repeats 5`.
+  - Why not one step-7 pass per configuration and task (22 passes)? That would measure the FP32 encoder in 10 of the 22 passes and spend 22 min per repetition on idle windows, which change the result by ~2 %. The component design measures the same quantities in ~30 instead of ~55 min per repetition.
+  - Deviation from methodology §8: idle is measured once per repetition instead of before each run, and the cool-down between windows is 20 s.
+- Code:
+  - greenvl/precision.py: configurations, conversion (FP16 cast; INT8 / NF4 through bitsandbytes on linear layers, the rest FP16, GPT-2's tied output layer FP16), loading of the encoder and decoder at a precision, and quantization scales for the size count.
+  - greenvl/measure.py: helpers shared by the step-7 and step-8 harnesses (moved out of 08_measure_inference.py; 08's summary is identical after the move).
+  - greenvl/model.py: the mapping network's input is cast to the decoder's compute dtype (no change at FP32).
+  - 02_extract_features.py --precision writes features/<encoder>_<precision>/.
+  - 05_evaluate.py --precision writes <checkpoint>_<configuration>_<split>_...; FP32 names are unchanged.
+  - 09_evaluate_variants.py + variants_accuracy.command, 10_measure_variants.py + variants_energy.command.
+- Probe on the Mac (3 Oct, 8 test images, MPS, batch 1):
+
+| Precision | Decoder side MiB (mapper + GPT-2 + adapters) | ms per caption (beam 3) | Encoder MiB | ms per image | Cosine to FP32 features |
+|---|---|---|---|---|---|
+| FP32 | 602 | 104 | 1,160 | 53 | 1.000 |
+| FP16 | 301 | 92 | 580 | 48 | 1.000 |
+| INT8 | 189 | 298 | 291 | 230 | 0.995 (mean) |
+| NF4 | 135 | 102 | 151 | 60 | 0.986 (mean) |
+
+  - Quantized layers: 50 on the decoder side (GPT-2's 48 + the mapper's 2), 145 in the encoder (ViT-L/14's 144 + the projection).
+  - Captions identical to FP32 on those 8 images: FP16 7, INT8 5, NF4 3. Answers to 8 questions: identical at every precision.
+  - GPU memory held by tensors, encoder and decoder loaded together: FP32 1,764 MB, dec_fp16 1,462, dec_nf4 1,297, enc_fp16 1,185, both_nf4 288 (each within 3 MB of the model size).
+- Observations for the analysis:
+  - INT8 runs 3-4x slower than FP32 here. bitsandbytes has no Metal kernel for LLM.int8, so it runs as PyTorch operations. NF4 uses a Metal kernel that bitsandbytes downloads from the Hugging Face Hub on first use (kernels-community/bitsandbytes-mps, through the `kernels` package; cached afterwards), so it runs at about FP32 speed. INT8 will likely cost more energy than FP32, as step 1's layer timings suggested.
+  - LLM.int8 chooses its outlier columns per batch. INT8 outputs at batch 64 (the accuracy evaluation) and at batch 1 (the cost measurement) can therefore differ: the probe's batch-1 and batch-8 INT8 captions differed. The energy summary reports how often batch-1 outputs match the evaluation's.
+  - Memory: the Metal driver allocates in large chunks (both_nf4: 288 MB in tensors, 1,096 MB driver total), and converting on the CPU leaves freed heap inside the process. The tables therefore report GPU memory held by tensors; the driver total and resident memory are in memory.json.
+  - Counter glitch: one 10 s NF4 extraction window in a smoke test read 0 J on every counter, while two re-runs read 46 J. 10_measure_variants.py now measures a window again (up to 3 attempts, recorded) when its GPU counter reads 0 J, or CPU / DRAM read 0 J while powermetrics is running.
+- Smoke tests (3 Oct; outputs deleted afterwards):
+  - 02 --precision nf4 / int8 on 64 images.
+  - 05 --precision dec_int8 on 20 images. For both_nf4 it stops with the right missing-features message.
+  - 10 with 8 items, 1 repetition, GPU-only energy: all 26 windows, the summary and the agreement column work; a second run added only repetition 2.
+  - 08 --summary-only gives an identical summary after the refactor.
+- Estimated time: accuracy ~1.5-2 h (INT8 extraction and INT8 decoding are the slowest parts); energy ~2 h for 3 repetitions.
+
 ## Step 1 results
 
 Hardware: Apple M4 Pro, 8P + 4E CPU cores, 16-core GPU, 24 GB unified memory, macOS 27.0, on AC power. Python 3.11.16.
@@ -197,7 +239,7 @@ Hardware: Apple M4 Pro, 8P + 4E CPU cores, 16-core GPU, 24 GB unified memory, ma
 | 5 Decoding + evaluation (BLEU-4, CIDEr, SPICE, CLIPScore, CHAIR, VQA acc, VQA-CE) | done 30 Sep; each metric checked against its reference implementation; pilot scored on val and test (results/eval/) |
 | 6 Reference configuration | encoder check 2 Oct: ViT-L/14; seed 0 done 2 Oct (3 epochs, selected epoch 3: test CIDEr 111.8, VQA 57.9, CHAIR_i 6.5); seeds 1-2 deferred (3 Oct) |
 | 7 Energy measurement harness | done 3 Oct: reference model FP32, 1.70 J per caption, 1.15 J per answer incl. idle; encoder 57 % / 84 % of it (results/inference/) |
-| 8 Inference-side sweep (precision x target, decoding) on the trained model | training-side factors dropped 2 Oct |
+| 8 Inference-side sweep (precision x target, decoding) on the trained model | training-side factors dropped 2 Oct; code ready and smoke-tested 3 Oct (09_evaluate_variants.py, 10_measure_variants.py); runs pending |
 | 9 CNN-LSTM baseline | |
 | 10 Analysis (frontiers, grounding score, retention ratios, Grad-CAM) | |
 | 11 Gradio demo | |
