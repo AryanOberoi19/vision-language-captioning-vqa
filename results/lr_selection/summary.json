@@ -1,0 +1,107 @@
+{
+  "stage_a": {
+    "short_epochs": 3,
+    "long_epochs": 6,
+    "rule": "rank by validation loss after 3 epochs, extend the best two to 6, choose the lower minimum",
+    "runs": {
+      "3e-5": {
+        "run": "f8k_lr3e-5",
+        "val_loss_caption": [
+          2.6544,
+          2.5479,
+          2.4907
+        ],
+        "unstable": false
+      },
+      "1e-4": {
+        "run": "f8k_lr1e-4",
+        "val_loss_caption": [
+          2.5271,
+          2.4391,
+          2.3934
+        ],
+        "unstable": false
+      },
+      "3e-4": {
+        "run": "f8k_lr3e-4",
+        "val_loss_caption": [
+          2.4554,
+          2.3898,
+          2.361,
+          2.345,
+          2.3519,
+          2.3534
+        ],
+        "unstable": false
+      },
+      "1e-3": {
+        "run": "f8k_lr1e-3",
+        "val_loss_caption": [
+          2.4352,
+          2.3701,
+          2.3283,
+          2.3071,
+          2.3057,
+          2.3089
+        ],
+        "unstable": false
+      }
+    },
+    "extended": [
+      "1e-3",
+      "3e-4"
+    ],
+    "chosen": "1e-3",
+    "margin_over_runner_up": 0.0393
+  },
+  "stage_b": {
+    "rule": "full fine-tuning at the chosen and next lower rate, 3 epochs; lower counts as better by > 0.02",
+    "runs": {
+      "1e-3": {
+        "run": "f8k_full_lr1e-3",
+        "val_loss_caption": [
+          2.4894,
+          2.4438,
+          2.497
+        ],
+        "unstable": true
+      },
+      "3e-4": {
+        "run": "f8k_full_lr3e-4",
+        "val_loss_caption": [
+          2.3531,
+          2.3037,
+          2.3532
+        ],
+        "unstable": true
+      }
+    },
+    "full_finetuning_prefers_lower_rate": true,
+    "note": "Full fine-tuning did better at the lower rate: decide whether it keeps the shared rate (\u00a75 as written) or gets its own."
+  },
+  "stage_c": {
+    "rule": "4,428-step pilot on COCO + VQA v2; switch to the lower rate if it is better by > 0.02 on either task or the chosen rate fails",
+    "steps": 4428,
+    "runs": {
+      "1e-3": {
+        "run": "coco_ViT-B-32_lora8_lr1e-3_s0",
+        "val_loss_caption": 2.3385,
+        "val_loss_vqa": 1.2998,
+        "failed": false
+      },
+      "3e-4": {
+        "run": "coco_ViT-B-32_lora8_lr3e-4_s0",
+        "val_loss_caption": 2.3714,
+        "val_loss_vqa": 1.3324,
+        "failed": false
+      }
+    },
+    "lower_rate_better": {
+      "caption": false,
+      "vqa": false
+    },
+    "final_rate": "1e-3",
+    "reference_run": "coco_ViT-B-32_lora8_lr1e-3_s0"
+  },
+  "updated": "2026-09-30T20:36:00"
+}

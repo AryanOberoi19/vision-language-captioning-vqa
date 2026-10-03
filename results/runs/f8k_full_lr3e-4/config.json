@@ -1,0 +1,40 @@
+{
+  "data": "flickr8k",
+  "tasks": [
+    "caption"
+  ],
+  "encoder": "ViT-B/32",
+  "decoder": "gpt2",
+  "adaptation": "full",
+  "rank": 8,
+  "epochs": 3,
+  "batch": 64,
+  "lr": 0.0003,
+  "weight_decay": 0.01,
+  "warmup_epochs": 0.2,
+  "schedule": "constant",
+  "clip": 1.0,
+  "amp": "fp32",
+  "seed": 0,
+  "run_name": "f8k_full_lr3e-4",
+  "log_every": 50,
+  "save_every": 1000,
+  "val_batches": 0,
+  "max_steps": null,
+  "save_epochs": "last",
+  "empty_cache_every": 100,
+  "idle_seconds": 60.0,
+  "device": null,
+  "overwrite": false,
+  "parameters": {
+    "mapper": 31468800,
+    "lora_caption": 0,
+    "lora_vqa": 0,
+    "decoder_trainable_full": 124439808,
+    "trainable_total": 155908608,
+    "total": 155908608
+  },
+  "total_steps": 1404,
+  "warmup_steps": 94,
+  "steps_per_epoch": 468
+}

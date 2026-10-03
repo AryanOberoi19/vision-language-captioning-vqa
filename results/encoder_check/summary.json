@@ -1,0 +1,55 @@
+{
+ "rule": "ViT-L/14 if CIDEr +5.0 or VQA +2.0 points, and neither lower by more than 1.0 CIDEr / 0.5 VQA; else ViT-B/32",
+ "steps": 4428,
+ "pilots": {
+  "ViT-B/32": {
+   "run": "coco_ViT-B-32_lora8_lr1e-3_s0",
+   "CIDEr": 87.01057691812055,
+   "CIDEr_ci95": [
+    85.15398946166366,
+    88.79035680561162
+   ],
+   "VQA": 48.09121179243518,
+   "VQA_ci95": [
+    47.44729957146137,
+    48.75172750437882
+   ],
+   "BLEU-4": 25.967404230070795,
+   "SPICE": 16.823503117296273,
+   "CLIPScore": 68.5496454334259,
+   "CHAIR_i": 12.289929441949967,
+   "val_loss_caption": 2.3385,
+   "val_loss_vqa": 1.2998,
+   "train_seconds": 1980.3,
+   "train_wh": 12.46622638888889
+  },
+  "ViT-L/14": {
+   "run": "coco_ViT-L-14_lora8_lr1e-3_s0",
+   "CIDEr": 93.24054068293586,
+   "CIDEr_ci95": [
+    91.30101503228798,
+    94.91401672942096
+   ],
+   "VQA": 49.52710539114818,
+   "VQA_ci95": [
+    48.86990459323213,
+    50.20747376476373
+   ],
+   "BLEU-4": 27.217644968868214,
+   "SPICE": 17.588532374951026,
+   "CLIPScore": 68.73677512079477,
+   "CHAIR_i": 9.221083816812738,
+   "val_loss_caption": 2.3062,
+   "val_loss_vqa": 1.272,
+   "train_seconds": 2083.0,
+   "train_wh": 10.45699861111111
+  }
+ },
+ "delta": {
+  "CIDEr": 6.2299637648153094,
+  "VQA": 1.435893598713001
+ },
+ "chosen": "ViT-L/14",
+ "reference_run": "coco_ViT-L-14_lora8_lr1e-3_s0",
+ "time": "2026-10-02T14:05:22"
+}

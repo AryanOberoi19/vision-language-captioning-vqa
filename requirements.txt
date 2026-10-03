@@ -1,0 +1,19 @@
+torch
+torchvision
+transformers
+peft
+accelerate
+bitsandbytes
+kernels
+zeus-apple-silicon; sys_platform == "darwin"
+nvidia-ml-py; sys_platform == "linux"
+pycocotools
+pycocoevalcap
+numpy
+pillow
+scipy
+pandas
+matplotlib
+tqdm
+psutil
+inflect

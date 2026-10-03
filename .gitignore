@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Model weights and resumable training state (GitHub refuses files over 100 MB; publish selected
+# checkpoints as release assets instead)
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.tmp
+*.part
+
+# Run-time files
+.lock
+console.log
+
+# Data and cached features live outside this folder (../Datasets); never add them here
+/Datasets/
+/features/

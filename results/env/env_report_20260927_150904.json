@@ -1,0 +1,314 @@
+{
+  "timestamp": "2026-09-27T14:52:54",
+  "args": {
+    "device": null,
+    "batch": 64,
+    "text_len": 24,
+    "steps": 20,
+    "warmup": 5,
+    "epochs": 10,
+    "seeds": 3,
+    "idle_seconds": 10,
+    "skip_bench": false,
+    "random_init": false,
+    "quick": false
+  },
+  "system": {
+    "python": "3.11.16",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "macos": "27.0",
+    "chip": "Apple M4 Pro",
+    "ram_gb": 24.0,
+    "cpu_performance_cores": "8",
+    "cpu_efficiency_cores": "4",
+    "gpu_cores": 16,
+    "power_source": "AC",
+    "low_power_mode": null
+  },
+  "packages": {
+    "torch": "2.14.0",
+    "torchvision": "0.29.0",
+    "transformers": "5.17.0",
+    "peft": "0.21.0",
+    "accelerate": "1.15.0",
+    "bitsandbytes": "0.50.2",
+    "zeus-apple-silicon": "1.1.0",
+    "codecarbon": null,
+    "pycocotools": "2.0.11",
+    "pycocoevalcap": "1.2",
+    "numpy": "2.4.6",
+    "pillow": "12.3.0",
+    "scipy": "1.17.1",
+    "pandas": "3.0.6"
+  },
+  "device": {
+    "device": "mps",
+    "mps_built": true,
+    "mps_available": true,
+    "cuda_available": false,
+    "dtypes": {
+      "fp32": "ok",
+      "fp16": "ok",
+      "bf16": "ok"
+    },
+    "autocast_bf16": "ok"
+  },
+  "energy": {
+    "backend": "apple_ioreport",
+    "error": null,
+    "idle_w": 0.0
+  },
+  "bnb_layers": {
+    "version": "0.50.2",
+    "mps": {
+      "fp16_linear_ms": 0.325,
+      "nf4": {
+        "rel_error": 0.0912,
+        "ms": 0.43
+      },
+      "int8": {
+        "rel_error": 0.0085,
+        "ms": 0.837
+      }
+    },
+    "cpu": {
+      "fp16_linear_ms": 0.724,
+      "nf4": {
+        "rel_error": 0.0912,
+        "ms": 1.381
+      },
+      "int8": {
+        "rel_error": 0.0039,
+        "ms": 1.313
+      }
+    }
+  },
+  "bnb_transformers": {
+    "mps/nf4": {
+      "ok": true,
+      "footprint_mb": 191.0
+    },
+    "mps/int8": {
+      "ok": true,
+      "footprint_mb": 231.7
+    },
+    "cpu/nf4": {
+      "ok": true,
+      "footprint_mb": 191.0
+    },
+    "cpu/int8": {
+      "ok": true,
+      "footprint_mb": 231.7
+    }
+  },
+  "train_throughput": {
+    "gpt2/lora/fp32": {
+      "samples_per_s": 169.2,
+      "ms_per_step": 378.3,
+      "memory_mb": 6260.3125,
+      "loss_finite": true,
+      "trainable_params": 32353536,
+      "j_per_sample": 0.1161,
+      "j_per_sample_above_idle": 0.1161
+    },
+    "gpt2/lora/bf16": {
+      "samples_per_s": 170.7,
+      "ms_per_step": 374.9,
+      "memory_mb": 7110.3125,
+      "loss_finite": true,
+      "trainable_params": 32353536,
+      "j_per_sample": 0.1008,
+      "j_per_sample_above_idle": 0.1008
+    },
+    "gpt2/frozen/fp32": {
+      "samples_per_s": 180.4,
+      "ms_per_step": 354.8,
+      "memory_mb": 6164.3125,
+      "loss_finite": true,
+      "trainable_params": 31468800,
+      "j_per_sample": 0.1155,
+      "j_per_sample_above_idle": 0.1155
+    },
+    "gpt2/frozen/bf16": {
+      "samples_per_s": 179.8,
+      "ms_per_step": 356.0,
+      "memory_mb": 6156.3125,
+      "loss_finite": true,
+      "trainable_params": 31468800,
+      "j_per_sample": 0.1006,
+      "j_per_sample_above_idle": 0.1006
+    },
+    "gpt2/full/fp32": {
+      "samples_per_s": 126.9,
+      "ms_per_step": 504.5,
+      "memory_mb": 8140.328125,
+      "loss_finite": true,
+      "trainable_params": 155908608,
+      "j_per_sample": 0.1706,
+      "j_per_sample_above_idle": 0.1705
+    },
+    "gpt2/full/bf16": {
+      "samples_per_s": 129.2,
+      "ms_per_step": 495.2,
+      "memory_mb": 8158.328125,
+      "loss_finite": true,
+      "trainable_params": 155908608,
+      "j_per_sample": 0.1446,
+      "j_per_sample_above_idle": 0.1446
+    },
+    "gpt2-medium/lora/fp32": {
+      "samples_per_s": 65.4,
+      "ms_per_step": 978.2,
+      "memory_mb": 11442.71875,
+      "loss_finite": true,
+      "trainable_params": 57424896,
+      "j_per_sample": 0.324,
+      "j_per_sample_above_idle": 0.324
+    },
+    "gpt2-medium/lora/bf16": {
+      "samples_per_s": 67.1,
+      "ms_per_step": 953.8,
+      "memory_mb": 11560.71875,
+      "loss_finite": true,
+      "trainable_params": 57424896,
+      "j_per_sample": 0.2806,
+      "j_per_sample_above_idle": 0.2805
+    },
+    "gpt2-medium/forward/fp32": {
+      "samples_per_s": 154.1,
+      "ms_per_step": 415.4,
+      "memory_mb": 4983.765625,
+      "loss_finite": true,
+      "trainable_params": 57424896,
+      "j_per_sample": 0.1493,
+      "j_per_sample_above_idle": 0.1492
+    },
+    "gpt2-medium/forward/bf16": {
+      "samples_per_s": 160.0,
+      "ms_per_step": 400.1,
+      "memory_mb": 4703.765625,
+      "loss_finite": true,
+      "trainable_params": 57424896,
+      "j_per_sample": 0.1225,
+      "j_per_sample_above_idle": 0.1225
+    }
+  },
+  "encoder_throughput": {
+    "ViT-B/32/fp32": {
+      "images_per_s": 413.5,
+      "embed_dim": 512
+    },
+    "ViT-B/32/fp16": {
+      "images_per_s": 533.5,
+      "embed_dim": 512
+    },
+    "ViT-B/16/fp32": {
+      "images_per_s": 116.5,
+      "embed_dim": 512
+    },
+    "ViT-B/16/fp16": {
+      "images_per_s": 144.1,
+      "embed_dim": 512
+    },
+    "ViT-L/14/fp32": {
+      "images_per_s": 27.1,
+      "embed_dim": 768
+    },
+    "ViT-L/14/fp16": {
+      "images_per_s": 32.5,
+      "embed_dim": 768
+    }
+  },
+  "estimate": {
+    "source": "processed/summary.json",
+    "caption_pairs": 566747,
+    "vqa_questions": 443757,
+    "samples_per_epoch": 1133494,
+    "epochs": 10,
+    "seeds": 3,
+    "by_precision": {
+      "fp32": {
+        "rows": [
+          {
+            "configs": "LoRA r8 reference, ViT-B/16, ViT-L/14, r4, r16",
+            "runs": 15,
+            "hours": 279.1,
+            "kwh": 5.48
+          },
+          {
+            "configs": "Frozen GPT-2",
+            "runs": 3,
+            "hours": 52.4,
+            "kwh": 1.09
+          },
+          {
+            "configs": "Full fine-tuning",
+            "runs": 3,
+            "hours": 74.4,
+            "kwh": 1.61
+          },
+          {
+            "configs": "Distilled student (+ teacher forward)",
+            "runs": 3,
+            "hours": 117.1,
+            "kwh": 2.51
+          },
+          {
+            "configs": "Teacher: GPT-2 medium, LoRA r8",
+            "runs": 1,
+            "hours": 48.1,
+            "kwh": 1.02
+          }
+        ],
+        "total_hours": 571.2,
+        "total_days": 23.8,
+        "total_kwh": 11.71,
+        "total_co2_kg_at_india_grid": 8.51
+      },
+      "bf16": {
+        "rows": [
+          {
+            "configs": "LoRA r8 reference, ViT-B/16, ViT-L/14, r4, r16",
+            "runs": 15,
+            "hours": 276.7,
+            "kwh": 4.76
+          },
+          {
+            "configs": "Frozen GPT-2",
+            "runs": 3,
+            "hours": 52.5,
+            "kwh": 0.95
+          },
+          {
+            "configs": "Full fine-tuning",
+            "runs": 3,
+            "hours": 73.1,
+            "kwh": 1.37
+          },
+          {
+            "configs": "Distilled student (+ teacher forward)",
+            "runs": 3,
+            "hours": 114.4,
+            "kwh": 2.11
+          },
+          {
+            "configs": "Teacher: GPT-2 medium, LoRA r8",
+            "runs": 1,
+            "hours": 46.9,
+            "kwh": 0.88
+          }
+        ],
+        "total_hours": 563.6,
+        "total_days": 23.5,
+        "total_kwh": 10.07,
+        "total_co2_kg_at_india_grid": 7.32
+      }
+    },
+    "feature_extraction_hours": {
+      "ViT-B/32/fp32": 0.09,
+      "ViT-B/16/fp32": 0.33,
+      "ViT-L/14/fp32": 1.43
+    }
+  }
+}

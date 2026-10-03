@@ -1,0 +1,89 @@
+{
+  "encoder": "ViT-L/14",
+  "hf_id": "openai/clip-vit-large-patch14",
+  "device": "mps",
+  "batch": 64,
+  "workers": 8,
+  "timestamp": "2026-10-02T11:55:31",
+  "versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pillow": "12.3.0"
+  },
+  "idle_window": {
+    "seconds": 60.004018416999315,
+    "cpu_j": 5.228,
+    "gpu_j": 3.456,
+    "gpu_sram_j": 0.0,
+    "ane_j": 0.0,
+    "dram_j": 7.19,
+    "total_j": 15.873999999999999,
+    "counters_live": true,
+    "watts": 0.2645489488667787
+  },
+  "sets": {
+    "coco_train": {
+      "images": 113287,
+      "seconds": 4765.3,
+      "images_per_s": 23.8,
+      "dim": 768,
+      "norm_mean": 18.569,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ViT-L-14/coco_train.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 4765.347300417998,
+        "cpu_j": 2887.4680000000003,
+        "gpu_j": 86349.874,
+        "gpu_sram_j": 0.0,
+        "ane_j": 6.529,
+        "dram_j": 15368.331,
+        "total_j": 104612.20199999999,
+        "counters_live": true
+      },
+      "j_per_image": 0.9234,
+      "j_per_image_above_idle": 0.9123
+    },
+    "coco_val": {
+      "images": 5000,
+      "seconds": 250.5,
+      "images_per_s": 20.0,
+      "dim": 768,
+      "norm_mean": 18.607,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ViT-L-14/coco_val.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 250.4848055420007,
+        "cpu_j": 164.067,
+        "gpu_j": 4376.159,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 665.582,
+        "total_j": 5205.808,
+        "counters_live": true
+      },
+      "j_per_image": 1.0412,
+      "j_per_image_above_idle": 1.0279
+    },
+    "coco_test": {
+      "images": 5000,
+      "seconds": 249.4,
+      "images_per_s": 20.1,
+      "dim": 768,
+      "norm_mean": 18.583,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ViT-L-14/coco_test.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 249.36615783300294,
+        "cpu_j": 159.451,
+        "gpu_j": 4424.573,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 665.393,
+        "total_j": 5249.417,
+        "counters_live": true
+      },
+      "j_per_image": 1.0499,
+      "j_per_image_above_idle": 1.0367
+    }
+  }
+}

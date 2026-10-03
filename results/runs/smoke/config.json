@@ -1,0 +1,38 @@
+{
+  "data": "flickr8k",
+  "tasks": [
+    "caption"
+  ],
+  "encoder": "ViT-B/32",
+  "decoder": "gpt2",
+  "adaptation": "lora",
+  "rank": 8,
+  "epochs": 10,
+  "batch": 64,
+  "lr": 0.0001,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.03,
+  "schedule": "linear",
+  "clip": 1.0,
+  "amp": "fp32",
+  "seed": 0,
+  "run_name": "smoke",
+  "log_every": 50,
+  "save_every": 1000,
+  "val_batches": 5,
+  "max_steps": 20,
+  "idle_seconds": 0.0,
+  "device": null,
+  "overwrite": false,
+  "parameters": {
+    "mapper": 31468800,
+    "lora_caption": 442368,
+    "lora_vqa": 442368,
+    "decoder_trainable_full": 0,
+    "trainable_total": 32353536,
+    "total": 156793344
+  },
+  "total_steps": 20,
+  "warmup_steps": 1,
+  "steps_per_epoch": 469
+}

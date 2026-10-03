@@ -1,0 +1,83 @@
+{
+  "rows": [
+    {
+      "window": "first window",
+      "seconds": 2.01,
+      "total_w": 0.00498739322152122,
+      "cpu_w": 0.0,
+      "gpu_w": 0.00498739322152122,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    },
+    {
+      "window": "idle 1",
+      "seconds": 10.01,
+      "total_w": 0.003298328764191456,
+      "cpu_w": 0.0,
+      "gpu_w": 0.003298328764191456,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    },
+    {
+      "window": "idle 2",
+      "seconds": 10.0,
+      "total_w": 0.06848009140619353,
+      "cpu_w": 0.0,
+      "gpu_w": 0.06848009140619353,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    },
+    {
+      "window": "idle 3",
+      "seconds": 10.0,
+      "total_w": 0.00349977267506626,
+      "cpu_w": 0.0,
+      "gpu_w": 0.00349977267506626,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    },
+    {
+      "window": "CPU load",
+      "seconds": 10.02,
+      "total_w": 0.2250663646352646,
+      "cpu_w": 0.0,
+      "gpu_w": 0.2250663646352646,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    },
+    {
+      "window": "GPU load (mps)",
+      "seconds": 10.23,
+      "total_w": 25.74918344701314,
+      "cpu_w": 0.0,
+      "gpu_w": 25.74918344701314,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    },
+    {
+      "window": "idle 4",
+      "seconds": 10.0,
+      "total_w": 0.021491410689074227,
+      "cpu_w": 0.0,
+      "gpu_w": 0.021491410689074227,
+      "gpu_sram_w": 0.0,
+      "ane_w": 0.0,
+      "dram_w": 0.0
+    }
+  ],
+  "cumulative_delta_j": 266.66699999999946,
+  "window_sum_j": 266.64706531559796,
+  "verdict": {
+    "idle_mean_w": 0.024,
+    "idle_plausible": false,
+    "components_missing": [],
+    "cpu_load_raises_cpu": false,
+    "gpu_load_raises_gpu": true
+  }
+}

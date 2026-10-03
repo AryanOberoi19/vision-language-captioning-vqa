@@ -1,0 +1,77 @@
+{
+ "run": "coco_ViT-L-14_lora8_lr1e-3_s0",
+ "rows": [
+  {
+   "epochs": 0.25,
+   "checkpoint": "step_004428.pt",
+   "CIDEr": 93.24054068293586,
+   "VQA": 49.52710539114818,
+   "BLEU-4": 27.217644968868214,
+   "SPICE": 17.588532374951026,
+   "CHAIR_i": 9.221083816812738,
+   "CHAIR_s": 14.04,
+   "length": 9.678,
+   "val_loss_caption": 2.3062,
+   "val_loss_vqa": 1.272,
+   "train_hours": 0.5786111111111111,
+   "train_wh": 10.45699861111111,
+   "sessions": 1
+  },
+  {
+   "epochs": 1,
+   "checkpoint": "epoch_00.pt",
+   "CIDEr": 106.07791124673598,
+   "VQA": 54.71136219087882,
+   "BLEU-4": 32.39688301910279,
+   "SPICE": 19.069795336256405,
+   "CHAIR_i": 7.897397017942886,
+   "CHAIR_s": 11.78,
+   "length": 9.2258,
+   "val_loss_caption": 2.1398,
+   "val_loss_vqa": 1.1261,
+   "train_hours": 2.245833333333333,
+   "train_wh": 44.238665555555556,
+   "sessions": 2
+  },
+  {
+   "epochs": 2,
+   "checkpoint": "epoch_01.pt",
+   "CIDEr": 109.22439799380217,
+   "VQA": 57.379999251749034,
+   "BLEU-4": 32.61513697089613,
+   "SPICE": 19.928037046381426,
+   "CHAIR_i": 6.686815262561391,
+   "CHAIR_s": 9.94,
+   "length": 9.776,
+   "val_loss_caption": 2.0811,
+   "val_loss_vqa": 1.0753,
+   "train_hours": 2.1994166666666666,
+   "train_wh": 46.16322638888889,
+   "sessions": 1
+  },
+  {
+   "epochs": 3,
+   "checkpoint": "epoch_02.pt",
+   "CIDEr": 110.51317882724992,
+   "VQA": 57.70212129148117,
+   "BLEU-4": 33.42069179063641,
+   "SPICE": 19.898329355854216,
+   "CHAIR_i": 6.541353383458646,
+   "CHAIR_s": 9.959999999999999,
+   "length": 9.5222,
+   "val_loss_caption": 2.0649,
+   "val_loss_vqa": 1.0703,
+   "train_hours": 2.184888888888889,
+   "train_wh": 46.86238333333333,
+   "sessions": 1
+  }
+ ],
+ "proposed_stop": {
+  "gains": {
+   "CIDEr": 1.2887808334477455,
+   "VQA": 0.32212203973213605
+  },
+  "stop": false
+ },
+ "time": "2026-10-02T23:09:42"
+}

@@ -1,0 +1,41 @@
+{
+  "data": "coco",
+  "tasks": [
+    "caption",
+    "vqa"
+  ],
+  "encoder": "ViT-B/32",
+  "decoder": "gpt2",
+  "adaptation": "lora",
+  "rank": 8,
+  "epochs": 1,
+  "batch": 64,
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "warmup_epochs": 0.2,
+  "schedule": "constant",
+  "clip": 1.0,
+  "amp": "fp32",
+  "seed": 0,
+  "run_name": "coco_ViT-B-32_lora8_lr1e-3_s0",
+  "log_every": 50,
+  "save_every": 1000,
+  "val_batches": 0,
+  "max_steps": 4428,
+  "save_epochs": "all",
+  "empty_cache_every": 100,
+  "idle_seconds": 60.0,
+  "device": null,
+  "overwrite": false,
+  "parameters": {
+    "mapper": 31468800,
+    "lora_caption": 442368,
+    "lora_vqa": 442368,
+    "decoder_trainable_full": 0,
+    "trainable_total": 32353536,
+    "total": 156793344
+  },
+  "total_steps": 4428,
+  "warmup_steps": 3542,
+  "steps_per_epoch": 17710
+}

@@ -1,0 +1,44 @@
+{
+  "encoder": "ViT-B/32",
+  "hf_id": "openai/clip-vit-base-patch32",
+  "device": "mps",
+  "batch": 64,
+  "workers": 8,
+  "timestamp": "2026-09-29T21:12:15",
+  "versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pillow": "12.3.0"
+  },
+  "idle_window": {
+    "seconds": 60.00507895800001,
+    "cpu_j": 0.0,
+    "gpu_j": 0.142,
+    "gpu_sram_j": 0.0,
+    "ane_j": 0.0,
+    "dram_j": 0.0,
+    "total_j": 0.142,
+    "watts": 0.0023664663469469232
+  },
+  "sets": {
+    "flickr8k": {
+      "images": 8000,
+      "seconds": 74.8,
+      "images_per_s": 107.0,
+      "dim": 512,
+      "norm_mean": 10.451,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ViT-B-32/flickr8k.pt",
+      "energy": {
+        "seconds": 74.78895224999906,
+        "cpu_j": 0.0,
+        "gpu_j": 483.004,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 0.0,
+        "total_j": 483.004
+      },
+      "j_per_image": 0.0604,
+      "j_per_image_above_idle": 0.0604
+    }
+  }
+}

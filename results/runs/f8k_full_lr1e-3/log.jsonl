@@ -1,0 +1,33 @@
+{"time": "2026-09-30T15:13:22", "type": "start", "resumed": false, "from_epoch": 0, "to_epochs": 3, "device": "mps", "energy_backend": "apple_ioreport", "energy_counters_live": true, "energy_warning": null, "idle_window": {"seconds": 60.00509624999904, "cpu_j": 3.083, "gpu_j": 1.094, "gpu_sram_j": 0.0, "ane_j": 0.0, "dram_j": 2.93, "total_j": 7.107000000000001, "counters_live": true, "watts": 0.11843994000759751}}
+{"time": "2026-09-30T15:14:00", "type": "step", "epoch": 0, "step": 50, "lr": 0.0005425531914893617, "samples_per_s": 83.0, "memory_mb": 12013.546875, "loss_caption": 3.2836}
+{"time": "2026-09-30T15:14:38", "type": "step", "epoch": 0, "step": 100, "lr": 0.001, "samples_per_s": 85.9, "memory_mb": 12013.953125, "loss_caption": 2.8421}
+{"time": "2026-09-30T15:15:15", "type": "step", "epoch": 0, "step": 150, "lr": 0.001, "samples_per_s": 85.3, "memory_mb": 9933.46875, "loss_caption": 2.8036}
+{"time": "2026-09-30T15:15:52", "type": "step", "epoch": 0, "step": 200, "lr": 0.001, "samples_per_s": 86.4, "memory_mb": 10957.921875, "loss_caption": 2.6276}
+{"time": "2026-09-30T15:16:30", "type": "step", "epoch": 0, "step": 250, "lr": 0.001, "samples_per_s": 85.4, "memory_mb": 10957.578125, "loss_caption": 2.5669}
+{"time": "2026-09-30T15:17:07", "type": "step", "epoch": 0, "step": 300, "lr": 0.001, "samples_per_s": 85.2, "memory_mb": 13006.078125, "loss_caption": 2.5256}
+{"time": "2026-09-30T15:17:46", "type": "step", "epoch": 0, "step": 350, "lr": 0.001, "samples_per_s": 83.6, "memory_mb": 11021.53125, "loss_caption": 2.4489}
+{"time": "2026-09-30T15:18:23", "type": "step", "epoch": 0, "step": 400, "lr": 0.001, "samples_per_s": 85.2, "memory_mb": 13069.921875, "loss_caption": 2.4276}
+{"time": "2026-09-30T15:19:01", "type": "step", "epoch": 0, "step": 450, "lr": 0.001, "samples_per_s": 84.4, "memory_mb": 13005.5, "loss_caption": 2.3896}
+{"time": "2026-09-30T15:19:28", "type": "epoch", "epoch": 0, "step": 468, "step_in_epoch": 468, "checkpoint": "epoch_00.pt", "train_seconds": 352.7, "val_seconds": 12.5, "memory_mb": 4551.703125, "train_loss_caption": 2.6463, "val_loss_caption": 2.4894, "train_energy": {"seconds": 352.7, "cpu_j": 253.099, "gpu_j": 5826.993, "gpu_sram_j": 0.0, "ane_j": 0.017, "dram_j": 998.649, "total_j": 7078.758, "counters_live": true}, "sessions": 1, "train_energy_above_idle_j": 7037.0}
+{"time": "2026-09-30T15:19:52", "type": "step", "epoch": 1, "step": 500, "lr": 0.001, "samples_per_s": 86.3, "memory_mb": 7852.390625, "loss_caption": 2.0377}
+{"time": "2026-09-30T15:20:31", "type": "step", "epoch": 1, "step": 550, "lr": 0.001, "samples_per_s": 84.0, "memory_mb": 13005.515625, "loss_caption": 2.0715}
+{"time": "2026-09-30T15:21:08", "type": "step", "epoch": 1, "step": 600, "lr": 0.001, "samples_per_s": 86.0, "memory_mb": 13005.984375, "loss_caption": 2.085}
+{"time": "2026-09-30T15:21:45", "type": "step", "epoch": 1, "step": 650, "lr": 0.001, "samples_per_s": 85.2, "memory_mb": 10957.59375, "loss_caption": 2.0839}
+{"time": "2026-09-30T15:22:23", "type": "step", "epoch": 1, "step": 700, "lr": 0.001, "samples_per_s": 84.8, "memory_mb": 13006.015625, "loss_caption": 2.1152}
+{"time": "2026-09-30T15:23:01", "type": "step", "epoch": 1, "step": 750, "lr": 0.001, "samples_per_s": 84.4, "memory_mb": 13005.546875, "loss_caption": 2.1243}
+{"time": "2026-09-30T15:23:38", "type": "step", "epoch": 1, "step": 800, "lr": 0.001, "samples_per_s": 86.3, "memory_mb": 13006.015625, "loss_caption": 2.0971}
+{"time": "2026-09-30T15:24:16", "type": "step", "epoch": 1, "step": 850, "lr": 0.001, "samples_per_s": 84.8, "memory_mb": 8909.53125, "loss_caption": 2.1127}
+{"time": "2026-09-30T15:24:54", "type": "step", "epoch": 1, "step": 900, "lr": 0.001, "samples_per_s": 84.7, "memory_mb": 13006.03125, "loss_caption": 2.084}
+{"time": "2026-09-30T15:25:34", "type": "epoch", "epoch": 1, "step": 936, "step_in_epoch": 468, "checkpoint": "epoch_01.pt", "train_seconds": 351.9, "val_seconds": 12.5, "memory_mb": 4551.703125, "train_loss_caption": 2.0911, "val_loss_caption": 2.4438, "train_energy": {"seconds": 351.9, "cpu_j": 152.221, "gpu_j": 5698.96, "gpu_sram_j": 0.0, "ane_j": 0.036, "dram_j": 998.432, "total_j": 6849.649, "counters_live": true}, "sessions": 1, "train_energy_above_idle_j": 6808.0}
+{"time": "2026-09-30T15:25:45", "type": "step", "epoch": 2, "step": 950, "lr": 0.001, "samples_per_s": 84.3, "memory_mb": 8917.109375, "loss_caption": 1.7415}
+{"time": "2026-09-30T15:26:22", "type": "step", "epoch": 2, "step": 1000, "lr": 0.001, "samples_per_s": 85.6, "memory_mb": 10965.703125, "loss_caption": 1.723}
+{"time": "2026-09-30T15:27:01", "type": "step", "epoch": 2, "step": 1050, "lr": 0.001, "samples_per_s": 83.0, "memory_mb": 7852.578125, "loss_caption": 1.7739}
+{"time": "2026-09-30T15:27:39", "type": "step", "epoch": 2, "step": 1100, "lr": 0.001, "samples_per_s": 83.4, "memory_mb": 13013.9375, "loss_caption": 1.7931}
+{"time": "2026-09-30T15:28:17", "type": "step", "epoch": 2, "step": 1150, "lr": 0.001, "samples_per_s": 84.2, "memory_mb": 9941.578125, "loss_caption": 1.8071}
+{"time": "2026-09-30T15:28:55", "type": "step", "epoch": 2, "step": 1200, "lr": 0.001, "samples_per_s": 85.8, "memory_mb": 10966.0, "loss_caption": 1.8248}
+{"time": "2026-09-30T15:29:32", "type": "step", "epoch": 2, "step": 1250, "lr": 0.001, "samples_per_s": 84.9, "memory_mb": 10965.484375, "loss_caption": 1.8328}
+{"time": "2026-09-30T15:30:11", "type": "step", "epoch": 2, "step": 1300, "lr": 0.001, "samples_per_s": 83.8, "memory_mb": 13014.015625, "loss_caption": 1.8489}
+{"time": "2026-09-30T15:30:48", "type": "step", "epoch": 2, "step": 1350, "lr": 0.001, "samples_per_s": 86.2, "memory_mb": 7860.59375, "loss_caption": 1.8284}
+{"time": "2026-09-30T15:31:25", "type": "step", "epoch": 2, "step": 1400, "lr": 0.001, "samples_per_s": 85.7, "memory_mb": 11989.90625, "loss_caption": 1.8502}
+{"time": "2026-09-30T15:31:41", "type": "epoch", "epoch": 2, "step": 1404, "step_in_epoch": 468, "checkpoint": "epoch_02.pt", "train_seconds": 352.7, "val_seconds": 12.4, "memory_mb": 4551.703125, "train_loss_caption": 1.8072, "val_loss_caption": 2.497, "train_energy": {"seconds": 352.7, "cpu_j": 295.069, "gpu_j": 5707.403, "gpu_sram_j": 0.0, "ane_j": 0.0, "dram_j": 1010.278, "total_j": 7012.75, "counters_live": true}, "sessions": 1, "train_energy_above_idle_j": 6971.0}
+{"time": "2026-09-30T15:31:42", "type": "end", "global_step": 1404}

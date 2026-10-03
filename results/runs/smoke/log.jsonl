@@ -1,0 +1,3 @@
+{"time": "2026-09-29T21:15:11", "type": "start", "resumed": false, "device": "mps", "energy_backend": "apple_ioreport", "idle_window": null}
+{"time": "2026-09-29T21:15:22", "type": "epoch", "epoch": 0, "step": 20, "train_seconds": 10.2, "val_seconds": 1.0, "memory_mb": 17272.53125, "train_loss_caption": 5.0083, "val_loss_caption": 3.8818, "train_energy": {"seconds": 10.245570958000826, "cpu_j": 0.0, "gpu_j": 154.979, "gpu_sram_j": 0.0, "ane_j": 0.0, "dram_j": 0.0, "total_j": 154.979}}
+{"time": "2026-09-29T21:15:22", "type": "end", "global_step": 20}
