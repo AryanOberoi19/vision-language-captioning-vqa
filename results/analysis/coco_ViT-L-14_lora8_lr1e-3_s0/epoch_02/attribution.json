@@ -1,0 +1,358 @@
+{
+ "method": "occlusion, 28 px window, stride 14 px, mean-colour fill; map = mean drop in log-probability over the windows covering each pixel, Gaussian-smoothed",
+ "images": [
+  {
+   "image_id": 322586,
+   "caption": "A baby is sleeping on a cell phone.",
+   "artifact_tokens": [
+    [
+     2,
+     12,
+     10.003335952758789
+    ],
+    [
+     1,
+     14,
+     8.166985511779785
+    ],
+    [
+     4,
+     1,
+     1.4148839712142944
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "baby",
+     "hallucinated": false,
+     "logprob": -0.9073377847671509,
+     "max_drop": 0.1520593969820939
+    },
+    {
+     "kind": "word",
+     "word": "cell phone",
+     "hallucinated": false,
+     "logprob": -0.41912978887557983,
+     "max_drop": 0.08967607269870355
+    },
+    {
+     "kind": "answer",
+     "question": "What is the baby holding?",
+     "answer": "phone",
+     "logprob": -0.39430949091911316,
+     "max_drop": 0.039649322162331524
+    }
+   ]
+  },
+  {
+   "image_id": 67881,
+   "caption": "A boy swinging a baseball bat at a baseball.",
+   "artifact_tokens": [
+    [
+     9,
+     13,
+     10.872669219970703
+    ],
+    [
+     10,
+     14,
+     6.824333667755127
+    ],
+    [
+     13,
+     12,
+     1.5787043571472168
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "boy",
+     "hallucinated": false,
+     "logprob": -1.111356496810913,
+     "max_drop": 0.22685474835983346
+    },
+    {
+     "kind": "word",
+     "word": "baseball bat",
+     "hallucinated": false,
+     "logprob": -0.32801416516304016,
+     "max_drop": 0.16113244966396353
+    },
+    {
+     "kind": "answer",
+     "question": "How many people are in the bleachers?",
+     "answer": "2",
+     "logprob": -1.376624345779419,
+     "max_drop": 0.15097583451266788
+    }
+   ]
+  },
+  {
+   "image_id": 380734,
+   "caption": "A group of people sitting at tables in front of a restaurant.",
+   "artifact_tokens": [
+    [
+     1,
+     10,
+     10.69795036315918
+    ],
+    [
+     4,
+     13,
+     4.924403190612793
+    ],
+    [
+     10,
+     11,
+     1.467811942100525
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "people",
+     "hallucinated": false,
+     "logprob": -0.04906516894698143,
+     "max_drop": 0.0
+    },
+    {
+     "kind": "word",
+     "word": "tables",
+     "hallucinated": false,
+     "logprob": -0.4335518479347229,
+     "max_drop": 0.3101345659674866
+    },
+    {
+     "kind": "answer",
+     "question": "Are they on a boat?",
+     "answer": "yes",
+     "logprob": -0.47242993116378784,
+     "max_drop": 0.15688859957713364
+    }
+   ]
+  },
+  {
+   "image_id": 225495,
+   "caption": "A man wearing glasses and a tie is smiling.",
+   "artifact_tokens": [
+    [
+     9,
+     13,
+     10.77176284790039
+    ],
+    [
+     11,
+     14,
+     9.99352741241455
+    ],
+    [
+     4,
+     14,
+     6.121059894561768
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "man",
+     "hallucinated": false,
+     "logprob": -0.40634191036224365,
+     "max_drop": 0.012974491829083674
+    },
+    {
+     "kind": "word",
+     "word": "tie",
+     "hallucinated": false,
+     "logprob": -1.3093675374984741,
+     "max_drop": 1.0084986265935287
+    },
+    {
+     "kind": "answer",
+     "question": "Is he wearing a bow tie?",
+     "answer": "no",
+     "logprob": -0.38403192162513733,
+     "max_drop": 0.051376975133425234
+    }
+   ]
+  },
+  {
+   "image_id": 173391,
+   "caption": "A microwave oven sitting on top of a counter.",
+   "artifact_tokens": [
+    [
+     5,
+     14,
+     11.438549995422363
+    ],
+    [
+     3,
+     13,
+     8.137784004211426
+    ],
+    [
+     6,
+     4,
+     1.4875668287277222
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "microwave",
+     "hallucinated": false,
+     "logprob": -1.527563214302063,
+     "max_drop": 2.3315345178012183
+    },
+    {
+     "kind": "word",
+     "word": "oven",
+     "hallucinated": false,
+     "logprob": -0.34957656264305115,
+     "max_drop": 0.13121195312121925
+    },
+    {
+     "kind": "answer",
+     "question": "Is this an oven?",
+     "answer": "yes",
+     "logprob": -0.19350315630435944,
+     "max_drop": 0.01714452833027159
+    }
+   ]
+  },
+  {
+   "image_id": 562356,
+   "caption": "A group of people standing on top of a motorcycle.",
+   "artifact_tokens": [
+    [
+     1,
+     7,
+     10.037635803222656
+    ],
+    [
+     0,
+     8,
+     7.880311012268066
+    ],
+    [
+     0,
+     2,
+     2.015312671661377
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "people",
+     "hallucinated": false,
+     "logprob": -0.4793754816055298,
+     "max_drop": 0.20973952512896854
+    },
+    {
+     "kind": "word",
+     "word": "motorcycle",
+     "hallucinated": false,
+     "logprob": -1.8711670637130737,
+     "max_drop": 0.24796570696254555
+    },
+    {
+     "kind": "answer",
+     "question": "Does the first biker have his left foot on the ground?",
+     "answer": "yes",
+     "logprob": -0.5567604899406433,
+     "max_drop": 0.008377629331270928
+    }
+   ]
+  },
+  {
+   "image_id": 478766,
+   "caption": "A plate of food on a table with a fork.",
+   "artifact_tokens": [
+    [
+     13,
+     3,
+     10.874175071716309
+    ],
+    [
+     14,
+     3,
+     6.925915241241455
+    ],
+    [
+     3,
+     0,
+     1.6519320011138916
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "table",
+     "hallucinated": true,
+     "logprob": -0.33629584312438965,
+     "max_drop": 0.050961515219109944
+    },
+    {
+     "kind": "word",
+     "word": "fork",
+     "hallucinated": true,
+     "logprob": -0.4510645568370819,
+     "max_drop": 0.039193156114993286
+    },
+    {
+     "kind": "answer",
+     "question": "How many egg yolks are visible?",
+     "answer": "1",
+     "logprob": -1.2766002416610718,
+     "max_drop": 0.04299017950284745
+    }
+   ]
+  },
+  {
+   "image_id": 211491,
+   "caption": "A woman sitting on top of a wooden bench.",
+   "artifact_tokens": [
+    [
+     2,
+     8,
+     9.932826042175293
+    ],
+    [
+     2,
+     15,
+     9.730795860290527
+    ],
+    [
+     2,
+     5,
+     1.6887377500534058
+    ]
+   ],
+   "cells": [
+    {
+     "kind": "word",
+     "word": "bench",
+     "hallucinated": true,
+     "logprob": -0.6761049032211304,
+     "max_drop": 0.6995492846227922
+    },
+    {
+     "kind": "word",
+     "word": "woman",
+     "hallucinated": false,
+     "logprob": -0.13920781016349792,
+     "max_drop": 0.7816035076155843
+    },
+    {
+     "kind": "answer",
+     "question": "Are they on a mountain top?",
+     "answer": "yes",
+     "logprob": -0.2250840961933136,
+     "max_drop": 0.15138784580194195
+    }
+   ]
+  }
+ ],
+ "seed": 0
+}

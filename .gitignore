@@ -20,6 +20,9 @@ __pycache__/
 .lock*
 console*.log
 
+# Analysis caches (per-image scores, mean prefixes; rebuilt by scripts/11_analysis.py)
+results/analysis/**/cache/
+
 # Data and cached features live outside this folder (../Datasets); never add them here
 /Datasets/
 /features/

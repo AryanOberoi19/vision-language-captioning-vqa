@@ -239,6 +239,43 @@ Not specified in the paper, fixed in code (additions, no contradiction):
 - Between sessions: FP32 used 1.813 J per caption and 1.191 per answer here, against 1.702 and 1.149 in step 7 (+6.5 %, +3.7%; encoder +4.7 %, caption decoding +13 %) at the same speed, so the chip drew more power on this run. This is the reason the configurations are compared with the FP32 of their own repetition; absolute joules carry a session uncertainty of several percent.
 - Open (Aryan's call): the platform contingency in Decisions (re-measure the precision configurations on a Colab T4 if INT8 / NF4 come out dominated on the Mac) is now triggered on the energy axis.
 
+## Step 10: analysis (3 Oct)
+
+- Plan agreed with Aryan (3 Oct): frontiers (RQ1), hallucination (RQ2), retention (RQ3), attribution maps, and a batch-1 vs batch-64 check; the T4 measurement is deferred and can be added as a second platform (`--platform`).
+- Dominance rule (Aryan, 3 Oct), replacing §9's seed-based rule (one seed only): a dominates b if it is not worse on either axis and better on at least one. An accuracy difference counts when the paired 95 % bootstrap interval of the difference excludes zero: both configurations are scored on the same 1,000 resamples of the test images. A cost difference counts when it exceeds the pooled sd over the repetitions (energy, latency), or 1 % (size, memory). Energy is per item above idle (§8's E_out).
+- Per-image scores: CIDEr recomputed from the saved captions (checked against the evaluation's values), CHAIR per image with the same object rules (checked against CHAIR's own extraction), SPICE rerun once per configuration, VQA per image from the saved per-question accuracy.
+- Grounding score: Ī = mean visual prefix of 10,000 training images (seed 0). These are FP32 features, passed through each configuration's own mapping network, so Ī is the same "average image" for every encoder precision. Each configuration scores its own captions and answers at its own precision. Object words that span several tokens are summed over their tokens; answers are summed over their tokens, without the end token.
+- Summary ratios: accuracy per joule. §9 also lists VQA accuracy per GFLOP, but FLOP counts do not change with precision, so that ratio cannot separate the precision configurations; it is not reported.
+- Attribution maps, a deviation from §9: §9 cites gradient-based maps (Grad-CAM). On 3 Oct, Grad-CAM at the last, 4th-last and 8th-last block, gradient x activation, and Chefer et al.'s gradient-weighted attention relevance were tried; all concentrate on 3-4 isolated background patches. These are high-norm tokens (~10x the median norm, e.g. the wall above a microwave) that CLIP ViT-L/14 uses to store global information (Darcet et al., "Vision Transformers Need Registers", ICLR 2024); gradients follow them, not the objects. Occlusion (grey out a 28 x 28 px window at every 14 px step; drop in the word's log-probability) highlights the objects: for example, "yellow" points at the liquid in a cup and "oven" at the microwave. Occlusion is used for the figure; attribution_methods.png shows Grad-CAM vs occlusion with the high-norm tokens marked. Each map is printed with its scale, because confident words barely change when a region is hidden ("oranges": 0.02 nats).
+- Code: greenvl/analysis.py (object mentions with spans, teacher-forced log-probabilities, mean prefix, paired bootstrap), scripts/11_analysis.py + analysis.command. VARIANTS moved to greenvl/precision.py (shared with 09). Figures use the dataviz reference palette: FP32 in ink, then FP16 / INT8 / NF4 in blue / orange / aqua (validated all-pairs on white). Marker shape shows the target (encoder ▲, decoder ▼, both ●; greedy ◆, beam 5 ✚); hollow = dominated.
+- Smoke test (200 images, no SPICE): every part runs, 1.6 min.
+- Full run: 3 Oct 21:10-21:42 (32 min), no warnings. CIDEr recomputed per image matched the evaluation for all 12 configurations; CHAIR object extraction matched for every caption. Rerunning the frontier part reproduced its report byte for byte.
+- Results (results/analysis/coco_ViT-L-14_lora8_lr1e-3_s0/epoch_02/; figures/ has PDF + PNG):
+  - RQ1 frontiers (frontiers_m4pro.md):
+    - Against energy, FP16 on both parts is the only non-dominated configuration for CIDEr, SPICE, CHAIR_i and VQA accuracy. FP32 is dominated by Encoder FP16, Encoder NF4, Decoder FP16 and Both FP16 (cheaper, accuracy not significantly worse).
+    - Against latency: FP32 greedy (130 ms, CIDEr 106.1) and Both FP16 (148 ms).
+    - Against size and memory: Both NF4 (286 MiB, CIDEr 110.3) and Both INT8 (481 MiB, 112.1); the same two for VQA.
+    - Accuracy per joule: Both FP16 81.8 CIDEr/J and 64.9 VQA points/J, against FP32's 62.0 and 48.8 (+32 %, +33 %).
+    - The rule is not transitive: beam 5 has the lowest CHAIR_i (6.0) but is dominated by Encoder NF4 on CHAIR_i vs energy, because their paired difference (−0.4) is not significant while Encoder NF4 is cheaper.
+  - RQ2 hallucination (rq2.md):
+    - Hallucinated object words are less grounded than correctly mentioned ones in every configuration. FP32: g 3.53 vs 4.34 nats, difference −0.81 [−1.05, −0.57]. The difference ranges from −0.69 (beam 5) to −1.05 (greedy), and all 12 intervals exclude zero, which supports the language-prior mechanism in H2.
+    - Hallucinated words still have g well above zero (≈3.5 nats; only 6-8 % at or below 0), so most hallucinations are image-driven confusions rather than pure prior. Example: "bench" for the rock a woman sits on, whose occlusion map points at the rock.
+    - Reduced precision does not change grounding: the hallucinated-word g differs from FP32 by −0.08 to +0.10, all intervals including zero. H2's prediction, that compression increases prior-driven hallucination, is not borne out here, because precision changes neither CHAIR nor grounding.
+    - Decoding does change hallucination. Greedy has CHAIR_i 7.5 and the largest grounding gap (−1.05); in the 9-10-word bin its CHAIR_s is 11.5 % vs 8.3 % for beam 3, so this is not a length effect. Beam 5 is lowest (CHAIR_i 6.0).
+    - Hallucination rises with caption length in every configuration: CHAIR_i 5.4-7.3 below 11 words, 8.2-10.0 at 11 or more.
+  - RQ3 retention (rq3.md):
+    - ΔR runs from −0.004 to +0.008, every interval includes zero. Mean ΔR +0.0007 [−0.0034, +0.0047]; Wilcoxon signed-rank W = 16, p = 0.50 (n = 9). No differential effect.
+    - Only the NF4 decoder lowers either head significantly: Decoder NF4 R_cap 0.986 [0.977, 0.994], R_vqa 0.994 [0.990, 0.998]; Both NF4 R_cap 0.987, R_vqa 0.989.
+    - Answer grounding falls slightly with the low-bit decoders (Both NF4 −0.031 [−0.043, −0.020] nats on a mean of 1.57; Decoder NF4 −0.023; INT8 decoders −0.011 to −0.013): significant but small.
+    - Yes/no answers are barely grounded (g 0.34 nats) against 2.66 for "other" answers. Wrong answers average a higher g than correct ones (1.80 vs 1.39) because correct answers are mostly yes/no, a composition effect.
+  - Batch check (batch_check.md): FP32, Encoder FP16 and Encoder NF4 give identical outputs at batch 1 and 64. For the decoder variants, CIDEr on the 500-image subset differs between batch 1 and 64 by −2.7 (Both INT8, 72 % identical captions) to +0.4, and VQA by −0.2 to +0.7. These differences are within the subset's noise (its CIDEr interval is about ±4), but Both INT8 should carry the caveat.
+  - Attribution (attribution_1/2, attribution_methods):
+    - Occlusion highlights the subject for well-grounded words: the baby's face, the boy for "boy" and "baseball bat", the woman's face, the rock for the hallucinated "bench".
+    - The hallucinated "table" and "fork" on a close-up plate depend on no region (max drop ≤ 0.05 nats), consistent with RQ2.
+    - "tie" draws on the face and glasses rather than the barely visible tie (1.01 nats), suggesting context-driven object words.
+    - Words the model is certain of ("people", "man": ≤ 0.01 nats) have flat maps.
+    - All 8 images have 2-3 tokens at 8-11x the median norm in the last block's input.
+
 ## Step 1 results
 
 Hardware: Apple M4 Pro, 8P + 4E CPU cores, 16-core GPU, 24 GB unified memory, macOS 27.0, on AC power. Python 3.11.16.
@@ -273,7 +310,7 @@ Hardware: Apple M4 Pro, 8P + 4E CPU cores, 16-core GPU, 24 GB unified memory, ma
 | 7 Energy measurement harness | done 3 Oct: reference model FP32, 1.70 J per caption, 1.15 J per answer incl. idle; encoder 57 % / 84 % of it (results/inference/) |
 | 8 Inference-side sweep (precision x target, decoding) on the trained model | done 3 Oct: 11 configurations, accuracy on Karpathy test, cost in 3 repetitions; FP16 on both parts saves 24-25 % energy at unchanged accuracy, INT8 and NF4 cost more energy than FP32 on the M4 Pro (results/variants/) |
 | 9 CNN-LSTM baseline | |
-| 10 Analysis (frontiers, grounding score, retention ratios, Grad-CAM) | |
+| 10 Analysis (frontiers, grounding score, retention ratios, attribution maps) | done 3 Oct (results/analysis/): energy frontier = FP16 on both parts; hallucinated words less grounded (−0.81 nats) but unaffected by precision; ΔR ≈ 0 (Wilcoxon p = 0.50) |
 | 11 Gradio demo | |
 
 ## Step 2 outputs (Datasets/processed/)

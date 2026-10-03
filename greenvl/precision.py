@@ -24,7 +24,13 @@ CONFIGS = {REFERENCE: ("fp32", "fp32"),
            **{f"enc_{p}": (p, "fp32") for p in PRECISIONS[1:]},
            **{f"dec_{p}": ("fp32", p) for p in PRECISIONS[1:]},
            **{f"both_{p}": (p, p) for p in PRECISIONS[1:]}}
+# the evaluated set (step 8): the precision factor at beam 3, then the caption-decoding factor at FP32
+VARIANTS = [(c, "beam3") for c in CONFIGS] + [(REFERENCE, "greedy"), (REFERENCE, "beam5")]
 INT8_THRESHOLD = 6.0
+
+
+def variant_name(config: str, decoding: str) -> str:
+    return config if decoding == "beam3" else f"{config}_{decoding}"
 
 
 def compute_dtype(precision: str) -> torch.dtype:

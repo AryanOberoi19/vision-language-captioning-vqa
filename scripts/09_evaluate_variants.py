@@ -36,21 +36,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from greenvl import paths  # noqa: E402
 from greenvl.energy import KEEPER_ENV, EnergyMeter  # noqa: E402
 from greenvl.lock import RunLock  # noqa: E402
-from greenvl.precision import CONFIGS, PRECISIONS, REFERENCE, config_tag, feature_name  # noqa: E402
+from greenvl.precision import (CONFIGS, PRECISIONS, REFERENCE, VARIANTS, config_tag, feature_name,  # noqa: E402
+                               variant_name)
 
 SCRIPTS = Path(__file__).resolve().parent
 RUN = "coco_ViT-L-14_lora8_lr1e-3_s0"
 CHECKPOINT = "epoch_02.pt"
 SPLIT = "test"
 PAUSED = 130
-# (configuration, caption decoding): the precision factor at beam 3, then the decoding factor at FP32
-VARIANTS = [(c, "beam3") for c in CONFIGS] + [(REFERENCE, "greedy"), (REFERENCE, "beam5")]
-
-
-def variant_name(config: str, decoding: str) -> str:
-    return config if decoding == "beam3" else f"{config}_{decoding}"
-
-
 def eval_path(run: str, ckpt: str, config: str, decoding: str) -> Path:
     return paths.RESULTS / "eval" / run / f"{config_tag(Path(ckpt).stem, config)}_{SPLIT}_{decoding}.json"
 

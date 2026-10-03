@@ -31,7 +31,7 @@ Training and measurement run on one MacBook Pro (M4 Pro), on its GPU through PyT
 | 7 | `greenvl/inference.py`, `scripts/08_measure_inference.py`: energy, latency, memory, size and FLOPs per caption and per answer at batch 1 (idle subtraction, 5 repetitions, randomised order) | done 3 Oct for the reference model, FP32 (`results/inference/`) |
 | 8 | `greenvl/precision.py`, `scripts/09_evaluate_variants.py`, `scripts/10_measure_variants.py`: inference-side sweep on the trained model, precision (FP16, INT8, NF4 on encoder, decoder, both) and caption decoding (greedy, beam 3, beam 5); accuracy on Karpathy test, cost measured component by component. Training-side factors dropped on 2 Oct (one trained configuration) | done 3 Oct (`results/variants/<run>/epoch_02/summary.md`) |
 | 9 | CNN-LSTM baseline | |
-| 10 | Analysis: frontiers (RQ1), grounding score (RQ2), retention ratios (RQ3), Grad-CAM figures | |
+| 10 | `greenvl/analysis.py`, `scripts/11_analysis.py`: frontiers with paired-bootstrap dominance (RQ1), CHAIR by length and grounding score (RQ2), retention ratios and Wilcoxon test (RQ3), occlusion maps, batch-1 vs batch-64 check | done 3 Oct (`results/analysis/<run>/epoch_02/`) |
 | 11 | Gradio demo with energy per caption | |
 
 ## Running steps 1 and 2 (Mac Terminal)
@@ -136,6 +136,22 @@ Configurations (`greenvl/precision.py`), all of the trained reference model: FP3
 `variants_accuracy.command` runs `09_evaluate_variants.py`: it caches Karpathy test features with the encoder at FP16, INT8 and NF4 (`02_extract_features.py --precision`), then scores every configuration on the full test split with `05_evaluate.py --precision` (all caption metrics, CHAIR, VQA, VQA-CE). `variants_energy.command` runs `10_measure_variants.py`: each repetition measures one idle window, then 26 windows in a shuffled order, 4 encoder windows (one per encoder precision, on the 1,000 step-7 subset images) and 22 decoding windows (each configuration's decoder, from its own encoder's embeddings), with a 20 s rest before each. A configuration's energy per caption or answer is its encoder window plus its decoding window. Every repetition includes FP32, so each configuration is also given relative to the FP32 of its own repetition. `--repeats 5` later adds two more repetitions without repeating the first three.
 
 Results: `results/variants/<run>/<checkpoint>/`: `accuracy.md`, `energy.md`, `summary.md` (accuracy and cost side by side), with `.json` versions, `energy.jsonl` (every window), `memory.json` (memory per configuration, encoder and decoder loaded together). Ctrl+C pauses either script; reopening resumes. Code check: `python scripts/10_measure_variants.py --n 8 --repeats 1 --pause 1 --idle-seconds 5 --warmup 2 --label _smoke --allow-gpu-only-energy`.
+
+## Step 10: analysis (Mac Terminal)
+
+```bash
+open scripts/analysis.command                               # every part, ~45-60 min, no password
+python scripts/11_analysis.py --parts frontier rq3 batch    # selected parts; cached per-image scores are reused
+python scripts/11_analysis.py --platform t4 --platform-name "Colab T4" --energy <path>/energy.json --parts frontier
+```
+
+Reads the step-8 outputs and writes `results/analysis/<run>/<checkpoint>/`: `frontiers_<platform>.md`, `rq2.md`, `rq3.md`, `batch_check.md` (each with a `.json`), `attribution.json` and `figures/` (PDF and PNG). Parts:
+
+- `frontier` (RQ1): accuracy against cost for every configuration (CIDEr, SPICE, CHAIR_i, VQA against energy above idle, latency, size, memory). A configuration dominates another if it is not worse on either axis and better on at least one; accuracy differences count when their paired 95 % bootstrap interval (same resampled test images for both) excludes zero, cost differences when they exceed the pooled sd over repetitions (1 % for size and memory). Reruns SPICE once per configuration to get per-image scores (~1 min each).
+- `rq2`: CHAIR by caption length; grounding score of every object word (log-probability with the image minus with the mean visual prefix of 10,000 training images), hallucinated vs correct, each configuration at its own precision.
+- `rq3`: retention ratios and ΔR for the 9 precision configurations, Wilcoxon signed-rank test, bootstrap intervals; grounding score of every answer.
+- `attribution`: occlusion maps (28 px window, 14 px steps) for two object words and one answer on 8 fixed test images, and a comparison with Grad-CAM (`attribution_methods`).
+- `batch`: batch-1 outputs of the energy run against the batch-64 evaluation on the same 500 captions and answers.
 
 ## Fixed implementation choices
 
