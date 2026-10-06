@@ -1,0 +1,47 @@
+{
+ "run": "coco_ViT-L-14_lora8_lr1e-3_s0",
+ "checkpoint": "epoch_02.pt",
+ "data": "vizwiz",
+ "split": "val",
+ "decoding": "beam3",
+ "precision": "both_fp16",
+ "encoder_precision": "fp16",
+ "decoder_precision": "fp16",
+ "limit": null,
+ "time": "2026-10-05T19:57:54",
+ "device": "mps",
+ "caption": {
+  "images": 7542,
+  "BLEU-4": {
+   "value": 0.1335250291335051,
+   "ci95": [
+    0.12929771963152223,
+    0.13769495341144786
+   ]
+  },
+  "CIDEr": {
+   "value": 0.31139445858086057,
+   "ci95": [
+    0.30159734040085984,
+    0.32052133200967126
+   ]
+  },
+  "SPICE": {
+   "value": 0.07930669435290146,
+   "ci95": [
+    0.07757115651577588,
+    0.08107036341094935
+   ]
+  },
+  "CLIPScore": {
+   "value": 0.5912916405633728,
+   "scorer": "CLIPScore-LAION-B/32",
+   "ci95": [
+    0.5882064576606256,
+    0.5942329449089625
+   ]
+  },
+  "mean_length_words": 9.663086714399364,
+  "decode_seconds": 93.6
+ }
+}

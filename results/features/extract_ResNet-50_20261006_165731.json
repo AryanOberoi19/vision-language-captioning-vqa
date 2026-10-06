@@ -1,0 +1,91 @@
+{
+  "encoder": "ResNet-50",
+  "precision": "fp32",
+  "quantized_layers": 0,
+  "hf_id": "torchvision/resnet50.IMAGENET1K_V2",
+  "device": "mps",
+  "batch": 64,
+  "workers": 8,
+  "timestamp": "2026-10-06T16:58:33",
+  "versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pillow": "12.3.0"
+  },
+  "idle_window": {
+    "seconds": 60.005069708000065,
+    "cpu_j": 17.046,
+    "gpu_j": 11.937,
+    "gpu_sram_j": 0.0,
+    "ane_j": 0.0,
+    "dram_j": 17.245,
+    "total_j": 46.227999999999994,
+    "counters_live": true,
+    "watts": 0.770401571483163
+  },
+  "sets": {
+    "coco_train": {
+      "images": 113287,
+      "seconds": 410.4,
+      "images_per_s": 276.0,
+      "dim": 2048,
+      "norm_mean": 12.772,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ResNet-50/coco_train.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 410.4415797919992,
+        "cpu_j": 1943.264,
+        "gpu_j": 8393.896999999999,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.081,
+        "dram_j": 1438.7169999999999,
+        "total_j": 11775.958999999999,
+        "counters_live": true
+      },
+      "j_per_image": 0.1039,
+      "j_per_image_above_idle": 0.1012
+    },
+    "coco_val": {
+      "images": 5000,
+      "seconds": 70.5,
+      "images_per_s": 70.9,
+      "dim": 2048,
+      "norm_mean": 12.735,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ResNet-50/coco_val.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 70.47718745800012,
+        "cpu_j": 166.449,
+        "gpu_j": 425.467,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 102.865,
+        "total_j": 694.781,
+        "counters_live": true
+      },
+      "j_per_image": 0.139,
+      "j_per_image_above_idle": 0.1281
+    },
+    "coco_test": {
+      "images": 5000,
+      "seconds": 69.6,
+      "images_per_s": 71.8,
+      "dim": 2048,
+      "norm_mean": 12.788,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ResNet-50/coco_test.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 69.6106066250004,
+        "cpu_j": 188.708,
+        "gpu_j": 424.009,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 106.121,
+        "total_j": 718.838,
+        "counters_live": true
+      },
+      "j_per_image": 0.1438,
+      "j_per_image_above_idle": 0.133
+    }
+  }
+}

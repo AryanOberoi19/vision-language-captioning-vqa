@@ -1,0 +1,42 @@
+{
+  "encoder": "CLIPScore-LAION-B/32",
+  "precision": "fp32",
+  "quantized_layers": 0,
+  "hf_id": "laion/CLIP-ViT-B-32-laion2B-s34B-b79K",
+  "device": "mps",
+  "batch": 64,
+  "workers": 8,
+  "timestamp": "2026-10-04T14:00:18",
+  "versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pillow": "12.3.0"
+  },
+  "idle_window": null,
+  "sets": {
+    "vizwiz_val": {
+      "images": 7750,
+      "seconds": 75.1,
+      "images_per_s": 103.2,
+      "dim": 512,
+      "norm_mean": 11.428,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/CLIPScore-LAION-B-32/vizwiz_val.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 75.08003245900181,
+        "cpu_j": 0.0,
+        "gpu_j": 441.52,
+        "gpu_sram_j": 0.0,
+        "ane_j": 0.0,
+        "dram_j": 0.0,
+        "total_j": 441.52,
+        "stale_counters": [
+          "cpu",
+          "dram"
+        ],
+        "counters_live": false
+      },
+      "j_per_image": 0.057
+    }
+  }
+}

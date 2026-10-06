@@ -1,0 +1,38 @@
+{
+  "encoder": "ViT-L/14",
+  "precision": "fp16",
+  "quantized_layers": 0,
+  "hf_id": "openai/clip-vit-large-patch14",
+  "device": "mps",
+  "batch": 64,
+  "workers": 8,
+  "timestamp": "2026-10-05T19:30:46",
+  "versions": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pillow": "12.3.0"
+  },
+  "idle_window": null,
+  "sets": {
+    "vizwiz_val": {
+      "images": 7750,
+      "seconds": 294.4,
+      "images_per_s": 26.3,
+      "dim": 768,
+      "norm_mean": 18.474,
+      "file": "/Users/aryanoberoi/Desktop/Work/STME - NMIMS/Sem 5/DL_NLP Project/Datasets/features/ViT-L-14_fp16/vizwiz_val.pt",
+      "sessions": 1,
+      "energy": {
+        "seconds": 294.4245755419979,
+        "cpu_j": 252.366,
+        "gpu_j": 5984.59,
+        "gpu_sram_j": 0.0,
+        "ane_j": 1.665,
+        "dram_j": 34.32,
+        "total_j": 6272.941,
+        "counters_live": false
+      },
+      "j_per_image": 0.8094
+    }
+  }
+}

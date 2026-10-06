@@ -1,0 +1,192 @@
+{
+ "fp32": {
+  "config": "fp32",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1763.16943359375,
+   "metal_mb": 1812.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 1772.29736328125,
+  "peak_metal_mb": 1844.0,
+  "rss_mb": 1943.66015625,
+  "lifetime_peak_rss_mb": 2138.04296875,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 1761.4101638793945
+  }
+ },
+ "enc_fp16": {
+  "config": "enc_fp16",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1185.00537109375,
+   "metal_mb": 1200.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 1194.13330078125,
+  "peak_metal_mb": 1230.0,
+  "rss_mb": 2046.828125,
+  "lifetime_peak_rss_mb": 2716.84375,
+  "size_mb": {
+   "encoder": 579.7714920043945,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 1181.6406326293945
+  }
+ },
+ "enc_int8": {
+  "config": "enc_int8",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 896.10205078125,
+   "metal_mb": 958.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 905.3212890625,
+  "peak_metal_mb": 1018.0,
+  "rss_mb": 2255.36328125,
+  "lifetime_peak_rss_mb": 2716.765625,
+  "size_mb": {
+   "encoder": 291.02149200439453,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 892.8906326293945
+  }
+ },
+ "enc_nf4": {
+  "config": "enc_nf4",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 756.7705078125,
+   "metal_mb": 774.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 765.8984375,
+  "peak_metal_mb": 804.0,
+  "rss_mb": 2245.6640625,
+  "lifetime_peak_rss_mb": 2717.47265625,
+  "size_mb": {
+   "encoder": 151.37915802001953,
+   "mapper": 123.7939453125,
+   "decoder": 478.0751953125,
+   "total": 753.2482986450195
+  }
+ },
+ "dec_fp16": {
+  "config": "dec_fp16",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1468.181640625,
+   "metal_mb": 1488.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 1477.3095703125,
+  "peak_metal_mb": 1514.0,
+  "rss_mb": 2088.8125,
+  "lifetime_peak_rss_mb": 2305.7421875,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 61.89697265625,
+   "decoder": 239.03759765625,
+   "total": 1460.4755935668945
+  }
+ },
+ "dec_int8": {
+  "config": "dec_int8",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1350.4169921875,
+   "metal_mb": 1370.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 1359.5458984375,
+  "peak_metal_mb": 1396.0,
+  "rss_mb": 2151.8359375,
+  "lifetime_peak_rss_mb": 2472.9140625,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 30.95947265625,
+   "decoder": 158.03759765625,
+   "total": 1348.5380935668945
+  }
+ },
+ "dec_nf4": {
+  "config": "dec_nf4",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 1297.07275390625,
+   "metal_mb": 1308.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 1306.20068359375,
+  "peak_metal_mb": 1354.0,
+  "rss_mb": 2137.3046875,
+  "lifetime_peak_rss_mb": 2479.4609375,
+  "size_mb": {
+   "encoder": 1159.5410232543945,
+   "mapper": 15.983749389648438,
+   "decoder": 118.872802734375,
+   "total": 1294.397575378418
+  }
+ },
+ "both_fp16": {
+  "config": "both_fp16",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 887.439453125,
+   "metal_mb": 896.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 896.5673828125,
+  "peak_metal_mb": 922.0,
+  "rss_mb": 2075.8125,
+  "lifetime_peak_rss_mb": 2757.640625,
+  "size_mb": {
+   "encoder": 579.7714920043945,
+   "mapper": 61.89697265625,
+   "decoder": 239.03759765625,
+   "total": 880.7060623168945
+  }
+ },
+ "both_int8": {
+  "config": "both_int8",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 482.396484375,
+   "metal_mb": 510.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 491.6162109375,
+  "peak_metal_mb": 588.0,
+  "rss_mb": 2226.02734375,
+  "lifetime_peak_rss_mb": 2775.72265625,
+  "size_mb": {
+   "encoder": 291.02149200439453,
+   "mapper": 30.95947265625,
+   "decoder": 158.03759765625,
+   "total": 480.01856231689453
+  }
+ },
+ "both_nf4": {
+  "config": "both_nf4",
+  "items": 40,
+  "loaded": {
+   "tensor_mb": 288.6259765625,
+   "metal_mb": 300.0
+  },
+  "device": "cuda",
+  "peak_tensor_mb": 297.75390625,
+  "peak_metal_mb": 328.0,
+  "rss_mb": 2222.9453125,
+  "lifetime_peak_rss_mb": 2853.85546875,
+  "size_mb": {
+   "encoder": 151.37915802001953,
+   "mapper": 15.983749389648438,
+   "decoder": 118.872802734375,
+   "total": 286.23571014404297
+  }
+ }
+}

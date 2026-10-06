@@ -1,6 +1,6 @@
 # RQ1: accuracy-cost frontiers, MacBook Pro M4 Pro (coco_ViT-L-14_lora8_lr1e-3_s0 epoch_02.pt, Karpathy test)
 
-Dominance: a configuration dominates another if it is not worse on either axis and better on at least one. Accuracy differences count when the paired 95 % bootstrap interval of the difference excludes zero (1,000 resamples of the test images, shared by all configurations); cost differences when they exceed the pooled sd over the repetitions (energy, latency) or 1 % (size, memory). Energy above idle (methodology §8). Accuracy in points (x 100).
+Dominance: a configuration dominates another if it is not worse on either axis and better on at least one. Accuracy differences count when the paired 95 % bootstrap interval of the difference excludes zero (1,000 resamples of the test images, shared by all configurations); cost differences when they exceed the pooled sd over the repetitions (energy, latency) or 1 % (size, memory). Energy including idle (the device's idle draw during each item counts; methodology §8 uses above idle, frontiers_<platform>.md). Accuracy in points (x 100).
 
 Show and Tell (CNN-LSTM baseline, 13_baseline.py) was measured in another session next to the FP32 reference; its energy and latency are its ratio to that FP32 (per repetition) times the FP32 values here. Captions only.
 
@@ -11,19 +11,19 @@ Frontier: Show and Tell, Both FP16
 
 | Configuration | CIDEr [95 % CI] | energy (J) | On frontier | Dominated by |
 |---|---|---|---|---|
-| Show and Tell | 93.1 [91.2, 94.9] | 0.171 ± 0.003 | yes |  |
-| Both FP16 | 111.7 [109.7, 113.7] | 1.365 ± 0.007 | yes |  |
-| Encoder FP16 | 111.7 [109.7, 113.7] | 1.525 ± 0.033 |  | Both FP16 |
-| FP32 greedy | 106.1 [104.2, 108.1] | 1.577 ± 0.005 |  | Encoder FP16, Both FP16 |
-| Decoder FP16 | 111.8 [109.8, 113.9] | 1.613 ± 0.018 |  | Encoder FP16, Both FP16 |
-| Encoder NF4 | 111.4 [109.3, 113.4] | 1.761 ± 0.015 |  | Encoder FP16, Decoder FP16, Both FP16 |
-| FP32 | 111.8 [109.8, 113.7] | 1.803 ± 0.023 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| FP32 beam 5 | 110.8 [108.8, 112.8] | 1.926 ± 0.012 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Both NF4 | 110.3 [108.4, 112.3] | 2.475 ± 0.007 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
-| Decoder NF4 | 110.2 [108.2, 112.1] | 2.526 ± 0.016 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
-| Encoder INT8 | 111.7 [109.8, 113.8] | 3.250 ± 0.025 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
-| Decoder INT8 | 111.6 [109.6, 113.8] | 3.275 ± 0.034 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
-| Both INT8 | 112.1 [110.2, 114.2] | 4.750 ± 0.031 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
+| Show and Tell | 93.1 [91.2, 94.9] | 0.173 ± 0.004 | yes |  |
+| Both FP16 | 111.7 [109.7, 113.7] | 1.374 ± 0.006 | yes |  |
+| Encoder FP16 | 111.7 [109.7, 113.7] | 1.535 ± 0.036 |  | Both FP16 |
+| FP32 greedy | 106.1 [104.2, 108.1] | 1.585 ± 0.008 |  | Encoder FP16, Both FP16 |
+| Decoder FP16 | 111.8 [109.8, 113.9] | 1.622 ± 0.021 |  | Encoder FP16, Both FP16 |
+| Encoder NF4 | 111.4 [109.3, 113.4] | 1.771 ± 0.014 |  | Encoder FP16, Decoder FP16, Both FP16 |
+| FP32 | 111.8 [109.8, 113.7] | 1.813 ± 0.026 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| FP32 beam 5 | 110.8 [108.8, 112.8] | 1.937 ± 0.014 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Both NF4 | 110.3 [108.4, 112.3] | 2.485 ± 0.004 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
+| Decoder NF4 | 110.2 [108.2, 112.1] | 2.535 ± 0.018 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
+| Encoder INT8 | 111.7 [109.8, 113.8] | 3.271 ± 0.032 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
+| Decoder INT8 | 111.6 [109.6, 113.8] | 3.297 ± 0.039 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
+| Both INT8 | 112.1 [110.2, 114.2] | 4.782 ± 0.026 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
 
 ## SPICE vs energy (captions)
 
@@ -31,19 +31,19 @@ Frontier: Show and Tell, Both FP16
 
 | Configuration | SPICE [95 % CI] | energy (J) | On frontier | Dominated by |
 |---|---|---|---|---|
-| Show and Tell | 17.9 [17.6, 18.2] | 0.171 ± 0.003 | yes |  |
-| Both FP16 | 20.0 [19.7, 20.3] | 1.365 ± 0.007 | yes |  |
-| Encoder FP16 | 20.0 [19.7, 20.3] | 1.525 ± 0.033 |  | Both FP16 |
-| FP32 greedy | 19.4 [19.1, 19.6] | 1.577 ± 0.005 |  | Encoder FP16, Both FP16 |
-| Decoder FP16 | 20.0 [19.7, 20.3] | 1.613 ± 0.018 |  | Encoder FP16, Both FP16 |
-| Encoder NF4 | 20.0 [19.7, 20.3] | 1.761 ± 0.015 |  | Encoder FP16, Decoder FP16, Both FP16 |
-| FP32 | 20.0 [19.8, 20.3] | 1.803 ± 0.023 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| FP32 beam 5 | 19.9 [19.6, 20.2] | 1.926 ± 0.012 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Both NF4 | 19.9 [19.6, 20.1] | 2.475 ± 0.007 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
-| Decoder NF4 | 19.9 [19.6, 20.1] | 2.526 ± 0.016 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
-| Encoder INT8 | 20.0 [19.7, 20.3] | 3.250 ± 0.025 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Decoder NF4, Both FP16, Both NF4, FP32 beam 5 |
-| Decoder INT8 | 20.1 [19.8, 20.4] | 3.275 ± 0.034 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Both INT8 | 20.1 [19.8, 20.4] | 4.750 ± 0.031 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
+| Show and Tell | 17.9 [17.6, 18.2] | 0.173 ± 0.004 | yes |  |
+| Both FP16 | 20.0 [19.7, 20.3] | 1.374 ± 0.006 | yes |  |
+| Encoder FP16 | 20.0 [19.7, 20.3] | 1.535 ± 0.036 |  | Both FP16 |
+| FP32 greedy | 19.4 [19.1, 19.6] | 1.585 ± 0.008 |  | Encoder FP16, Both FP16 |
+| Decoder FP16 | 20.0 [19.7, 20.3] | 1.622 ± 0.021 |  | Encoder FP16, Both FP16 |
+| Encoder NF4 | 20.0 [19.7, 20.3] | 1.771 ± 0.014 |  | Encoder FP16, Decoder FP16, Both FP16 |
+| FP32 | 20.0 [19.8, 20.3] | 1.813 ± 0.026 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| FP32 beam 5 | 19.9 [19.6, 20.2] | 1.937 ± 0.014 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Both NF4 | 19.9 [19.6, 20.1] | 2.485 ± 0.004 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
+| Decoder NF4 | 19.9 [19.6, 20.1] | 2.535 ± 0.018 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
+| Encoder INT8 | 20.0 [19.7, 20.3] | 3.271 ± 0.032 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Decoder NF4, Both FP16, Both NF4, FP32 beam 5 |
+| Decoder INT8 | 20.1 [19.8, 20.4] | 3.297 ± 0.039 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Both INT8 | 20.1 [19.8, 20.4] | 4.782 ± 0.026 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
 
 ## CHAIR_i vs energy (captions)
 
@@ -51,19 +51,19 @@ Frontier: Show and Tell, Both FP16
 
 | Configuration | CHAIR_i [95 % CI] | energy (J) | On frontier | Dominated by |
 |---|---|---|---|---|
-| Show and Tell | 13.2 [12.5, 14.0] | 0.171 ± 0.003 | yes |  |
-| Both FP16 | 6.5 [5.9, 7.0] | 1.365 ± 0.007 | yes |  |
-| Encoder FP16 | 6.5 [5.9, 7.0] | 1.525 ± 0.033 |  | Both FP16 |
-| FP32 greedy | 7.5 [6.9, 8.0] | 1.577 ± 0.005 |  | Encoder FP16, Both FP16 |
-| Decoder FP16 | 6.4 [5.9, 6.9] | 1.613 ± 0.018 |  | Encoder FP16, Both FP16 |
-| Encoder NF4 | 6.4 [5.8, 6.9] | 1.761 ± 0.015 |  | Encoder FP16, Decoder FP16, Both FP16 |
-| FP32 | 6.5 [5.9, 7.0] | 1.803 ± 0.023 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| FP32 beam 5 | 6.0 [5.5, 6.6] | 1.926 ± 0.012 |  | Encoder NF4 |
-| Both NF4 | 6.6 [6.0, 7.1] | 2.475 ± 0.007 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
-| Decoder NF4 | 6.8 [6.3, 7.4] | 2.526 ± 0.016 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
-| Encoder INT8 | 6.3 [5.8, 6.9] | 3.250 ± 0.025 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
-| Decoder INT8 | 6.4 [5.9, 6.9] | 3.275 ± 0.034 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
-| Both INT8 | 6.5 [5.9, 7.0] | 4.750 ± 0.031 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Decoder NF4, Both FP16, Both NF4, FP32 beam 5 |
+| Show and Tell | 13.2 [12.5, 14.0] | 0.173 ± 0.004 | yes |  |
+| Both FP16 | 6.5 [5.9, 7.0] | 1.374 ± 0.006 | yes |  |
+| Encoder FP16 | 6.5 [5.9, 7.0] | 1.535 ± 0.036 |  | Both FP16 |
+| FP32 greedy | 7.5 [6.9, 8.0] | 1.585 ± 0.008 |  | Encoder FP16, Both FP16 |
+| Decoder FP16 | 6.4 [5.9, 6.9] | 1.622 ± 0.021 |  | Encoder FP16, Both FP16 |
+| Encoder NF4 | 6.4 [5.8, 6.9] | 1.771 ± 0.014 |  | Encoder FP16, Decoder FP16, Both FP16 |
+| FP32 | 6.5 [5.9, 7.0] | 1.813 ± 0.026 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| FP32 beam 5 | 6.0 [5.5, 6.6] | 1.937 ± 0.014 |  | Encoder NF4 |
+| Both NF4 | 6.6 [6.0, 7.1] | 2.485 ± 0.004 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, FP32 beam 5 |
+| Decoder NF4 | 6.8 [6.3, 7.4] | 2.535 ± 0.018 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
+| Encoder INT8 | 6.3 [5.8, 6.9] | 3.271 ± 0.032 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
+| Decoder INT8 | 6.4 [5.9, 6.9] | 3.297 ± 0.039 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16, Both NF4, FP32 beam 5 |
+| Both INT8 | 6.5 [5.9, 7.0] | 4.782 ± 0.026 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Decoder NF4, Both FP16, Both NF4, FP32 beam 5 |
 
 ## CIDEr vs latency (captions)
 
@@ -129,16 +129,16 @@ Frontier: Both FP16
 
 | Configuration | VQA [95 % CI] | energy (J) | On frontier | Dominated by |
 |---|---|---|---|---|
-| Both FP16 | 57.9 [57.2, 58.6] | 0.892 ± 0.007 | yes |  |
-| Encoder FP16 | 57.9 [57.2, 58.6] | 0.934 ± 0.004 |  | Both FP16 |
-| Decoder FP16 | 57.9 [57.2, 58.6] | 1.142 ± 0.013 |  | Encoder FP16, Both FP16 |
-| Encoder NF4 | 57.7 [57.1, 58.4] | 1.152 ± 0.008 |  | Encoder FP16, Both FP16 |
-| FP32 | 57.9 [57.2, 58.6] | 1.187 ± 0.014 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Both NF4 | 57.2 [56.6, 57.9] | 1.236 ± 0.005 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Decoder NF4 | 57.5 [56.9, 58.2] | 1.269 ± 0.006 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Decoder INT8 | 57.8 [57.2, 58.5] | 1.569 ± 0.018 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
-| Encoder INT8 | 57.8 [57.2, 58.5] | 2.664 ± 0.019 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
-| Both INT8 | 57.8 [57.2, 58.5] | 3.049 ± 0.027 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
+| Both FP16 | 57.9 [57.2, 58.6] | 0.896 ± 0.005 | yes |  |
+| Encoder FP16 | 57.9 [57.2, 58.6] | 0.938 ± 0.003 |  | Both FP16 |
+| Decoder FP16 | 57.9 [57.2, 58.6] | 1.147 ± 0.014 |  | Encoder FP16, Both FP16 |
+| Encoder NF4 | 57.7 [57.1, 58.4] | 1.157 ± 0.008 |  | Encoder FP16, Both FP16 |
+| FP32 | 57.9 [57.2, 58.6] | 1.191 ± 0.015 |  | Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Both NF4 | 57.2 [56.6, 57.9] | 1.241 ± 0.005 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Decoder NF4 | 57.5 [56.9, 58.2] | 1.274 ± 0.007 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Decoder INT8 | 57.8 [57.2, 58.5] | 1.577 ± 0.021 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Both FP16 |
+| Encoder INT8 | 57.8 [57.2, 58.5] | 2.679 ± 0.015 |  | FP32, Encoder FP16, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
+| Both INT8 | 57.8 [57.2, 58.5] | 3.068 ± 0.021 |  | FP32, Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16 |
 
 ## VQA vs latency (answers)
 
@@ -174,20 +174,20 @@ Frontier: Both NF4, Both INT8
 | Decoder FP16 | 57.9 [57.2, 58.6] | 1460 |  | Encoder FP16, Encoder INT8, Encoder NF4, Decoder INT8, Both FP16, Both INT8 |
 | FP32 | 57.9 [57.2, 58.6] | 1761 |  | Encoder FP16, Encoder INT8, Encoder NF4, Decoder FP16, Decoder INT8, Both FP16, Both INT8 |
 
-## Accuracy per joule (above idle)
+## Accuracy per joule (incl. idle)
 
 | Configuration | CIDEr per J | VQA accuracy per J |
 |---|---|---|
-| FP32 | 62.0 | 48.8 |
-| Encoder FP16 | 73.2 | 62.0 |
-| Encoder INT8 | 34.4 | 21.7 |
-| Encoder NF4 | 63.2 | 50.1 |
-| Decoder FP16 | 69.3 | 50.7 |
-| Decoder INT8 | 34.1 | 36.9 |
-| Decoder NF4 | 43.6 | 45.3 |
-| Both FP16 | 81.8 | 64.9 |
-| Both INT8 | 23.6 | 19.0 |
-| Both NF4 | 44.6 | 46.3 |
-| FP32 greedy | 67.3 | - |
-| FP32 beam 5 | 57.5 | - |
-| Show and Tell | 544.5 | - |
+| FP32 | 61.7 | 48.6 |
+| Encoder FP16 | 72.7 | 61.7 |
+| Encoder INT8 | 34.1 | 21.6 |
+| Encoder NF4 | 62.9 | 49.9 |
+| Decoder FP16 | 68.9 | 50.5 |
+| Decoder INT8 | 33.9 | 36.7 |
+| Decoder NF4 | 43.5 | 45.2 |
+| Both FP16 | 81.3 | 64.6 |
+| Both INT8 | 23.4 | 18.8 |
+| Both NF4 | 44.4 | 46.1 |
+| FP32 greedy | 66.9 | - |
+| FP32 beam 5 | 57.2 | - |
+| Show and Tell | 537.8 | - |

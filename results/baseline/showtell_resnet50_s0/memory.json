@@ -1,0 +1,15 @@
+{
+ "items": 20,
+ "loaded": {
+  "tensor_mb": 141.94775390625,
+  "metal_mb": 1144.46875
+ },
+ "peak_tensor_mb": 141.95556640625,
+ "peak_metal_mb": 1159.390625,
+ "rss_mb": 815.1875,
+ "lifetime_peak_rss_mb": 816.90625,
+ "size_mb": {
+  "encoder": 89.87906646728516,
+  "decoder": 51.517051696777344
+ }
+}

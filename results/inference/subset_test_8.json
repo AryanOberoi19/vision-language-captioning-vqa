@@ -1,0 +1,89 @@
+{
+ "split": "test",
+ "n": 8,
+ "seed": 0,
+ "caption": [
+  {
+   "image_id": 34428,
+   "file": "val2014/COCO_val2014_000000034428.jpg"
+  },
+  {
+   "image_id": 241503,
+   "file": "val2014/COCO_val2014_000000241503.jpg"
+  },
+  {
+   "image_id": 286717,
+   "file": "val2014/COCO_val2014_000000286717.jpg"
+  },
+  {
+   "image_id": 365094,
+   "file": "val2014/COCO_val2014_000000365094.jpg"
+  },
+  {
+   "image_id": 384981,
+   "file": "val2014/COCO_val2014_000000384981.jpg"
+  },
+  {
+   "image_id": 402788,
+   "file": "val2014/COCO_val2014_000000402788.jpg"
+  },
+  {
+   "image_id": 460505,
+   "file": "val2014/COCO_val2014_000000460505.jpg"
+  },
+  {
+   "image_id": 483348,
+   "file": "val2014/COCO_val2014_000000483348.jpg"
+  }
+ ],
+ "vqa": [
+  {
+   "question_id": 132776000,
+   "image_id": 132776,
+   "file": "val2014/COCO_val2014_000000132776.jpg",
+   "question": "What is sitting on top of the elephant?"
+  },
+  {
+   "question_id": 133380002,
+   "image_id": 133380,
+   "file": "val2014/COCO_val2014_000000133380.jpg",
+   "question": "What kind of bird is this?"
+  },
+  {
+   "question_id": 206705025,
+   "image_id": 206705,
+   "file": "val2014/COCO_val2014_000000206705.jpg",
+   "question": "Where is the sink in the picture?"
+  },
+  {
+   "question_id": 265816001,
+   "image_id": 265816,
+   "file": "val2014/COCO_val2014_000000265816.jpg",
+   "question": "What is attached to the buggy?"
+  },
+  {
+   "question_id": 340209002,
+   "image_id": 340209,
+   "file": "val2014/COCO_val2014_000000340209.jpg",
+   "question": "What does the man have in his mouth?"
+  },
+  {
+   "question_id": 453013011,
+   "image_id": 453013,
+   "file": "val2014/COCO_val2014_000000453013.jpg",
+   "question": "What are the teddy bears sitting on?"
+  },
+  {
+   "question_id": 476552002,
+   "image_id": 476552,
+   "file": "val2014/COCO_val2014_000000476552.jpg",
+   "question": "What are the people sitting in?"
+  },
+  {
+   "question_id": 556341001,
+   "image_id": 556341,
+   "file": "val2014/COCO_val2014_000000556341.jpg",
+   "question": "What kind of tree is growing in the background?"
+  }
+ ]
+}
