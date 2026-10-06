@@ -19,6 +19,8 @@ ENCODERS = {  # name -> (Hugging Face id, projected embedding size)
 # all three OpenAI encoders above. Its image embeddings are cached like the encoders' (02_extract_features.py).
 SCORER = "CLIPScore-LAION-B/32"
 IMAGE_MODELS = {**ENCODERS, SCORER: ("laion/CLIP-ViT-B-32-laion2B-s34B-b79K", 512)}
+# CNN-LSTM baseline encoder (greenvl/showtell.py; torchvision weights, not a Hugging Face model)
+IMAGE_MODELS["ResNet-50"] = ("torchvision/resnet50.IMAGENET1K_V2", 2048)
 DECODERS = {
     "gpt2": "openai-community/gpt2",
     "gpt2-medium": "openai-community/gpt2-medium",

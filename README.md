@@ -23,16 +23,18 @@ Training and measurement run on one MacBook Pro (M4 Pro), on its GPU through PyT
 | 1 | `setup_env.sh`, `scripts/00_check_env.py`: environment, capability checks, throughput and grid-cost estimate | done 27 Sep (`results/env/`) |
 | 1b | `scripts/00b_energy_check.py`: energy counters per component, idle vs CPU vs GPU load, optional powermetrics cross-check | done 27 Sep; counters agree with powermetrics within ~3-4 % under load; first window after start-up discarded |
 | 2 | `scripts/01_build_splits.py`: Karpathy splits, reference files, VQA / VQA-CE / VizWiz subsets | done 29 Sep; all counts match datasets.md |
-| 3 | `scripts/02_extract_features.py`: CLIP embeddings for the three encoders (139,037 images each), with time and energy | ViT-B/32 Flickr8k and COCO done 30 Sep; ViT-L/14 COCO done 2 Oct; ViT-L/14 VizWiz to run |
+| 3 | `scripts/02_extract_features.py`: CLIP embeddings for the three encoders (139,037 images each), with time and energy | ViT-B/32 Flickr8k and COCO done 30 Sep; ViT-L/14 COCO done 2 Oct; ViT-L/14 VizWiz val at FP32, FP16, INT8 and NF4 done 4-5 Oct; ResNet-50 COCO (baseline) to run |
 | 4 | `greenvl/data.py`, `scripts/03_train.py`: tokenisation, one-task-per-batch mixing, training with resumable checkpoints, validation loss and energy per epoch | f8k_lr1e-4 done 29 Sep (3 epochs) |
 | 4b | `scripts/04_select_lr.py`: learning-rate selection (Flickr8k LoRA sweep, full fine-tuning check, COCO + VQA pilot), rules fixed in advance | done 30 Sep: LoRA and frozen 1e-3, full fine-tuning 3e-4 (`results/lr_selection/summary.md`) |
 | 5 | `greenvl/decode.py`, `greenvl/metrics.py`, `greenvl/chair.py`, `greenvl/vqa_metrics.py`, `scripts/05_evaluate.py`: decoding (greedy, beam 3, beam 5) and evaluation: BLEU-4, CIDEr, SPICE, CLIPScore, CHAIR, VQA accuracy, VQA-CE, each with a 95 % bootstrap interval | done 30 Sep; checked on the 1e-3 pilot (`results/eval/`) |
 | 6 | `scripts/06_encoder_check.py`, `scripts/07_reference_run.py`: encoder check (ViT-L/14 vs ViT-B/32, quarter-epoch pilots, rule fixed in advance), then the reference run on COCO + VQA v2 | encoder check done 2 Oct: ViT-L/14 (`results/encoder_check/summary.md`); seed 0 done 2 Oct, 3 epochs (`results/reference/`); seeds 1-2 deferred |
 | 7 | `greenvl/inference.py`, `scripts/08_measure_inference.py`: energy, latency, memory, size and FLOPs per caption and per answer at batch 1 (idle subtraction, 5 repetitions, randomised order) | done 3 Oct for the reference model, FP32 (`results/inference/`) |
 | 8 | `greenvl/precision.py`, `scripts/09_evaluate_variants.py`, `scripts/10_measure_variants.py`: inference-side sweep on the trained model, precision (FP16, INT8, NF4 on encoder, decoder, both) and caption decoding (greedy, beam 3, beam 5); accuracy on Karpathy test, cost measured component by component. Training-side factors dropped on 2 Oct (one trained configuration) | done 3 Oct (`results/variants/<run>/epoch_02/summary.md`) |
-| 9 | CNN-LSTM baseline | |
+| 9 | `greenvl/showtell.py`, `scripts/13_baseline.py`: CNN-LSTM baseline (Show and Tell over frozen ResNet-50 features): features, training with validation CIDEr per epoch, Karpathy test evaluation, inference cost next to the FP32 reference | done 6 Oct: test CIDEr 93.1, 0.095x FP32's energy per caption (`results/baseline/showtell_resnet50_s0/summary.md`) |
 | 10 | `greenvl/analysis.py`, `scripts/11_analysis.py`: frontiers with paired-bootstrap dominance (RQ1), CHAIR by length and grounding score (RQ2), retention ratios and Wilcoxon test (RQ3), occlusion maps, batch-1 vs batch-64 check | done 3 Oct (`results/analysis/<run>/epoch_02/`) |
-| 11 | Gradio demo with energy per caption | |
+| 10b | `scripts/12_vizwiz.py`: VizWiz-Captions val zero-shot, FP32 and the step-10 frontier configurations | run 5 Oct (`results/vizwiz/<run>/epoch_02/`) |
+| 8b | `colab/make_bundle.py`, `colab/colab_t4.ipynb`: step-8 inference cost on a Colab T4 (GPU energy only) | done 6 Oct (`results/variants/<run>/epoch_02_t4/`, `frontiers_t4*.md`) |
+| 11 | `scripts/14_demo.py`: local Gradio demo, captions and answers at any configuration with the latency and energy of each request next to the measured averages | done 6 Oct, tested on the Mac |
 
 ## Running steps 1 and 2 (Mac Terminal)
 
@@ -152,6 +154,42 @@ Reads the step-8 outputs and writes `results/analysis/<run>/<checkpoint>/`: `fro
 - `rq3`: retention ratios and ΔR for the 9 precision configurations, Wilcoxon signed-rank test, bootstrap intervals; grounding score of every answer.
 - `attribution`: occlusion maps (28 px window, 14 px steps) for two object words and one answer on 8 fixed test images, and a comparison with Grad-CAM (`attribution_methods`).
 - `batch`: batch-1 outputs of the energy run against the batch-64 evaluation on the same 500 captions and answers.
+
+## Step 10b: VizWiz zero-shot (Mac Terminal)
+
+```bash
+open scripts/vizwiz.command                         # ~1-1.5 h, no password
+python scripts/12_vizwiz.py --summary-only
+```
+
+Captions only, for FP32 and the step-10 frontier configurations (Both FP16: energy; FP32 greedy: latency; Both NF4 and Both INT8: size and memory). Extracts the VizWiz val features at each encoder precision (`02_extract_features.py --precision --sets vizwiz_val`), then scores each configuration with `05_evaluate.py --data vizwiz --split val` on the 7,542 images with at least one usable reference: BLEU-4, CIDEr, SPICE, CLIPScore (no CHAIR: no object annotations). `results/vizwiz/<run>/epoch_02/summary.md` puts each configuration's VizWiz scores next to its Karpathy test scores, with the CIDEr difference to FP32 on VizWiz as a paired bootstrap interval, and `figures/vizwiz_examples` shows six images with the FP32 caption and two references.
+
+## Second platform: Colab T4 (inference cost)
+
+```bash
+python colab/make_bundle.py     # on the Mac: DL_NLP Project/colab/greenvl_t4_bundle.zip (~280 MB) + colab_t4.ipynb
+```
+
+Upload both files to `My Drive/greenvl_t4/` in Google Drive, open `colab_t4.ipynb` in Colab with a T4 runtime and run its cells: GPU check, Drive mount, unpack (code and images on Colab's disk, results on Drive), libraries (Mac versions except PyTorch), energy-counter and INT8/NF4 checks, an 8-item smoke test, then `10_measure_variants.py --label epoch_02_t4` (3 repetitions; roughly 2-4 h). Energy is NVML's board counter, GPU only, so the T4 has its own frontier. A disconnect loses at most one window: re-run cells 1-4 and the measurement cell. Afterwards copy `results/variants/<run>/epoch_02_t4/` from Drive to the Mac and run `11_analysis.py --platform t4 --platform-name "Colab T4" --parts frontier batch --energy results/variants/<run>/epoch_02_t4/energy.json` (the T4 frontier uses the Mac's full-test accuracy; `batch_check_t4.md` scores the T4's batch-1 outputs against it).
+
+## Step 9: CNN-LSTM baseline (Mac Terminal)
+
+```bash
+open scripts/baseline.command                       # password once, ~1.5-2 h
+python scripts/13_baseline.py --summary-only
+python scripts/13_baseline.py --label _smoke --train-limit 20000 --epochs 2 --val-limit 200 --test-limit 200 \
+    --n 8 --repeats 1 --pause 1 --idle-seconds 5 --warmup 2      # code check
+```
+
+Show and Tell (Vinyals et al. 2015): a frozen ImageNet ResNet-50 (torchvision IMAGENET1K_V2) gives one 2,048-d vector per image, projected to 512 and fed to a one-layer LSTM (512 units) as its first input. Words: the evaluation's PTB tokenisation of the training captions, words seen at least 5 times, captions cut at 16 words. Training: all 566,747 caption pairs per epoch, teacher forcing, Adam 5e-4 x 0.8 every 3 epochs, batch 128, dropout 0.5, gradient norm 1.0, seed 0, 20 epochs, best epoch by validation CIDEr (beam 3); settings fixed in advance, not tuned. Steps, each skipped when done: ResNet-50 features of COCO train/val/test (`02_extract_features.py --encoder ResNet-50`, energy logged as for CLIP); training (`--part train`, energy per epoch); test evaluation with the same metrics as `05_evaluate.py` (`--part test`); inference cost (`--part energy`): 4 windows per repetition (ResNet-50 encoding, LSTM beam-3 decoding, and the FP32 reference's encoder and decoder windows), 500 step-7 caption images, batch 1, 3 repetitions, plus a memory check. Results: `results/baseline/showtell_resnet50_s0/` (`summary.md`: accuracy, inference cost, training cost next to the FP32 reference). `11_analysis.py` adds it to the caption frontiers when its results exist (energy and latency as its ratio to the same-session FP32 times the step-10 FP32; `--no-baseline` leaves it out).
+
+## Step 11: demo (Mac Terminal)
+
+```bash
+open scripts/demo.command                           # opens http://127.0.0.1:7860; installs gradio once
+```
+
+Upload an image (or pick one of six Karpathy test images), choose a precision configuration and caption decoding, optionally ask a question. Shows the caption, the answer and, if the baseline is trained, the CNN-LSTM caption; and for each request its latency and energy (one counter reading around the request, incl. and above the idle power measured at start-up; CPU + GPU + DRAM with the password, GPU only without) next to the step-10 averages and the step-8 test accuracy. Parts load on first use of a configuration and are warmed up on a blank image, so the measured request excludes loading. One request at a time; local only.
 
 ## Fixed implementation choices
 

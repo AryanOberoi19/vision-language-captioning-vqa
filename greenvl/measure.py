@@ -2,6 +2,7 @@
 methodology §8): the fixed test subset, idle power with a disturbance check, latency percentiles, the agreement
 check against the batched evaluation, and the record of the machine's state."""
 import json
+import os
 import platform
 import random
 import statistics
@@ -18,7 +19,8 @@ from .precision import config_tag
 CO2_G_PER_KWH = 727  # CEA, Indian grid, FY 2023-24 (methodology §8), as in scripts/00_check_env.py
 
 IDLE_ATTEMPTS = 3
-IDLE_ABS_W = 1.0       # with no clean window yet, idle power above this counts as disturbed
+IDLE_ABS_W = {"apple_ioreport": 1.0, "nvml": 40.0}  # no clean window yet: idle power above this is disturbed
+# (M4 Pro SoC + DRAM idles at 0.04-0.5 W; a T4 board idles at ~10 W in P8 and draws 70 W at its limit)
 IDLE_REL = 3.0         # later: disturbed if above IDLE_REL x the session's median clean idle ...
 IDLE_MARGIN_W = 0.5    # ... and more than IDLE_MARGIN_W above it
 
@@ -73,7 +75,22 @@ def mean_sd(xs: list) -> tuple[float | None, float | None]:
 
 
 def metal_mb(dev) -> float | None:
-    return torch.mps.driver_allocated_memory() / 2**20 if dev.type == "mps" else None
+    """The allocator's total from the driver's side: Metal's allocation on MPS, the caching allocator's reserved
+    memory on CUDA. Both exceed the memory held by tensors (allocated in large chunks)."""
+    if dev.type == "mps":
+        return torch.mps.driver_allocated_memory() / 2**20
+    if dev.type == "cuda":
+        return torch.cuda.memory_reserved() / 2**20
+    return None
+
+
+def tensor_mb(dev) -> float | None:
+    """GPU memory held by tensors right now."""
+    if dev.type == "mps":
+        return torch.mps.current_allocated_memory() / 2**20
+    if dev.type == "cuda":
+        return torch.cuda.memory_allocated() / 2**20
+    return None
 
 
 # ---------------------------------------------------------------- reference outputs (agreement check)
@@ -111,7 +128,8 @@ def measure_idle_checked(meter, seconds: float, history: list[float]) -> dict | 
         r["background"] = top_processes()
         attempts.append(r)
         base = statistics.median(history) if history else None
-        limit = IDLE_ABS_W if base is None else max(IDLE_REL * base, base + IDLE_MARGIN_W)
+        limit = IDLE_ABS_W.get(meter.backend, float("inf")) if base is None else \
+            max(IDLE_REL * base, base + IDLE_MARGIN_W)
         r["disturbed"] = r["watts"] > limit
         if not r["disturbed"]:
             break
@@ -163,6 +181,22 @@ def system_state() -> dict:
         state["energy_mode"] = next((ln.strip() for ln in settings.splitlines()
                                      if "powermode" in ln.lower()), None)
         state["on_ac_power"] = "AC Power" in state.get("power", "")
+    if torch.cuda.is_available():
+        state["gpu"] = torch.cuda.get_device_name(0)
+        state["cuda"] = torch.version.cuda
+        try:
+            state["nvidia_smi"] = subprocess.run(
+                ["nvidia-smi", "--query-gpu=name,driver_version,power.limit,power.default_limit,clocks.max.sm,"
+                 "clocks.sm,pstate,temperature.gpu,persistence_mode", "--format=csv"],
+                capture_output=True, text=True, timeout=20).stdout.strip()
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+        try:
+            state["cpu"] = next((ln.split(":", 1)[1].strip() for ln in open("/proc/cpuinfo")
+                                 if ln.startswith("model name")), None)
+            state["cpu_count"] = os.cpu_count()
+        except OSError:
+            pass
     return state
 
 

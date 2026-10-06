@@ -4,6 +4,9 @@
     open scripts/analysis.command                               # every part, ~45-60 min, no password
     python scripts/11_analysis.py --parts frontier rq3 batch    # selected parts
     python scripts/11_analysis.py --limit 200 --label _smoke --no-spice --attribution-images 2   # code check
+    python scripts/11_analysis.py --platform t4 --platform-name "Colab T4" --parts frontier batch \
+        --energy results/variants/<run>/epoch_02_t4/energy.json      # second platform (colab/colab_t4.ipynb)
+    python scripts/11_analysis.py --parts frontier --energy-basis incl         # energy including idle (*_inclidle)
 
 Inputs: the step-8 evaluation outputs (results/eval/<run>/, Karpathy test) and cost measurements
 (results/variants/<run>/<checkpoint>/energy.json, memory.json, energy.jsonl).
@@ -31,6 +34,12 @@ Parts (results/analysis/<run>/<checkpoint>/):
             is used and attribution_methods.png shows the comparison.
   batch     Batch 1 (the energy runs) vs batch 64 (the evaluation): accuracy of both on the same 500 captions and
             500 answers, per configuration.
+
+CNN-LSTM baseline (13_baseline.py), when its results exist: one more point on the caption frontiers of the Mac (not on
+the VQA ones, it has no VQA head; not on another platform's, where it was not measured). Its accuracy is computed from its saved captions like every configuration's. Its energy
+and latency were measured in another session, next to the FP32 reference, so they enter as the ratio to that
+session's FP32 (per repetition) times the step-10 FP32 value; the sd scales the same way. Size and memory are
+absolute. --no-baseline leaves it out.
 
 Grounding score (§9): g(y) = log p(y | context, I) - log p(y | context, Ī), with I the image's own visual prefix and Ī
 the mean prefix over 10,000 training images (seed 0; FP32 features through each configuration's own mapping network).
@@ -76,11 +85,22 @@ SURFACE, INK, INK2, MUTED, GRID, AXIS = "#ffffff", "#0b0b0b", "#52514e", "#89878
 PRECISION_COLOR = {"fp32": INK, "fp16": "#2a78d6", "int8": "#eb6834", "nf4": "#1baf7a"}
 SERIES = ["#2a78d6", "#eb6834"]  # two-series charts (correct vs hallucinated)
 HEAT = "#eb6834"  # Grad-CAM overlay: one hue, opacity carries the magnitude
+BASELINE = "showtell"  # the CNN-LSTM baseline (13_baseline.py)
+DEFAULT_PLATFORM = "m4pro"
+# Energy basis of the frontiers: above idle (methodology §8's E_out, the default) or including idle (--energy-basis
+# incl): at batch 1 a GPU that stays in its performance state while the model is loaded (the T4: ~33 W) spends most of
+# each item's energy on idle draw, which a deployment serving one image at a time pays.
+ENERGY_BASES = {"above": ("j_above", "rel_fp32_above", "above idle"), "incl": ("j", "rel_fp32", "incl. idle")}
+ENERGY_KEY = "j_above"
+BASELINE_DIR = paths.RESULTS / "baseline" / "showtell_resnet50_s0"
+BASELINE_COLOR = "#4a3aa7"  # reference palette slot 7 (violet): a different model family, not a precision
 
 
 # ---------------------------------------------------------------- names and encodings
 
 def display_name(variant: str) -> str:
+    if variant == BASELINE:
+        return "Show and Tell"
     if variant == REFERENCE:
         return "FP32"
     if variant.startswith(REFERENCE + "_"):
@@ -91,6 +111,8 @@ def display_name(variant: str) -> str:
 
 def variant_style(variant: str) -> tuple[str, str]:
     """(colour, marker): colour = precision, marker = what it is applied to (or the decoding variant)."""
+    if variant == BASELINE:
+        return BASELINE_COLOR, "*"
     if variant == REFERENCE:
         return PRECISION_COLOR["fp32"], "s"
     if variant.startswith(REFERENCE + "_"):
@@ -104,7 +126,7 @@ def variant_style(variant: str) -> tuple[str, str]:
 class Data:
     """Step-8 evaluation outputs for one run and checkpoint on Karpathy test."""
 
-    def __init__(self, run: str, checkpoint: str, limit: int | None):
+    def __init__(self, run: str, checkpoint: str, limit: int | None, baseline: bool = True):
         self.run, self.checkpoint, self.stem = run, checkpoint, Path(checkpoint).stem
         self.eval_dir = paths.RESULTS / "eval" / run
         cfg = json.loads((paths.RESULTS / "runs" / run / "config.json").read_text())
@@ -127,6 +149,12 @@ class Data:
             caps = json.loads((self.eval_dir / f"{tag}_{SPLIT}_{d}_captions.json").read_text())["captions"]
             self.captions[v] = {x["image_id"]: x["caption"] for x in caps}
             self.summary[v] = json.loads((self.eval_dir / f"{tag}_{SPLIT}_{d}.json").read_text())
+        self.extra = []  # the CNN-LSTM baseline: caption frontiers only (RQ2, RQ3 and the batch check skip it)
+        base_caps = BASELINE_DIR / f"{SPLIT}_beam3_captions.json"
+        if baseline and base_caps.exists() and (BASELINE_DIR / f"{SPLIT}_beam3.json").exists():
+            self.extra = [BASELINE]
+            self.captions[BASELINE] = {x["image_id"]: x["caption"] for x in json.loads(base_caps.read_text())["captions"]}
+            self.summary[BASELINE] = json.loads((BASELINE_DIR / f"{SPLIT}_beam3.json").read_text())
         self.answers = {}
         for c in CONFIGS:
             f = self.eval_dir / f"{config_tag(self.stem, c)}_{SPLIT}_answers.json"
@@ -143,6 +171,8 @@ class Data:
         self.gt = {int(k): set(v) for k, v in gt.items()}
 
     def config_of(self, variant: str) -> tuple[str, str]:
+        if variant == BASELINE:
+            return BASELINE, "beam3"
         return next((c, d) for c, d in VARIANTS if variant_name(c, d) == variant)
 
 
@@ -156,18 +186,19 @@ def per_image_metrics(D: Data, out_dir: Path, spice_on: bool):
     cache.mkdir(parents=True, exist_ok=True)
     n = len(D.image_ids)
     path = cache / f"per_image_n{n}.npz"
-    M = {v: {} for v in D.variants}
+    scored = D.variants + D.extra
+    M = {v: {} for v in scored}
     if path.exists():
         z = np.load(path)
         for key in z.files:
             v, metric = key.split("|")
             if v in M:
                 M[v][metric] = z[key]
-    for v in D.variants:
+    for v in scored:
         f = cache / f"spice_{v}_n{n}.npy"
         if f.exists():
             M[v]["SPICE"] = np.load(f)
-    need = [v for v in D.variants if "CIDEr" not in M[v] or (spice_on and "SPICE" not in M[v])]
+    need = [v for v in scored if "CIDEr" not in M[v] or (spice_on and "SPICE" not in M[v])]
     if need:
         print(f"PTB tokenisation for {len(need)} configurations", flush=True)
         tok = ptb_tokenize({**{("g", i): D.refs[i] for i in D.image_ids},
@@ -261,6 +292,31 @@ def load_costs(energy_path: Path) -> dict:
     return {(r["config"], r["task"], r["decoding"]): r for r in rows}
 
 
+def baseline_costs(costs: dict, basis: str = "above") -> dict:
+    """The CNN-LSTM baseline's cost row in step-10 terms (see the module docstring): energy and latency as the ratio
+    to its own session's FP32 times the step-10 FP32 value. Empty if its measurements are missing."""
+    path = BASELINE_DIR / "summary.json"
+    fp32 = costs.get((REFERENCE, "caption", "beam3"))
+    if not path.exists() or fp32 is None:
+        return {}
+    s = json.loads(path.read_text())
+    b, mem = (s.get("cost") or {}).get("baseline"), s.get("memory") or {}
+    key, rel, _ = ENERGY_BASES[basis]
+    if not b or not b.get(rel) or b[rel][0] is None:
+        return {}
+
+    def scaled(rel, ref):
+        if not rel or rel[0] is None:
+            return [None, None]
+        return [rel[0] * ref[0], rel[1] * ref[0] if rel[1] is not None else None]
+    return {(BASELINE, "caption", "beam3"): {
+        "config": BASELINE, "task": "caption", "decoding": "beam3",
+        key: scaled(b[rel], fp32[key]),
+        "lat_median": scaled(b.get("rel_lat_median"), fp32["lat_median"]),
+        "size_mb": sum((mem.get("size_mb") or {}).values()) or None, "memory_mb": mem.get("peak_tensor_mb"),
+        "measured": {k: b.get(k) for k in ("j_above", "j", "rel_fp32_above", "lat_median", "rel_lat_median")}}}
+
+
 def dominance(points: list[dict], higher_is_better: bool, cost_kind: str) -> None:
     """Fills point['dominated_by'] and point['frontier'] (see the module docstring for the rule)."""
     for a in points:
@@ -302,7 +358,7 @@ FRONTIERS = [  # name, task, accuracy metric, higher is better, cost kind, axis 
 def frontier_points(spec, D, M, vqa, W, costs) -> list[dict]:
     name, task, metric, higher, kind = spec[:5]
     pts = []
-    for v in D.variants:
+    for v in D.variants + D.extra:
         c, d = D.config_of(v)
         if task == "vqa" and (d != "beam3" or c not in vqa):
             continue
@@ -319,7 +375,7 @@ def frontier_points(spec, D, M, vqa, W, costs) -> list[dict]:
             if metric not in M[v]:
                 return []
             value, boot = M[v][metric].mean(), boot_mean(M[v][metric], W)
-        cost, sd = {"energy": tuple(row["j_above"]), "latency": tuple(row["lat_median"]),
+        cost, sd = {"energy": tuple(row[ENERGY_KEY]), "latency": tuple(row["lat_median"]),
                     "size": (row["size_mb"], None), "memory": (row.get("memory_mb"), None)}[kind]
         if cost is None:
             continue
@@ -342,26 +398,46 @@ def plot_frontier(ax, pts, spec, label_frontier=True):
     if len(front) > 1:
         ax.plot([p["cost"] for p in front], [p["value"] for p in front], color=INK2, lw=1.0, zorder=3)
     if label_frontier:
+        lo, hi = ax.get_xlim()
         for p in front:
+            near_left = (p["cost"] - lo) < 0.12 * (hi - lo)  # keep the label clear of the y tick labels
             ax.annotate(display_name(p["variant"]), (p["cost"], p["value"]), textcoords="offset points",
-                        xytext=(0, 10), ha="center", va="bottom", fontsize=8, color=INK, zorder=5,
+                        xytext=(6, 8) if near_left else (0, 10), ha="left" if near_left else "center",
+                        va="bottom", fontsize=8, color=INK, zorder=5,
                         bbox={"boxstyle": "round,pad=0.15", "fc": SURFACE, "ec": "none", "alpha": 0.85})
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
 
 def part_frontier(D, args, out_dir, M, vqa, W):
+    global ENERGY_KEY
     plt = setup_matplotlib()
+    ENERGY_KEY, _, basis_label = ENERGY_BASES[args.energy_basis]
+    specs = [tuple(x.replace("above idle", basis_label) if isinstance(x, str) else x for x in spec)
+             for spec in FRONTIERS]
     costs = load_costs(args.energy)
-    slug = args.platform
+    if args.platform == DEFAULT_PLATFORM:  # the baseline was measured next to FP32 on the Mac only
+        costs.update(baseline_costs(costs, args.energy_basis))
+    slug = args.platform + ("" if args.energy_basis == "above" else "_inclidle")
     results = {}
     lines = [f"# RQ1: accuracy-cost frontiers, {args.platform_name} ({D.run} {D.checkpoint}, Karpathy {SPLIT})\n",
              "Dominance: a configuration dominates another if it is not worse on either axis and better on at least "
              "one. Accuracy differences count when the paired 95 % bootstrap interval of the difference excludes zero "
              "(1,000 resamples of the test images, shared by all configurations); cost differences when they exceed "
-             "the pooled sd over the repetitions (energy, latency) or 1 % (size, memory). Energy above idle "
-             "(methodology §8). Accuracy in points (x 100).\n"]
-    for spec in FRONTIERS:
+             "the pooled sd over the repetitions (energy, latency) or 1 % (size, memory). "
+             + ("Energy above idle (methodology §8). " if args.energy_basis == "above" else
+                "Energy including idle (the device's idle draw during each item counts; methodology §8 uses above "
+                "idle, frontiers_<platform>.md). ")
+             + "Accuracy in points (x 100).\n"]
+    if args.platform != DEFAULT_PLATFORM:
+        lines.append(f"Cost measured on {args.platform_name} ({args.energy}); accuracy is the Mac's full Karpathy-test "
+                     f"evaluation at batch 64. batch_check_{args.platform}.md scores this platform's batch-1 outputs on "
+                     "the 500-item subset against it.\n")
+    if (BASELINE, "caption", "beam3") in costs:
+        lines.append("Show and Tell (CNN-LSTM baseline, 13_baseline.py) was measured in another session next to the "
+                     "FP32 reference; its energy and latency are its ratio to that FP32 (per repetition) times the "
+                     "FP32 values here. Captions only.\n")
+    for spec in specs:
         pts = frontier_points(spec, D, M, vqa, W, costs)
         if not pts:
             continue
@@ -382,27 +458,29 @@ def part_frontier(D, args, out_dir, M, vqa, W):
                          f"{', '.join(display_name(x) for x in p['dominated_by'])} |")
     # summary ratio (§9): accuracy per joule; FLOPs do not change with precision, so a per-GFLOP ratio cannot separate
     # the precision configurations and is not reported for them.
-    lines += ["\n## Accuracy per joule (above idle)\n", "| Configuration | CIDEr per J | VQA accuracy per J |",
+    lines += [f"\n## Accuracy per joule ({basis_label})\n", "| Configuration | CIDEr per J | VQA accuracy per J |",
               "|---|---|---|"]
     ce = {p["variant"]: p for p in results.get("captions_energy", [])}
     ae = {p["variant"]: p for p in results.get("answers_energy", [])}
-    for v in D.variants:
+    for v in D.variants + D.extra:
         c = ce.get(v)
         a = ae.get(v)
         lines.append(f"| {display_name(v)} | {c['value'] / c['cost']:.1f} |" if c else f"| {display_name(v)} | - |")
         lines[-1] += f" {a['value'] / a['cost']:.1f} |" if a else " - |"
     (out_dir / f"frontiers_{slug}.json").write_text(json.dumps(
-        {"platform": args.platform_name, "energy_file": str(args.energy), "frontiers": results,
+        {"platform": args.platform_name, "energy_file": str(args.energy), "energy_basis": args.energy_basis,
+         "frontiers": results,
          "time": datetime.now().isoformat(timespec="seconds")}, indent=1))
     (out_dir / f"frontiers_{slug}.md").write_text("\n".join(lines) + "\n")
 
     # primary figure
-    by = {s[0]: s for s in FRONTIERS}
+    by = {s[0]: s for s in specs}
     if "captions_energy" in results:
         pts = frontier_points(by["captions_energy"], D, M, vqa, W, costs)
         fig, ax = plt.subplots(figsize=(6.6, 4.4))
         plot_frontier(ax, pts, by["captions_energy"])
-        ax.set_title(f"Captioning: accuracy vs energy per caption ({args.platform_name}, batch 1)", loc="left")
+        ax.set_title(f"Captioning: accuracy vs energy per caption ({args.platform_name}, batch 1"
+                     + ("" if args.energy_basis == "above" else ", incl. idle") + ")", loc="left")
         variant_legend(ax, [p["variant"] for p in pts], anchor=(0.5, -0.15))
         save(fig, out_dir, f"frontier_captions_energy_{slug}")
         plt.close(fig)
@@ -994,7 +1072,9 @@ def part_batch(D, args, out_dir):
         r["answers_identical"] = float(np.mean([o == b64[q][0] for q, o in zip(qids, w["outputs"])]))
         r["VQA_b1"] = 100 * float(np.mean([question_accuracy(o, D.anns[q]) for q, o in zip(qids, w["outputs"])]))
         r["VQA_b64"] = 100 * float(np.mean([b64[q][1] for q in qids]))
-    lines = ["# Batch 1 (energy runs) vs batch 64 (evaluation), same 500 test images and 500 questions\n",
+    other = args.platform != DEFAULT_PLATFORM
+    lines = [f"# Batch 1 (energy runs{', ' + args.platform_name if other else ''}) vs batch 64 (evaluation, "
+             f"{'MacBook Pro M4 Pro' if other else 'same device'}), same 500 test images and 500 questions\n",
              "Accuracy of the first-repetition outputs of 10_measure_variants.py against the evaluation's outputs for "
              "the same items. CIDEr's document frequencies come from the 500 images' references, so these values are "
              "not comparable with the full-test CIDEr; only the batch-1 vs batch-64 difference is.\n",
@@ -1013,8 +1093,9 @@ def part_batch(D, args, out_dir):
                      f"{f(r.get('CIDEr_b1'))} | {f(dc, 2)} | {f(r.get('CHAIR_i_b64'))} | {f(r.get('CHAIR_i_b1'))} | "
                      f"{f(r.get('answers_identical'), pct=True)} | {f(r.get('VQA_b64'))} | {f(r.get('VQA_b1'))} | "
                      f"{f(dv, 2)} |")
-    (out_dir / "batch_check.json").write_text(json.dumps(rows, indent=1))
-    (out_dir / "batch_check.md").write_text("\n".join(lines) + "\n")
+    suffix = f"_{args.platform}" if other else ""
+    (out_dir / f"batch_check{suffix}.json").write_text(json.dumps(rows, indent=1))
+    (out_dir / f"batch_check{suffix}.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
 
 
@@ -1028,7 +1109,7 @@ def main():
     ap.add_argument("--run", default=RUN)
     ap.add_argument("--checkpoint", default=CHECKPOINT)
     ap.add_argument("--parts", nargs="+", default=list(PARTS), choices=PARTS)
-    ap.add_argument("--platform", default="m4pro", help="short name for the cost measurements (file names)")
+    ap.add_argument("--platform", default=DEFAULT_PLATFORM, help="short name for the cost measurements (file names)")
     ap.add_argument("--platform-name", default="MacBook Pro M4 Pro", help="name in titles and reports")
     ap.add_argument("--energy", type=Path, default=None,
                     help="energy.json of 10_measure_variants.py (default: results/variants/<run>/<checkpoint>/)")
@@ -1036,6 +1117,9 @@ def main():
     ap.add_argument("--label", default=None, help="results subfolder (default: the checkpoint name)")
     ap.add_argument("--no-spice", action="store_true")
     ap.add_argument("--attribution-images", type=int, default=8)
+    ap.add_argument("--no-baseline", action="store_true", help="leave the CNN-LSTM baseline off the frontiers")
+    ap.add_argument("--energy-basis", choices=list(ENERGY_BASES), default="above",
+                    help="frontier energy above idle (default, methodology §8) or including idle (files *_inclidle)")
     ap.add_argument("--device", default=None)
     args = ap.parse_args()
     stem = Path(args.checkpoint).stem
@@ -1044,8 +1128,8 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     dev = get_device(args.device)
     t0 = time.perf_counter()
-    D = Data(args.run, args.checkpoint, args.limit)
-    print(f"{len(D.variants)} configurations, {len(D.image_ids):,} test images, {len(D.questions):,} questions "
+    D = Data(args.run, args.checkpoint, args.limit, baseline=not args.no_baseline)
+    print(f"{len(D.variants)} configurations{' + the CNN-LSTM baseline' if D.extra else ''}, {len(D.image_ids):,} test images, {len(D.questions):,} questions "
           f"-> {out_dir}", flush=True)
     W = bootstrap_weights(len(D.image_ids))
     need_metrics = {"frontier", "rq2", "rq3"} & set(args.parts)

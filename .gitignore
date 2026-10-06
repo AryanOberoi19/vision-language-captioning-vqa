@@ -23,6 +23,9 @@ console*.log
 # Analysis caches (per-image scores, mean prefixes; rebuilt by scripts/11_analysis.py)
 results/analysis/**/cache/
 
+# PTB-tokenised COCO training captions (34 MB; rebuilt by scripts/13_baseline.py when missing)
+results/baseline/coco_train_ptb.json
+
 # Data and cached features live outside this folder (../Datasets); never add them here
 /Datasets/
 /features/

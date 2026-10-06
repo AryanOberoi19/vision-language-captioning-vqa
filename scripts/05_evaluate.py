@@ -52,7 +52,11 @@ SELECTION_DECODING = "beam3"
 # ---------------------------------------------------------------- data
 
 def feature_sets(family: str, split: str) -> list[str]:
-    return [f"coco_{split}"] if family == "coco" else ["flickr8k"]
+    if family == "coco":
+        return [f"coco_{split}"]
+    if family == "vizwiz":
+        return ["vizwiz_val"]
+    return ["flickr8k"]
 
 
 def references(family: str, split: str) -> dict:
@@ -79,10 +83,10 @@ def features_of(cfg: dict, args) -> str:
     """Feature set for the configuration: the encoder's own (FP32) or the one cached at reduced precision."""
     precision = CONFIGS[args.precision][0]
     name = feature_name(cfg["encoder"], precision)
-    if precision != "fp32" and not (paths.FEATURES / name.replace("/", "-") / f"coco_{args.split}.pt").exists():
-        sys.exit(f"no {args.split} features from {cfg['encoder']} at {precision}: run scripts/02_extract_features.py "
-                 f"--encoder {cfg['encoder']} --precision {precision} --sets coco_{args.split} "
-                 "(scripts/09_evaluate_variants.py does this)")
+    fset = feature_sets(args.family, args.split)[0]
+    if not (paths.FEATURES / name.replace("/", "-") / f"{fset}.pt").exists():
+        sys.exit(f"no {fset} features from {cfg['encoder']} at {precision}: run scripts/02_extract_features.py "
+                 f"--encoder {cfg['encoder']} --precision {precision} --sets {fset}")
     return name
 
 
@@ -130,7 +134,7 @@ def chair_ground_truth(split, image_ids):
 
 
 def score_captions(args, cfg, model, run_eval, stem, image_ids, device):
-    family = cfg["data"]
+    family = args.family
     refs = references(family, args.split)
     store = FeatureStore(features_of(cfg, args), family, feature_sets(family, args.split))
     caps, seconds = decode_captions(model, store, image_ids, args.decoding, run_eval / f"{stem}_captions.json",
@@ -246,17 +250,21 @@ def evaluate(args, device):
         model, cfg, ckpt = load_run(args.run, checkpoint, device)
     else:
         model, cfg, ckpt, _ = load_decoder(args.run, checkpoint, CONFIGS[args.precision][1], device)
-    family = cfg["data"]
-    image_ids = sorted(references(family, args.split))
+    family = args.family = args.data or cfg["data"]
+    image_ids = sorted(references(family, args.split))  # images with at least one reference caption
     if args.limit:
         image_ids = image_ids[: args.limit]
     tag = config_tag(ckpt.stem, args.precision)
-    stem = f"{tag}_{args.split}_{args.decoding}"
-    result = {"run": args.run, "checkpoint": ckpt.name, "split": args.split, "decoding": args.decoding,
+    split_label = args.split if family == cfg["data"] else f"{family}_{args.split}"  # e.g. vizwiz_val
+    stem = f"{tag}_{split_label}_{args.decoding}"
+    result = {"run": args.run, "checkpoint": ckpt.name, "data": family, "split": args.split,
+              "decoding": args.decoding,
               "precision": args.precision, "encoder_precision": CONFIGS[args.precision][0],
               "decoder_precision": CONFIGS[args.precision][1],
               "limit": args.limit, "time": datetime.now().isoformat(timespec="seconds"), "device": str(device)}
-    tasks = args.tasks or (["caption", "vqa"] if "vqa" in cfg["tasks"] else ["caption"])
+    tasks = args.tasks or (["caption", "vqa"] if "vqa" in cfg["tasks"] and family == "coco" else ["caption"])
+    if family != "coco" and "vqa" in tasks:
+        sys.exit("VQA is scored on COCO (VQA v2) only")
     if "caption" in tasks:
         result["caption"] = score_captions(args, cfg, model, run_eval, stem, image_ids, device)
     if "vqa" in tasks:
@@ -270,7 +278,8 @@ def print_summary(r):
     def f(m, scale=100):
         return f"{scale * m['value']:.1f} [{scale * m['ci95'][0]:.1f}, {scale * m['ci95'][1]:.1f}]" if "ci95" in m \
             else f"{scale * m['value']:.1f}"
-    print(f"\n{r['run']} {r['checkpoint']} {r.get('precision', REFERENCE)} {r['split']} ({r['decoding']})")
+    print(f"\n{r['run']} {r['checkpoint']} {r.get('precision', REFERENCE)} {r.get('data', '')} {r['split']} "
+          f"({r['decoding']})")
     c = r.get("caption")
     if c:
         parts = [f"{k} {f(c[k])}" for k in ("BLEU-4", "CIDEr", "SPICE", "CLIPScore", "CHAIR_i", "CHAIR_s") if k in c]
@@ -288,6 +297,8 @@ def main():
     ap.add_argument("--select", action="store_true", help="validation CIDEr for every epoch checkpoint")
     ap.add_argument("--checkpoint", default=None, help="file in the run folder (default: selected, else newest)")
     ap.add_argument("--split", choices=["val", "test"], default="test")
+    ap.add_argument("--data", choices=["coco", "flickr8k", "vizwiz"], default=None,
+                    help="evaluation data (default: the run's own); vizwiz = VizWiz-Captions val, zero-shot")
     ap.add_argument("--decoding", choices=list(DECODING), default="beam3")
     ap.add_argument("--precision", choices=list(CONFIGS), default=REFERENCE,
                     help="reduced-precision configuration (greenvl/precision.py; step 8)")
@@ -302,6 +313,8 @@ def main():
     device = get_device(args.device)
     if args.select and args.precision != REFERENCE:
         sys.exit("--select chooses the checkpoint in FP32; drop --precision")
+    if args.data == "vizwiz" and args.split != "val":
+        sys.exit("VizWiz-Captions is evaluated on its validation split: pass --split val")
     select(args, device) if args.select else evaluate(args, device)
 
 

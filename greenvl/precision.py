@@ -104,7 +104,14 @@ def convert(module: nn.Module, precision: str) -> int:
 
 
 def load_encoder(name: str, precision: str, device: torch.device):
-    """(CLIP vision encoder with projection at `precision` on `device`, its image processor, quantized layers)."""
+    """(CLIP vision encoder with projection at `precision` on `device`, its image processor, quantized layers).
+    The CNN-LSTM baseline's ResNet-50 (greenvl/showtell.py) loads here too, at FP32 only."""
+    if name == "ResNet-50":
+        from .showtell import ResNetEncoder, ResNetProcessor
+
+        if precision != REFERENCE:
+            raise ValueError("the ResNet-50 baseline encoder runs at fp32 only")
+        return ResNetEncoder().to(device).eval(), ResNetProcessor(), 0
     from transformers import CLIPImageProcessor, CLIPVisionModelWithProjection
     from transformers.utils import logging as hf_logging
 

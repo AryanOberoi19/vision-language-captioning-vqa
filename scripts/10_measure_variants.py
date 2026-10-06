@@ -4,6 +4,7 @@ with Aryan on 3 Oct: 3 repetitions, more can be added later).
 
     open scripts/variants_energy.command              # Terminal window: password once, then ~2 h
     sudo -v && python scripts/10_measure_variants.py [--repeats 3]
+    python scripts/10_measure_variants.py --label epoch_02_t4        # second platform: colab/colab_t4.ipynb
     python scripts/10_measure_variants.py --summary-only
     python scripts/10_measure_variants.py --n 8 --repeats 1 --pause 1 --idle-seconds 5 --warmup 2 \\
         --label _smoke --allow-gpu-only-energy        # code check
@@ -61,8 +62,8 @@ from greenvl.energy import KEEPER_ENV, EnergyMeter, awake_clock  # noqa: E402
 from greenvl.inference import component_sizes, encode_image, load_pipeline  # noqa: E402
 from greenvl.lock import RunLock  # noqa: E402
 from greenvl.measure import (CO2_G_PER_KWH, agreement, mean_sd, measure_idle_checked, metal_mb,  # noqa: E402
-                             peak_rss_mb, percentile, reference_outputs, subset, system_state, top_processes,
-                             warm_file_cache)
+                             peak_rss_mb, percentile, reference_outputs, subset, system_state, tensor_mb,
+                             top_processes, warm_file_cache)
 from greenvl.precision import CONFIGS, PRECISIONS, REFERENCE, load_decoder, load_encoder  # noqa: E402
 
 RUN = "coco_ViT-L-14_lora8_lr1e-3_s0"
@@ -148,7 +149,7 @@ def memory_check(args, dev, sub):
     pipe = load_pipeline(args.run, args.checkpoint, dev, args.memory)
     gc.collect()
     empty_cache(dev)
-    tensors = lambda: torch.mps.current_allocated_memory() / 2**20 if dev.type == "mps" else 0.0  # noqa: E731
+    tensors = lambda: tensor_mb(dev) or 0.0  # noqa: E731
     loaded = {"tensor_mb": tensors(), "metal_mb": metal_mb(dev) or 0.0}
     peak = dict(loaded)
     k = min(MEMORY_ITEMS, args.n)
@@ -158,9 +159,10 @@ def memory_check(args, dev, sub):
             pipe.caption(emb, "beam3") if task == "caption" else pipe.answer(emb, it["question"])
             peak["tensor_mb"] = max(peak["tensor_mb"], tensors())
             peak["metal_mb"] = max(peak["metal_mb"], metal_mb(dev) or 0.0)
-    out = {"config": args.memory, "items": 2 * k, "loaded": loaded,
-           "peak_tensor_mb": peak["tensor_mb"] if dev.type == "mps" else None,
-           "peak_metal_mb": peak["metal_mb"] if dev.type == "mps" else None,
+    gpu = dev.type in ("mps", "cuda")
+    out = {"config": args.memory, "items": 2 * k, "loaded": loaded, "device": str(dev),
+           "peak_tensor_mb": peak["tensor_mb"] if gpu else None,
+           "peak_metal_mb": peak["metal_mb"] if gpu else None,
            "rss_mb": psutil.Process().memory_info().rss / 2**20, "lifetime_peak_rss_mb": peak_rss_mb(),
            "size_mb": component_sizes(pipe.encoder, pipe.model)}
     print("MEMORY " + json.dumps(out), flush=True)
@@ -253,7 +255,8 @@ def main():
         log({"type": "session", "session": session, "time": datetime.now().isoformat(timespec="seconds"),
              "run": args.run, "checkpoint": args.checkpoint, "split": SPLIT, "n": args.n, "repeats": args.repeats,
              "warmup": args.warmup, "pause": args.pause, "idle_seconds": args.idle_seconds, "sizes_mb": sizes,
-             "quantized_layers": quantized, "counters_live": meter.counters_live, "system": system})
+             "quantized_layers": quantized, "counters_live": meter.counters_live, "energy_backend": meter.backend,
+             "device": str(dev), "system": system})
 
         emb_dir = out_dir / "embeddings"
         emb_dir.mkdir(exist_ok=True)
@@ -439,8 +442,11 @@ def write_summary(out_dir: Path, args):
                  "included. Memory: GPU memory held by tensors (weights, caches, activations) with encoder and decoder "
                  "loaded together, highest value after each of 20 captions and 20 answers, fresh process; the Metal "
                  "driver's total (allocated in large chunks) is in memory.json. Same output as batch 64: share of first-repetition outputs identical to "
-                 "05_evaluate.py's (batch 64) for the same configuration. Energy covers the SoC (CPU, GPU) and DRAM; "
-                 f"CO2e uses J incl. idle at {CO2_G_PER_KWH} g/kWh, PUE 1.")
+                 "05_evaluate.py's (batch 64) for the same configuration. "
+                 + ("Energy covers the GPU board only (NVML; no CPU or DRAM counters on this platform); "
+                    if sessions and sessions[-1].get("energy_backend") == "nvml"
+                    else "Energy covers the SoC (CPU, GPU) and DRAM; ")
+                 + f"CO2e uses J incl. idle at {CO2_G_PER_KWH} g/kWh, PUE 1.")
     (out_dir / "energy.md").write_text("\n".join(lines) + "\n")
     print("\n" + "\n".join(lines))
     joined_summary(out_dir, rows)
