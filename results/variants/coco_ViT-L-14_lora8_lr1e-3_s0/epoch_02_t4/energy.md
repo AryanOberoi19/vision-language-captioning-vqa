@@ -25,31 +25,4 @@
 | fp32 | caption | greedy | 3.376 ± 0.069 | 11.007 ± 0.073 | 0.85 ± 0.02 | 2.480 ± 0.018 | 0.896 ± 0.055 | 226 | 295 | 1761 | - | 100.0% |
 | fp32 | caption | beam5 | 6.187 ± 0.133 | 14.866 ± 0.044 | 1.15 ± 0.02 | 2.480 ± 0.018 | 3.707 ± 0.116 | 256 | 332 | 1761 | - | 100.0% |
 
-## Energy by component (J per item incl. idle, mean over repetitions)
-
-| Configuration | Task | Decoding | CPU | GPU | DRAM | g CO2e per 1,000 items |
-|---|---|---|---|---|---|---|
-| fp32 | caption | beam3 | 0.000 (0%) | 12.937 (100%) | 0.000 (0%) | 2.61 |
-| fp32 | vqa | greedy | 0.000 (0%) | 6.209 (100%) | 0.000 (0%) | 1.25 |
-| enc_fp16 | caption | beam3 | 0.000 (0%) | 9.227 (100%) | 0.000 (0%) | 1.86 |
-| enc_fp16 | vqa | greedy | 0.000 (0%) | 2.655 (100%) | 0.000 (0%) | 0.54 |
-| enc_int8 | caption | beam3 | 0.000 (0%) | 12.781 (100%) | 0.000 (0%) | 2.58 |
-| enc_int8 | vqa | greedy | 0.000 (0%) | 6.127 (100%) | 0.000 (0%) | 1.24 |
-| enc_nf4 | caption | beam3 | 0.000 (0%) | 10.351 (100%) | 0.000 (0%) | 2.09 |
-| enc_nf4 | vqa | greedy | 0.000 (0%) | 3.713 (100%) | 0.000 (0%) | 0.75 |
-| dec_fp16 | caption | beam3 | 0.000 (0%) | 12.078 (100%) | 0.000 (0%) | 2.44 |
-| dec_fp16 | vqa | greedy | 0.000 (0%) | 6.172 (100%) | 0.000 (0%) | 1.25 |
-| dec_int8 | caption | beam3 | 0.000 (0%) | 21.279 (100%) | 0.000 (0%) | 4.30 |
-| dec_int8 | vqa | greedy | 0.000 (0%) | 7.890 (100%) | 0.000 (0%) | 1.59 |
-| dec_nf4 | caption | beam3 | 0.000 (0%) | 14.063 (100%) | 0.000 (0%) | 2.84 |
-| dec_nf4 | vqa | greedy | 0.000 (0%) | 6.425 (100%) | 0.000 (0%) | 1.30 |
-| both_fp16 | caption | beam3 | 0.000 (0%) | 8.510 (100%) | 0.000 (0%) | 1.72 |
-| both_fp16 | vqa | greedy | 0.000 (0%) | 2.600 (100%) | 0.000 (0%) | 0.52 |
-| both_int8 | caption | beam3 | 0.000 (0%) | 21.388 (100%) | 0.000 (0%) | 4.32 |
-| both_int8 | vqa | greedy | 0.000 (0%) | 7.696 (100%) | 0.000 (0%) | 1.55 |
-| both_nf4 | caption | beam3 | 0.000 (0%) | 11.376 (100%) | 0.000 (0%) | 2.30 |
-| both_nf4 | vqa | greedy | 0.000 (0%) | 3.905 (100%) | 0.000 (0%) | 0.79 |
-| fp32 | caption | greedy | 0.000 (0%) | 11.007 (100%) | 0.000 (0%) | 2.22 |
-| fp32 | caption | beam5 | 0.000 (0%) | 14.866 (100%) | 0.000 (0%) | 3.00 |
-
-Per item = the configuration's encoder window (J per image) + its decoding window (J per item), same repetition. vs FP32: ratio to the FP32 reference of the same repetition and task. Encoder and decoding columns are above idle. Size: parameters and buffers as stored, quantization scales included. Memory: GPU memory held by tensors (weights, caches, activations) with encoder and decoder loaded together, highest value after each of 20 captions and 20 answers, fresh process; the Metal driver's total (allocated in large chunks) is in memory.json. Same output as batch 64: share of first-repetition outputs identical to 05_evaluate.py's (batch 64) for the same configuration. Energy covers the GPU board only (NVML; no CPU or DRAM counters on this platform); CO2e uses J incl. idle at 727 g/kWh, PUE 1.
+Per item = the configuration's encoder window (J per image) + its decoding window (J per item), same repetition. vs FP32: ratio to the FP32 reference of the same repetition and task. Encoder and decoding columns are above idle. Size: parameters and buffers as stored, quantization scales included. Memory: GPU memory held by tensors (weights, caches, activations) with encoder and decoder loaded together, highest value after each of 20 captions and 20 answers, fresh process; the CUDA allocator's reserved total is in memory.json. Same output as batch 64: share of first-repetition outputs identical to 05_evaluate.py's (batch 64) for the same configuration. Energy covers the GPU board only (NVML; no CPU or DRAM counters on this platform); no CO2e is given, since the data centre's grid intensity and PUE are unknown.
