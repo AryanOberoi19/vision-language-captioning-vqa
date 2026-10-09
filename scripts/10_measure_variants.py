@@ -346,6 +346,7 @@ def write_summary(out_dir: Path, args):
         return
     recs = [json.loads(ln) for ln in log_path.read_text().splitlines()]
     sessions = [r for r in recs if r["type"] == "session"]
+    nvml = bool(sessions) and sessions[-1].get("energy_backend") == "nvml"  # a cloud GPU: board energy only
     win = {}
     for r in recs:
         if r["type"] == "window" and r["subset_n"] == args.n and not r.get("suspect"):
@@ -402,7 +403,7 @@ def write_summary(out_dir: Path, args):
         for k in ("j", "j_above", "rel_fp32", "enc_above", "dec_above", "cpu_j", "gpu_j", "dram_j", "lat_median",
                   "lat_p95", "enc_median", "dec_median"):
             row[k] = mean_sd([x.get(k) for x in per_rep])
-        if row["j"][0] is not None:
+        if row["j"][0] is not None and not nvml:  # the grid factor is India's; a cloud GPU's location is unknown
             row["g_co2e_per_1000"] = row["j"][0] * 1000 / 3.6e6 * CO2_G_PER_KWH
         rows.append(row)
     (out_dir / "energy.json").write_text(json.dumps({"n": n, "repetitions": reps, "rows": rows,
@@ -427,10 +428,12 @@ def write_summary(out_dir: Path, args):
                      f"{ms(r['rel_fp32'], 2)} | {ms(r['enc_above'])} | {ms(r['dec_above'])} | "
                      f"{f0(r['lat_median'][0])} | {f0(r['lat_p95'][0])} | {f0(r['size_mb'])} | "
                      f"{f0(r['memory_mb'])} | {pct(r['agreement_b1_vs_b64'])} |")
-    lines += ["\n## Energy by component (J per item incl. idle, mean over repetitions)\n",
-              "| Configuration | Task | Decoding | CPU | GPU | DRAM | g CO2e per 1,000 items |", "|---|---|---|---|---|---|---|"]
+    if not nvml:  # NVML reads the GPU board alone, so there is nothing to split
+        lines += ["\n## Energy by component (J per item incl. idle, mean over repetitions)\n",
+                  "| Configuration | Task | Decoding | CPU | GPU | DRAM | g CO2e per 1,000 items |",
+                  "|---|---|---|---|---|---|---|"]
     for r in rows:
-        if r["cpu_j"][0] is None:
+        if nvml or r["cpu_j"][0] is None:
             continue
         tot = r["cpu_j"][0] + r["gpu_j"][0] + r["dram_j"][0]
         lines.append(f"| {r['config']} | {r['task']} | {r['decoding']} | "
@@ -440,13 +443,14 @@ def write_summary(out_dir: Path, args):
                  "same repetition. vs FP32: ratio to the FP32 reference of the same repetition and task. Encoder and "
                  "decoding columns are above idle. Size: parameters and buffers as stored, quantization scales "
                  "included. Memory: GPU memory held by tensors (weights, caches, activations) with encoder and decoder "
-                 "loaded together, highest value after each of 20 captions and 20 answers, fresh process; the Metal "
-                 "driver's total (allocated in large chunks) is in memory.json. Same output as batch 64: share of first-repetition outputs identical to "
+                 "loaded together, highest value after each of 20 captions and 20 answers, fresh process; "
+                 + ("the CUDA allocator's reserved total" if nvml else "the Metal driver's total (allocated in large chunks)")
+                 + " is in memory.json. Same output as batch 64: share of first-repetition outputs identical to "
                  "05_evaluate.py's (batch 64) for the same configuration. "
-                 + ("Energy covers the GPU board only (NVML; no CPU or DRAM counters on this platform); "
-                    if sessions and sessions[-1].get("energy_backend") == "nvml"
-                    else "Energy covers the SoC (CPU, GPU) and DRAM; ")
-                 + f"CO2e uses J incl. idle at {CO2_G_PER_KWH} g/kWh, PUE 1.")
+                 + ("Energy covers the GPU board only (NVML; no CPU or DRAM counters on this platform); no CO2e is "
+                    "given, since the data centre's grid intensity and PUE are unknown."
+                    if nvml else f"Energy covers the SoC (CPU, GPU) and DRAM; CO2e uses J incl. idle at "
+                    f"{CO2_G_PER_KWH} g/kWh, PUE 1."))
     (out_dir / "energy.md").write_text("\n".join(lines) + "\n")
     print("\n" + "\n".join(lines))
     joined_summary(out_dir, rows)
